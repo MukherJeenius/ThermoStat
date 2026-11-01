@@ -1,8 +1,8 @@
-/** Left rail (spec 9.4): intro, layer switches, "Places to investigate" with two tabs, Together totals. */
-import { useEffect, useRef, type KeyboardEvent } from 'react';
-import type { Facility, Recipient, Totals } from '../contract/data-contract';
-import { BAND_WORD, COPY, FACILITY_KIND_WORD } from '../content/copy';
-import { about, money, num, two } from '../engine/format';
+/** Left rail: two plain-text tabs, ranked rows with status in words, the top eight then "Show all N". */
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import type { Facility, HeatConnection, Recipient, Totals } from '../contract/data-contract';
+import { BAND_WORD, COPY, TYPE_WORD } from '../content/copy';
+import { facilityState, FACILITY_STATE_WORD, two } from './ledger';
 import { recipientName } from './RecipientPanel';
 
 export type Tab = 'facilities' | 'recipients';
@@ -11,6 +11,7 @@ export type LayerKey = 'facilities' | 'connections' | 'buildings' | 'heat';
 type Props = {
   facilities: Facility[];
   recipients: Recipient[];
+  connections?: HeatConnection[];
   tab: Tab;
   onTab: (t: Tab) => void;
   layers: Record<LayerKey, boolean>;
@@ -43,34 +44,38 @@ function roving(e: KeyboardEvent<HTMLButtonElement>) {
   }
 }
 
+const TOP = 8;
+
 export function Rail(p: Props) {
   const listRef = useRef<HTMLDivElement>(null);
+  const [all, setAll] = useState(false);
   const ranked = p.recipients.filter((r) => r.rank).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
+  const conns = p.connections ?? [];
   useEffect(() => {
     listRef.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest' });
   }, [p.selectedId, p.tab]);
+  const selIndex = p.tab === 'facilities' ? p.facilities.findIndex((f) => f.id === p.selectedId) : ranked.findIndex((r) => r.id === p.selectedId);
+  const total = p.tab === 'facilities' ? p.facilities.length : ranked.length;
+  const limit = all || selIndex >= TOP ? total : TOP;
   return (
     <aside className="ts-panel ts-panel--rail" aria-label="Places to investigate">
-      <div className="ts-rail-tabs">
-        <p className="ts-rail-heading">Places to investigate</p>
-        <div className="ts-tabs" role="tablist" aria-label="Places to investigate">
-          {(['facilities', 'recipients'] as const).map((t) => (
-            <button
-              key={t}
-              type="button"
-              role="tab"
-              id={`ts-tab-${t}`}
-              aria-selected={p.tab === t}
-              aria-controls="ts-places"
-              className="ts-tab"
-              onClick={() => p.onTab(t)}
-            >
-              {t === 'facilities' ? 'Facilities' : 'Recipients'}
-              <span className="ts-tab-count" aria-hidden="true">{two(t === 'facilities' ? p.facilities.length : ranked.length)}</span>
-              {t === 'recipients' && <span className="ts-visually-hidden"> to approach</span>}
-            </button>
-          ))}
-        </div>
+      <div className="ts-tabs" role="tablist" aria-label="Places to investigate">
+        {(['facilities', 'recipients'] as const).map((t) => (
+          <button
+            key={t}
+            type="button"
+            role="tab"
+            id={`ts-tab-${t}`}
+            aria-selected={p.tab === t}
+            aria-controls="ts-places"
+            className="ts-tab"
+            onClick={() => { setAll(false); p.onTab(t); }}
+          >
+            {t === 'facilities' ? 'Facilities' : 'Buildings'}{' '}
+            <span className="ts-tab-count">{t === 'facilities' ? p.facilities.length : ranked.length}</span>
+            {t === 'recipients' && <span className="ts-visually-hidden"> to approach</span>}
+          </button>
+        ))}
       </div>
       <div className="ts-rail-places" id="ts-places" role="tabpanel" aria-labelledby={`ts-tab-${p.tab}`} ref={listRef} aria-busy={p.loading}>
         {p.loading && (
@@ -83,7 +88,7 @@ export function Rail(p: Props) {
         )}
         {!p.loading && p.tab === 'facilities' && (
           <ul className="ts-places">
-            {p.facilities.map((f, i) => (
+            {p.facilities.slice(0, limit).map((f, i) => (
               <li key={f.id}>
                 <button
                   type="button"
@@ -93,10 +98,10 @@ export function Rail(p: Props) {
                   tabIndex={p.selectedId === f.id || (!p.selectedId && i === 0) ? 0 : -1}
                   onClick={() => p.onSelectFacility(f.id)}
                 >
-                  <span className={`ts-dot${p.selectedId === f.id ? ' is-on' : ''}`} aria-hidden="true" />
-                  <span>{f.name}</span>
+                  <span className="ts-number">{two(i + 1)}</span>
+                  <span className="ts-place-name">{f.name}</span>
                   <span className="ts-place-sub">
-                    {FACILITY_KIND_WORD[f.kind]}
+                    {FACILITY_STATE_WORD[facilityState(f, conns)]}
                     {f.synthetic ? ' · Illustrative' : ''}
                   </span>
                 </button>
@@ -105,49 +110,31 @@ export function Rail(p: Props) {
           </ul>
         )}
         {!p.loading && p.tab === 'recipients' && (
-          <>
-            <ul className="ts-places">
-              {ranked.map((r, i) => (
-                <li key={r.id}>
-                  <button
-                    type="button"
-                    className="ts-place"
-                    onKeyDown={roving}
-                    aria-current={p.selectedId === r.id ? 'true' : undefined}
-                    tabIndex={p.selectedId === r.id || (!p.selectedId && i === 0) ? 0 : -1}
-                    onClick={() => p.onSelectRecipient(r.id)}
-                  >
-                    <span className="ts-number">{two(r.rank ?? 0)}</span>
-                    <span>{recipientName(r)}</span>
-                    <span className="ts-place-sub">
-                      {BAND_WORD[r.fit.band]} fit{r.synthetic ? ' · Illustrative' : ''}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-            {p.together && (
-              <div className="ts-totals" id="ts-together">
-                <p className="ts-label">TOGETHER: THE TOP {p.together.count}</p>
-                <dl>
-                  <dt>Annual heat</dt>
-                  <dd>{num(p.together.annualMwh)} MWh a year</dd>
-                  <dt>Network peak</dt>
-                  <dd>{num(p.together.networkMw)} MW</dd>
-                  <dt>CO2 avoided against gas</dt>
-                  <dd>{num(p.together.co2AvoidedT)} t a year</dd>
-                  <dt>Heat sales for HCE</dt>
-                  <dd>{money(p.together.hceRevenue)} a year</dd>
-                </dl>
-                {p.scale && (
-                  <p className="ts-meta">
-                    For scale: 5 MW of network peak ≈ {about(p.scale.mwh)} MWh a year ≈ {money(p.scale.low)}–{money(p.scale.high)} a year at gas
-                    parity (carbon $0 to $85/t).
-                  </p>
-                )}
-              </div>
-            )}
-          </>
+          <ul className="ts-places">
+            {ranked.slice(0, limit).map((r, i) => (
+              <li key={r.id}>
+                <button
+                  type="button"
+                  className="ts-place"
+                  onKeyDown={roving}
+                  aria-current={p.selectedId === r.id ? 'true' : undefined}
+                  tabIndex={p.selectedId === r.id || (!p.selectedId && i === 0) ? 0 : -1}
+                  onClick={() => p.onSelectRecipient(r.id)}
+                >
+                  <span className="ts-number">{two(r.rank ?? 0)}</span>
+                  <span className="ts-place-name">{recipientName(r)}</span>
+                  <span className="ts-place-sub">
+                    {TYPE_WORD[r.type]} · {BAND_WORD[r.fit.band]} fit{r.synthetic ? ' · Illustrative' : ''}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        {!p.loading && total > limit && (
+          <button type="button" className="ts-link ts-show-all" onClick={() => setAll(true)}>
+            Show all {total} <span aria-hidden="true">→</span>
+          </button>
         )}
         <p className="ts-footnote">{COPY.railFootnote}</p>
       </div>

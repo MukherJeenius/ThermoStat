@@ -5,6 +5,10 @@ import type { Engine } from '../App';
 import type { AppData } from '../data/load';
 import { boilerYear } from '../engine/cost';
 import { date, money, num, pctAbs } from '../engine/format';
+
+/** Table cells share one unit so a column reads at a glance ($0.26M beside $6.50M, not $259,000 beside $6.50M). */
+const moneyCol = (x: number | null | undefined) =>
+  x === null || x === undefined || !Number.isFinite(x) ? money(x) : x === 0 ? '$0' : `$${(x / 1e6).toFixed(2)}M`;
 import { bandPhrase } from '../engine/verdict';
 import { BAND_WORD, COPY, METHOD_SENTENCE, QUALITY_WORD, recipientQuestion, TYPE_WORD } from '../content/copy';
 import { TEAM_CREDIT } from '../content/credits';
@@ -33,7 +37,7 @@ function CostChart({ c }: { c: CostComparison }) {
         return (
           <g key={r.key} transform={`translate(0 ${i * 30})`}>
             <text x="0" y="10" className="ts-chart-label">{r.label}</text>
-            <rect x={labelW} y="14" width={w} height="12" fill={r.key === 'hce' ? '#d16b24' : '#b9b5ad'} />
+            <rect x={labelW} y="14" width={w} height="12" fill={r.key === 'hce' ? '#b8441a' : '#b9b0a2'} />
             <text x={labelW + w + 6} y="24" className="ts-chart-value">{money(r.v)}</text>
           </g>
         );
@@ -149,18 +153,14 @@ export function Brief({ recipient: r, comparison: c, data, engine }: { recipient
       </div>
       <div className="ts-brief-fit" style={{ height: `${1056 * fit}px` }}>
         <article className="ts-brief" style={{ ['--fit' as string]: String(fit) }} aria-label="Recipient brief">
-          <header className="ts-brief-head">
-            <div>
-              <p className="ts-brief-wordmark">THERMOSTAT</p>
-              <p className="ts-kicker">RECIPIENT BRIEF / {r.synthetic ? 'ILLUSTRATIVE' : 'SCENARIO'}</p>
-            </div>
-            <div className="ts-brief-for">
-              <div className="ts-brief-logo">HCE logo</div>
-              <p>{COPY.disclaimer}</p>
-            </div>
+          <header className="ts-brief-mast">
+            <span className="ts-brief-wordmark">THERMOSTAT</span>
+            <span>Recipient brief · Prepared for Hamilton Community Enterprises{r.synthetic ? ' · Illustrative' : ''}</span>
           </header>
           <section className="ts-brief-title">
             <h1>{recipientName(r)}</h1>
+            <span className="ts-double-rule" aria-hidden="true" />
+            <p className="ts-brief-disclaimer">{COPY.disclaimer}</p>
             <p>
               {r.address ?? 'Address not in source data'} · {TYPE_WORD[r.type]} · {QUALITY_WORD[r.estimate.quality]} · Data as of{' '}
               {date(data.meta?.osmBase)}
@@ -191,7 +191,7 @@ export function Brief({ recipient: r, comparison: c, data, engine }: { recipient
                   {([['Keep gas', c.gas], ['Own heat pump', c.heatpump], ['Connect to HCE', c.hce]] as const).map(([label, o]) => (
                     <tr key={label}>
                       <th scope="row">{label}</th>
-                      <td>{money(o.annual)}</td><td>{money(o.upfront)}</td><td>${num(o.levelized)}</td><td>{num(o.co2T)}</td><td>{num(o.gridKw)}</td>
+                      <td>{moneyCol(o.annual)}</td><td>{moneyCol(o.upfront)}</td><td>${num(o.levelized)}</td><td>{num(o.co2T)}</td><td>{num(o.gridKw)}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,7 +1,15 @@
 /** Endpoints (shape carries meaning with colour) and map labels with a surface halo (spec 9.3, layers 7 and 8). */
-import { ScatterplotLayer, TextLayer } from '@deck.gl/layers';
+import { IconLayer, ScatterplotLayer, TextLayer } from '@deck.gl/layers';
 import { MAP, rgba } from '../../ui/mapTokens';
 import { interleave, OVERLAY_PARAMS } from './heatLayers';
+
+/** A brick square inside a 1.5 px surface halo, drawn as an inline SVG icon (10 px square, 13 px with halo). */
+function squareIcon(id: string, ring: string): { id: string; url: string; width: number; height: number } {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><rect x="0" y="0" width="26" height="26" fill="${ring}"/><rect x="3" y="3" width="20" height="20" fill="${MAP.attention}"/></svg>`;
+  return { id, url: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`, width: 26, height: 26 };
+}
+const SQUARE = squareIcon('ts-square', MAP.surface);
+const SQUARE_SELECTED = squareIcon('ts-square-on', MAP.ink);
 
 export interface EndpointDatum {
   id: string;
@@ -39,54 +47,31 @@ export function endpointLayers(opts: {
       return true;
     },
   };
-  const filled = opts.data.filter((d) => d.role !== 'scenario');
-  const rings = opts.data.filter((d) => d.role === 'scenario');
   const sources = opts.data.filter((d) => d.role === 'source');
+  const dots = opts.data.filter((d) => d.role !== 'source');
   return [
-    // hot spots: a soft halo under every heat source
-    new ScatterplotLayer<EndpointDatum>({
+    // facilities: 10 px brick squares with a 1.5 px surface halo
+    new IconLayer<EndpointDatum>({
       ...common,
-      id: 'ts-hotspot-halo',
+      id: 'ts-endpoints-sources',
       data: sources,
-      getRadius: (d) => (d.selected ? 26 : 16),
-      getFillColor: (d) => rgba(MAP.attention, d.selected ? 0.26 : 0.16),
-      stroked: false,
-      pickable: false,
-      updateTriggers: { getRadius: sources.map((d) => d.selected).join(), getFillColor: sources.map((d) => d.selected).join() },
+      getIcon: (d) => (d.selected ? SQUARE_SELECTED : SQUARE),
+      getSize: (d) => (d.selected ? 17 : 13),
+      sizeUnits: 'pixels',
+      billboard: true,
+      updateTriggers: { getIcon: sources.map((d) => d.selected).join(), getSize: sources.map((d) => d.selected).join() },
     }),
+    // buildings: 6 px ink dots
     new ScatterplotLayer<EndpointDatum>({
       ...common,
       id: 'ts-endpoints',
-      data: filled,
-      getRadius: (d) => (d.role === 'source' ? (d.selected ? 8 : 6) : 4),
-      updateTriggers: { getRadius: filled.map((d) => d.selected).join() },
-      getFillColor: (d) => rgba(d.role === 'source' ? MAP.attention : MAP.secondary, 1),
+      data: dots,
+      getRadius: (d) => (d.selected ? 4.5 : 3),
+      updateTriggers: { getRadius: dots.map((d) => d.selected).join() },
+      getFillColor: rgba(MAP.secondary, 1),
       stroked: true,
       getLineColor: rgba(MAP.surface, 1),
-      getLineWidth: 1.5,
-    }),
-    // hollow rings for recipients to approach: a surface ring under a secondary ring
-    new ScatterplotLayer<EndpointDatum>({
-      ...common,
-      id: 'ts-endpoint-ring-halo',
-      data: rings,
-      getRadius: 5,
-      filled: false,
-      stroked: true,
-      getLineColor: rgba(MAP.surface, 1),
-      getLineWidth: 3,
-      pickable: false,
-    }),
-    new ScatterplotLayer<EndpointDatum>({
-      ...common,
-      id: 'ts-endpoint-rings',
-      data: rings,
-      getRadius: 5,
-      filled: true,
-      getFillColor: rgba(MAP.surface, 0.01),
-      stroked: true,
-      getLineColor: rgba(MAP.secondary, 1),
-      getLineWidth: 1.5,
+      getLineWidth: 1,
     }),
   ];
 }
@@ -98,18 +83,18 @@ export function labelLayer(opts: { data: LabelDatum[]; visible: boolean; beforeI
     visible: opts.visible,
     getPosition: (d) => d.position,
     getText: (d) => d.text,
-    getSize: 12,
+    getSize: 13,
     sizeUnits: 'pixels',
     fontFamily: '"Inter Variable", Inter, "Helvetica Neue", Arial, sans-serif',
     fontWeight: 500,
     characterSet: 'auto',
-    fontSettings: { sdf: true, fontSize: 48, buffer: 6 },
-    outlineWidth: 2,
+    fontSettings: { sdf: true, fontSize: 48, buffer: 10 },
+    outlineWidth: 6,
     outlineColor: rgba(MAP.surface, 1),
     getColor: rgba(MAP.ink, 1),
     getTextAnchor: 'start',
     getAlignmentBaseline: 'center',
-    getPixelOffset: [10, 0],
+    getPixelOffset: [14, 0],
     parameters: OVERLAY_PARAMS,
     beforeId: opts.beforeId,
   } as ConstructorParameters<typeof TextLayer<LabelDatum>>[0]);

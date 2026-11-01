@@ -1,3 +1,4 @@
-/* Self-hosted fonts (spec 9.1): Inter variable and Literata italic 400, both SIL OFL, bundled by Vite. */
+/* Self-hosted fonts: Inter variable and Literata (400 italic for quotes, 600 roman for display), SIL OFL, bundled by Vite. */
 @import '@fontsource-variable/inter/index.css';
 @import '@fontsource/literata/400-italic.css';
+@import '@fontsource/literata/600.css';

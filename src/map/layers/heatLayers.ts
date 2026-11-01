@@ -4,7 +4,7 @@ import type { Layer } from '@deck.gl/core';
 import { PathStyleExtension } from '@deck.gl/extensions';
 import { PathLayer } from '@deck.gl/layers';
 import type { ConnectionKind, HeatConnection } from '../../contract/data-contract';
-import { HEAT_RAMP, MAP, rgba } from '../../ui/mapTokens';
+import { ARC, HEAT_RAMP, MAP, rgba } from '../../ui/mapTokens';
 
 export const ROUTE_COLOR = HEAT_RAMP[4];
 
@@ -14,8 +14,9 @@ export const OVERLAY_PARAMS = { depthCompare: 'always', depthWriteEnabled: false
 export const interleave = (beforeId?: string) => ({ beforeId }) as Record<string, unknown>;
 const SAMPLES = 48;
 // existing: bold solid · proposed: long even dash · scenario: thin solid in the secondary colour
-const DASH: Record<ConnectionKind, [number, number]> = { operational: [0, 0], proposed: [9, 6], scenario: [0, 0] };
-const WIDTH: Record<ConnectionKind, number> = { operational: 3, proposed: 2.6, scenario: 1.6 };
+// every arc is a solid brick line of one width; the kind is told in words in the panels
+const DASH: Record<ConnectionKind, [number, number]> = { operational: [0, 0], proposed: [0, 0], scenario: [0, 0] };
+const WIDTH: Record<ConnectionKind, number> = { operational: ARC.width, proposed: ARC.width, scenario: ARC.width };
 
 export interface ArcDatum {
   connection: HeatConnection;
@@ -53,7 +54,7 @@ export function makeHeatLayers(
   },
 ): Layer[] {
   const data: ArcDatum[] = connections.map((c) => ({ connection: c, path: arcPath(c.source, c.target, 0, options.targetZ?.(c) ?? 0) }));
-  const width = (d: ArcDatum) => WIDTH[d.connection.kind] + (d.connection.id === options.selectedConnectionId ? 1 : 0);
+  const width = (d: ArcDatum) => WIDTH[d.connection.kind] + (d.connection.id === options.selectedConnectionId ? 1.25 : 0);
   const common = {
     data,
     visible: options.visible,
@@ -71,13 +72,13 @@ export function makeHeatLayers(
       ...common,
       id: 'ts-heat-casing',
       getColor: rgba(MAP.surface, 1),
-      getWidth: (d) => width(d) + 2.5,
+      getWidth: (d) => width(d) + 1.5,
       pickable: false,
     }),
     new PathLayer<ArcDatum, { getDashArray: (d: ArcDatum) => [number, number] }>({
       ...common,
       id: 'ts-heat-connections',
-      getColor: (d) => rgba(d.connection.kind === 'scenario' ? MAP.secondary : MAP.attention, 1),
+      getColor: rgba(MAP.attention, ARC.opacity),
       getWidth: width,
       getDashArray: (d) => DASH[d.connection.kind],
       extensions: [new PathStyleExtension({ dash: true })],

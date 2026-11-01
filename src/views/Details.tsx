@@ -1,14 +1,15 @@
-/** The details screen: one place, laid out to be read. Facilities show their promises in the documents' own words;
- *  recipients show why they fit, the 20-year cost comparison and the sources. */
-import { useEffect } from 'react';
+/** The details screen: one place as a page of the record. Kicker, title, a fact table, the evidence in the documents'
+ *  own words, the cost table, a figure, and the "prepared for" line. Missing values print "Unknown". */
+import { useEffect, type ReactNode } from 'react';
 import type { CostComparison, Facility, HeatConnection, Recipient, SourceRecord } from '../contract/data-contract';
 import { safeHttpsUrl } from '../data/urls';
 import { boilerYear } from '../engine/cost';
-import { date, money, num, pct } from '../engine/format';
+import { date, money, num } from '../engine/format';
 import { BAND_WORD, COPY, FACILITY_KIND_WORD, KIND_WORD, METHOD_SENTENCE, QUALITY_WORD, recipientQuestion, STATUS_LINE, STATUS_WORD, TYPE_WORD } from '../content/copy';
 import { href } from '../state/route';
-import { ChevronLeft, ChevronRight, External } from '../ui/icons';
+import { facilityState, FACILITY_STATE_WORD, pageRef, two, Val } from '../ui/ledger';
 import { recipientName } from '../ui/RecipientPanel';
+import { Schematic } from '../ui/Schematic';
 
 function useScrollTo(anchor: string | null, dep: unknown) {
   useEffect(() => {
@@ -17,138 +18,147 @@ function useScrollTo(anchor: string | null, dep: unknown) {
   }, [anchor, dep]);
 }
 
-function pageLabel(s: SourceRecord): string {
-  if (s.page === null) return '';
-  return /^PDF p\./.test(s.page) ? s.page : `page ${s.page}`;
+function Facts({ rows }: { rows: [string, ReactNode | null | undefined][] }) {
+  return (
+    <dl className="ts-facts-table">
+      {rows.map(([k, v]) => (
+        <div key={k}><dt className="ts-label">{k}</dt><dd><Val v={v} /></dd></div>
+      ))}
+    </dl>
+  );
+}
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="ts-doc-section">
+      <span className="ts-double-rule" aria-hidden="true" />
+      <h2 className="ts-label ts-doc-h2">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function Quote({ n, s, id, note }: { n: number; s: SourceRecord; id: string; note?: string | null }) {
+  const url = safeHttpsUrl(s.url);
+  return (
+    <li className="ts-doc-quote" id={`ev-${id}`}>
+      <span className="ts-doc-n">{two(n)}</span>
+      <div>
+        <blockquote className="ts-quote">“{s.excerpt}”</blockquote>
+        <p className="ts-quote-ref">
+          {url ? <a href={url} target="_blank" rel="noopener noreferrer">{pageRef(s)}</a> : pageRef(s)}
+        </p>
+        {note && <p className="ts-doc-fine">{note}</p>}
+      </div>
+    </li>
+  );
+}
+
+function Footer({ action }: { action?: ReactNode }) {
+  return (
+    <footer className="ts-doc-foot">
+      <span className="ts-double-rule" aria-hidden="true" />
+      <div className="ts-doc-foot-actions">
+        {action}
+        <button type="button" className="ts-link" onClick={() => window.print()}>Print</button>
+      </div>
+      <p className="ts-doc-fine">Prepared for Hamilton Community Enterprises. {COPY.disclaimer}</p>
+    </footer>
+  );
 }
 
 export function FacilityDetails({ facility, connections, anchor }: { facility: Facility; connections: HeatConnection[]; anchor: string | null }) {
   useScrollTo(anchor, facility.id);
   const sourced = facility.commitments.filter((c) => c.source);
   const open = facility.commitments.filter((c) => !c.source);
-  const counts = (['operational', 'proposed', 'scenario'] as const).map((k) => connections.filter((c) => c.kind === k).length);
-  const positionNote =
-    facility.positionQuality === 'illustrative' ? 'Position illustrative until traced from the study figure' : facility.positionQuality === 'approximate' ? 'Position approximate' : null;
+  const state = facilityState(facility, connections);
+  const served = connections.filter((c) => c.kind !== 'scenario');
+  const positionNote = facility.positionQuality === 'illustrative' ? 'Position illustrative' : facility.positionQuality === 'approximate' ? 'Position approximate' : null;
   return (
-    <main className="ts-detail">
-      <a className="ts-detail-back" href={href.facility(facility.id)}>
-        <ChevronLeft /> Back to the map
-      </a>
-      <header className="ts-detail-head">
-        <p className="ts-detail-kicker">{FACILITY_KIND_WORD[facility.kind]}</p>
+    <main className="ts-doc">
+      <nav className="ts-doc-crumbs" aria-label="Breadcrumb">
+        <a className="ts-link" href={href.facility(facility.id)}><span aria-hidden="true">←</span> Back to map</a>
+        <span className="ts-label">FACILITIES / {facility.name.toUpperCase()}</span>
+      </nav>
+      <header className="ts-doc-head">
+        <p className="ts-label">FACILITY · {FACILITY_KIND_WORD[facility.kind].toUpperCase()}{facility.synthetic ? ' · ILLUSTRATIVE' : ''}</p>
         <h1>{facility.name}</h1>
-        <p className="ts-detail-meta">
-          {facility.address ?? facility.locality}
-          {facility.operator ? ` · ${facility.operator}` : ''}
-          {positionNote ? ` · ${positionNote}` : ''}
+        <p className="ts-doc-meta">
+          {facility.address ?? facility.locality}{facility.operator ? ` · ${facility.operator}` : ''}{positionNote ? ` · ${positionNote}` : ''}
         </p>
       </header>
-      <dl className="ts-detail-glance">
-        <div><dt>Promises on record</dt><dd>{sourced.length}</dd></div>
-        <div><dt>Open questions</dt><dd>{open.length}</dd></div>
-        <div><dt>Existing connections</dt><dd>{counts[0]}</dd></div>
-        <div><dt>Proposed connections</dt><dd>{counts[1]}</dd></div>
-      </dl>
+      <span className="ts-double-rule" aria-hidden="true" />
+      <Facts rows={[
+        ['Kind', FACILITY_KIND_WORD[facility.kind]],
+        ['Status', FACILITY_STATE_WORD[state]],
+        ['Claimed capacity', null],
+        ['Claim status', sourced.length ? sourced.map((c) => STATUS_WORD[c.status]).filter((w, i, a) => a.indexOf(w) === i).join(', ') : null],
+        ['Operator', facility.operator],
+        ['Buildings served', served.length || null],
+      ]} />
 
-      <section className="ts-detail-section">
-        <h2><span>01</span>What was promised</h2>
-        {sourced.length === 0 && <p className="ts-detail-empty">No promise on record yet. {COPY.notNonCompliance}</p>}
-        {sourced.map((c) => {
-          const s = c.source!;
-          const url = safeHttpsUrl(s.url);
-          return (
-            <article className="ts-promise" key={c.id} id={`ev-${c.id}`}>
-              <div className="ts-promise-side">
-                <span className="ts-status-word">{STATUS_WORD[c.status]}</span>
-                <span className="ts-promise-topic">{c.title}</span>
-              </div>
-              <div className="ts-promise-body">
-                <blockquote className="ts-promise-quote">“{s.excerpt}”</blockquote>
-                <p className="ts-promise-source">
-                  {url ? (
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      {s.shortTitle} <External />
-                    </a>
-                  ) : (
-                    s.shortTitle
-                  )}
-                  {pageLabel(s) && <> · {pageLabel(s)}</>} · {s.documentDate ? `published ${date(s.documentDate)}` : 'publication date not in source data'} · retrieved {date(s.retrievedAt)}
-                </p>
-                <p className="ts-promise-note">
-                  {c.interpretation ?? STATUS_LINE[c.status]}{' '}
-                  {s.humanCheck ? `Checked against the original by ${s.humanCheck.checkedBy} on ${date(s.humanCheck.checkedOn)}.` : 'Not yet checked against the original by a person.'}
-                </p>
-              </div>
-            </article>
-          );
-        })}
-      </section>
-
-      {open.length > 0 && (
-        <section className="ts-detail-section">
-          <h2><span>02</span>Still open</h2>
-          <ul className="ts-open-list">
-            {open.map((c) => (
-              <li key={c.id} id={`ev-${c.id}`}>
-                <span className="ts-status-word">Unknown</span>
-                <span>
-                  <strong>{c.title}.</strong> {c.summary} {c.question && <em className="ts-open-q">{c.question}</em>}
-                </span>
-              </li>
+      <Section title="The evidence">
+        {sourced.length === 0 ? (
+          <p className="ts-doc-empty">No promise on record. {COPY.notNonCompliance}</p>
+        ) : (
+          <ol className="ts-doc-list">
+            {sourced.map((c, i) => (
+              <Quote key={c.id} n={i + 1} s={c.source!} id={c.id}
+                note={`${STATUS_WORD[c.status]}. ${c.interpretation ?? STATUS_LINE[c.status]} Retrieved ${date(c.source!.retrievedAt)}.`} />
             ))}
-          </ul>
-          <p className="ts-detail-fine">{COPY.notNonCompliance}</p>
-        </section>
-      )}
+          </ol>
+        )}
+        {open.length > 0 && (
+          <>
+            <h3 className="ts-label ts-doc-h3">Still open</h3>
+            <ul className="ts-doc-rows">
+              {open.map((c) => (
+                <li key={c.id} id={`ev-${c.id}`}>
+                  <span className="ts-unknown">Unknown</span>
+                  <span><strong>{c.title}.</strong> {c.summary} {c.question && <em>{c.question}</em>}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="ts-doc-fine">{COPY.notNonCompliance}</p>
+          </>
+        )}
+      </Section>
 
-      {connections.length > 0 && (
-        <section className="ts-detail-section">
-          <h2><span>{open.length > 0 ? '03' : '02'}</span>Connections</h2>
-          <ul className="ts-conn-rows">
-            {connections.map((c) => (
+      <Section title="Buildings served">
+        {connections.length === 0 ? (
+          <p className="ts-doc-empty">Unknown</p>
+        ) : (
+          <ol className="ts-doc-rows ts-doc-rows--num">
+            {connections.map((c, i) => (
               <li key={c.id}>
+                <span className="ts-doc-n">{two(i + 1)}</span>
                 <span>{c.recipientName}</span>
-                <span className="ts-conn-kind" data-kind={c.kind}>{KIND_WORD[c.kind]}{c.phase ? `, ${c.phase}` : ''}</span>
-                <a href={c.recipientId ? href.placeRecipient(c.recipientId) : href.connection(c.id)}>
-                  {c.recipientId ? 'Details' : 'On the map'} <ChevronRight />
+                <span className="ts-doc-kind">{KIND_WORD[c.kind]}{c.phase ? `, ${c.phase}` : ''}</span>
+                <a className="ts-link" href={c.recipientId ? href.placeRecipient(c.recipientId) : href.connection(c.id)}>
+                  {c.recipientId ? 'Details' : 'On the map'} <span aria-hidden="true">→</span>
                 </a>
               </li>
             ))}
-          </ul>
-          <p className="ts-detail-fine">Lines on the map join two places. They are not pipe routes.</p>
-        </section>
-      )}
+          </ol>
+        )}
+      </Section>
+
+      <Section title="See on map">
+        <figure className="ts-frame ts-doc-fig">
+          <a href={href.facility(facility.id)} aria-label="Open this facility on the map">
+            <Schematic fig={{ facilities: [facility.position], buildings: connections.map((c) => c.target), arcs: connections.map((c) => [c.source, c.target]) }} />
+          </a>
+          <figcaption>Fig. 1. {facility.name} (brick) and the buildings it is linked to (ink). {COPY.legendNote}</figcaption>
+        </figure>
+      </Section>
+
+      <Footer />
     </main>
   );
 }
 
-function CostBars({ c }: { c: CostComparison }) {
-  const rows = [
-    { key: 'gas', label: 'Keep gas', o: c.gas, note: 'boiler replacement included' },
-    { key: 'hce', label: 'Connect to HCE', o: c.hce, note: 'assumed rate: gas parity' },
-    { key: 'heatpump', label: 'Own heat pump', o: c.heatpump, note: 'equipment and grid upgrade' },
-  ];
-  const max = Math.max(...rows.map((r) => r.o.pv20));
-  return (
-    <div className="ts-bars" role="table" aria-label="20-year cost of each option">
-      {rows.map((r) => (
-        <div className="ts-bar-row" role="row" key={r.key} data-option={r.key}>
-          <span className="ts-bar-label" role="rowheader">
-            {r.label}
-            <small>{r.note}</small>
-          </span>
-          <span className="ts-bar-track" role="cell" aria-label={money(r.o.pv20)}>
-            <span className="ts-bar-fill" style={{ width: `${(r.o.pv20 / max) * 100}%` }} />
-          </span>
-          <span className="ts-bar-value" role="cell">{money(r.o.pv20)}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export function RecipientDetails({
-  recipient: r, comparison: c, sources, carbon, onCarbon, factorLabel,
+  recipient: r, comparison: c, sources, carbon, onCarbon, factorLabel, connections = [], facilities = [],
 }: {
   recipient: Recipient;
   comparison: CostComparison;
@@ -156,91 +166,108 @@ export function RecipientDetails({
   carbon: number;
   onCarbon: (t: number) => void;
   factorLabel: string;
+  connections?: HeatConnection[];
+  facilities?: Facility[];
 }) {
   useScrollTo(null, r.id);
   const v = c.verdict;
   const by = boilerYear(r.boilerYearsLeft);
   const srcById = new Map(sources.map((s) => [s.id, s]));
+  const links = connections.filter((x) => x.recipientId === r.id);
+  const nearFac = links.length ? facilities.find((f) => f.id === links[0].facilityId) ?? null : null;
+  const evidence = (nearFac?.commitments ?? []).filter((x) => x.source).slice(0, 2);
+  const opts = [
+    { key: 'gas', label: 'Gas', o: c.gas },
+    { key: 'heatpump', label: 'Heat pump', o: c.heatpump },
+    { key: 'hce', label: 'District heat', o: c.hce },
+  ];
+  const lowest = opts.reduce((a, b) => (b.o.pv20 < a.o.pv20 ? b : a)).key;
   return (
-    <main className="ts-detail">
-      <a className="ts-detail-back" href={href.recipient(r.id)}>
-        <ChevronLeft /> Back to the map
-      </a>
-      <header className="ts-detail-head">
-        <p className="ts-detail-kicker">{r.rank ? `Recipient ${r.rank} of 20` : 'Candidate building'}{r.synthetic ? ' · Illustrative' : ''}</p>
+    <main className="ts-doc">
+      <nav className="ts-doc-crumbs" aria-label="Breadcrumb">
+        <a className="ts-link" href={href.recipient(r.id)}><span aria-hidden="true">←</span> Back to map</a>
+        <span className="ts-label">BUILDINGS / {r.rank ? `RANK ${r.rank}` : 'NOT RANKED'}</span>
+      </nav>
+      <header className="ts-doc-head">
+        <p className="ts-label">BUILDING · {TYPE_WORD[r.type].toUpperCase()}{r.synthetic ? ' · ILLUSTRATIVE' : ''}</p>
         <h1>{recipientName(r)}</h1>
-        <p className="ts-detail-meta">
-          {TYPE_WORD[r.type]}
-          {r.address ? ` · ${r.address}` : ''} · {QUALITY_WORD[r.estimate.quality]}
-        </p>
-        <div className="ts-detail-actions">
-          <a className="ts-primary" href={href.brief(r.id)}>Get the recipient brief <ChevronRight /></a>
-        </div>
+        <p className="ts-doc-meta"><Val v={r.address} /></p>
       </header>
-      <dl className="ts-detail-glance">
-        <div><dt>Fit</dt><dd>{BAND_WORD[r.fit.band]}<small>score {r.fit.score} of 100</small></dd></div>
-        <div><dt>Heat a year</dt><dd>{num(r.estimate.annualHeatMwh, 2)} MWh<small>{QUALITY_WORD[r.estimate.quality].toLowerCase()}</small></dd></div>
-        <div><dt>Cost vs gas, 20 years</dt><dd>{pct(v.deltaPct)}<small>{v.band === 'about_the_same' ? 'about the same' : v.band === 'costs_more' ? 'costs more' : 'cheaper'}</small></dd></div>
-        <div><dt>CO2 vs gas</dt><dd>{pct(-v.co2CutPct)}<small>about {num(c.gas.co2T - c.hce.co2T, 2)} t less a year</small></dd></div>
-      </dl>
+      <span className="ts-double-rule" aria-hidden="true" />
+      <Facts rows={[
+        ['Kind', TYPE_WORD[r.type]],
+        ['Status', r.rank ? `Ranked ${r.rank} of 20 · ${QUALITY_WORD[r.estimate.quality]}` : `Candidate, not ranked · ${QUALITY_WORD[r.estimate.quality]}`],
+        ['Fit', `${BAND_WORD[r.fit.band]} (score ${r.fit.score} of 100)`],
+        ['Annual heat demand', Number.isFinite(r.estimate.annualHeatMwh) ? `${num(r.estimate.annualHeatMwh, 2)} MWh a year` : null],
+        ['Nearest facility', nearFac?.name],
+        ['Year built', r.yearBuilt],
+      ]} />
 
-      <section className="ts-detail-section">
-        <h2><span>01</span>Why it fits</h2>
-        <ul className="ts-reason-list">
-          {r.fit.reasons.map((x) => <li key={x}>{x}</li>)}
-        </ul>
-        {r.fit.missing.length > 0 && <p className="ts-detail-fine">Not in source data: {r.fit.missing.join(', ')}.</p>}
-        <p className="ts-detail-q">{recipientQuestion(r)}</p>
-      </section>
+      <Section title="Why it fits">
+        <ol className="ts-doc-rows ts-doc-rows--num">
+          {r.fit.reasons.map((x, i) => <li key={x}><span className="ts-doc-n">{two(i + 1)}</span><span>{x}</span></li>)}
+        </ol>
+        {r.fit.missing.length > 0 && <p className="ts-doc-fine">Unknown: {r.fit.missing.join(', ')}.</p>}
+        <p className="ts-doc-q">{recipientQuestion(r)}</p>
+      </Section>
 
-      <section className="ts-detail-section">
-        <h2><span>02</span>Cost over 20 years</h2>
-        <p className="ts-detail-lead">{v.sentence}</p>
-        <fieldset className="ts-segment" aria-label="Carbon price">
-          <legend className="ts-visually-hidden">Carbon price</legend>
+      <Section title="The evidence">
+        {evidence.length === 0 ? (
+          <p className="ts-doc-empty">Unknown. No quoted claim links this building to a facility.</p>
+        ) : (
+          <ol className="ts-doc-list">
+            {evidence.map((x, i) => <Quote key={x.id} n={i + 1} s={x.source!} id={x.id} note={`${STATUS_WORD[x.status]}, from ${nearFac!.name}.`} />)}
+          </ol>
+        )}
+      </Section>
+
+      <Section title="What it would cost">
+        <p className="ts-doc-lead">{v.sentence}</p>
+        <div className="ts-tabs ts-doc-carbon" role="radiogroup" aria-label="Carbon price">
           {[{ t: 0, label: 'No carbon price' }, { t: 85, label: '$85 per tonne' }].map((o) => (
-            <label key={o.t}>
-              <input type="radio" name="ts-detail-carbon" checked={carbon === o.t} onChange={() => onCarbon(o.t)} />
+            <button key={o.t} type="button" role="radio" aria-checked={carbon === o.t} className="ts-tab" onClick={() => onCarbon(o.t)}>
               {o.label}
-            </label>
+            </button>
           ))}
-        </fieldset>
-        <CostBars c={c} />
-        <table className="ts-table ts-detail-table">
-          <thead>
-            <tr><th data-type="text">Option</th><th>Each year</th><th>Upfront</th><th>Per MWh</th><th>t CO2 a year</th><th>Added grid kW</th></tr>
-          </thead>
-          <tbody>
-            {([['Keep gas', c.gas], ['Own heat pump', c.heatpump], ['Connect to HCE', c.hce]] as const).map(([label, o]) => (
-              <tr key={label}>
-                <td data-type="text">{label}</td>
-                <td>{money(o.annual)}</td><td>{money(o.upfront)}</td><td>${num(o.levelized)}</td><td>{num(o.co2T)}</td><td>{num(o.gridKw)}</td>
+        </div>
+        <div className="ts-doc-table-wrap">
+          <table className="ts-cost">
+            <thead>
+              <tr>
+                <th scope="col"><span className="ts-visually-hidden">Measure</span></th>
+                {opts.map((o) => (
+                  <th scope="col" key={o.key} className={o.key === lowest ? 'is-lowest' : undefined}>
+                    {o.label}{o.key === lowest && <small>Lowest</small>}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {v.heatPumpCaveat && <p className="ts-detail-fine">{v.heatPumpCaveat}</p>}
-        <p className="ts-detail-fine">
-          Boiler replacement in year {by.year}{by.assumed ? ' (assumed)' : ''}. Emission factors: {factorLabel}, {c.factorYear}. HCE’s assumed rate is gas
-          parity, about ${num(c.hceRate)}/MWh. <a href={href.method('costs')}>How this is calculated</a>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Capital</th>{opts.map((o) => <td key={o.key}>{money(o.o.upfront)}</td>)}</tr>
+              <tr><th scope="row">Annual</th>{opts.map((o) => <td key={o.key}>{money(o.o.annual)}</td>)}</tr>
+              <tr><th scope="row">20-year</th>{opts.map((o) => <td key={o.key}>{money(o.o.pv20)}</td>)}</tr>
+            </tbody>
+          </table>
+        </div>
+        {v.heatPumpCaveat && <p className="ts-doc-fine">{v.heatPumpCaveat}</p>}
+        <p className="ts-doc-fine">
+          District heat assumes HCE’s rate at gas parity, about ${num(c.hceRate)}/MWh. Boiler replacement in year {by.year}{by.assumed ? ' (assumed)' : ''}.
+          Emission factors: {factorLabel}, {c.factorYear}. {QUALITY_WORD[r.estimate.quality]}. {METHOD_SENTENCE[r.estimate.method]}{' '}
+          Sources: {r.sourceIds.map((id) => srcById.get(id)?.shortTitle ?? id).join(' · ')}. Estimates, not a quote.{' '}
+          <a className="ts-link" href={href.method('costs')}>How this is calculated <span aria-hidden="true">→</span></a>
         </p>
-      </section>
+      </Section>
 
-      <section className="ts-detail-section">
-        <h2><span>03</span>Heat demand and sources</h2>
-        <dl className="ts-detail-facts">
-          <div><dt>Annual heat</dt><dd>{num(r.estimate.annualHeatMwh)} MWh</dd></div>
-          <div><dt>Building peak</dt><dd>{num(r.estimate.peakHeatKw)} kW</dd></div>
-          <div><dt>Network peak</dt><dd>{num(r.estimate.networkKw)} kW</dd></div>
-          <div><dt>Floor area</dt><dd>{num(r.floorAreaM2)} m²</dd></div>
-          <div><dt>Year built</dt><dd>{r.yearBuilt ?? 'Not in source data'}</dd></div>
-          <div><dt>Distance</dt><dd>{r.distances.minM === null ? 'Not computed' : `${num(r.distances.minM, 2)} m`}</dd></div>
-        </dl>
-        <p className="ts-detail-fine">{QUALITY_WORD[r.estimate.quality]}. {METHOD_SENTENCE[r.estimate.method]}</p>
-        <p className="ts-detail-fine">
-          Sources: {r.sourceIds.map((id) => srcById.get(id)?.shortTitle ?? id).join(' · ')}. Estimates, not a quote. Carbon price: {carbon ? `$${carbon} per tonne (scenario)` : 'none'}.
-        </p>
-      </section>
+      <Section title="See on map">
+        <figure className="ts-frame ts-doc-fig">
+          <a href={href.recipient(r.id)} aria-label="Open this building on the map">
+            <Schematic fig={{ facilities: nearFac ? [nearFac.position] : [], buildings: [r.position], arcs: links.map((x) => [x.source, x.target]) }} />
+          </a>
+          <figcaption>Fig. 1. {recipientName(r)} (ink){nearFac ? ` and ${nearFac.name} (brick)` : ''}. {COPY.legendNote}</figcaption>
+        </figure>
+      </Section>
+
+      <Footer action={<a className="ts-primary" href={href.brief(r.id)}>Add to brief</a>} />
     </main>
   );
 }

@@ -65,7 +65,7 @@ export function recipientData(features: Feature<Poly, Recipient>[], enclose = fa
 }
 
 /** Recipients: the roof colour, slightly warmer. */
-const RECIPIENT_FILL = '#e8e4dc';
+const RECIPIENT_FILL = darken(MAP.roof, 0.1);
 
 function heatClass(mwh: number, breaks: readonly number[]): number {
   let i = 0;

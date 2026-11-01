@@ -23,7 +23,7 @@ const browser = await puppeteer.launch({
 });
 const page = await browser.newPage();
 await page.goto(BASE + '?video=1', { waitUntil: 'networkidle0' });
-await page.waitForSelector('.ts-home-primary:not([disabled])');
+await page.waitForSelector('.ts-home-actions .ts-primary:not([disabled])');
 await sleep(800);
 
 const scenes = [];
@@ -38,7 +38,7 @@ await sleep(2800);
 
 // 2 · the map, with heat demand colours and the network
 mark('map');
-await page.click('.ts-home-primary');
+await page.click('.ts-home-actions .ts-primary');
 await sleep(1400);
 await page.evaluate(() => {
   const m = window.__thermostat?.map;
@@ -71,12 +71,12 @@ mark('cost');
 await page.click('#ts-open-details');
 await sleep(900);
 await page.evaluate(() => {
-  const h = [...document.querySelectorAll('.ts-detail-section h2')].find((x) => x.textContent?.includes('Cost over 20 years'));
+  const h = [...document.querySelectorAll('.ts-doc-h2')].find((x) => x.textContent?.includes('What it would cost'));
   if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
 });
 await sleep(1600);
 await page.evaluate(() => {
-  const inputs = document.querySelectorAll('input[name="ts-detail-carbon"]');
+  const inputs = document.querySelectorAll('.ts-doc-carbon button');
   inputs[1]?.click();
 });
 await sleep(2400);

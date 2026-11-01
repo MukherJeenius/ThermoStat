@@ -282,7 +282,9 @@ export function App() {
   let card: React.ReactNode = null;
   if (data && engine) {
     if (selectedRecipient) {
-      card = <RecipientPreview key={selectedRecipient.id} recipient={selectedRecipient} comparison={engine.compareFor(selectedRecipient)} onHeading={setHeading} />;
+      const near = connections.find((c) => c.recipientId === selectedRecipient.id);
+      const nearest = near ? facilities.find((f) => f.id === near.facilityId)?.name ?? null : null;
+      card = <RecipientPreview key={selectedRecipient.id} recipient={selectedRecipient} comparison={engine.compareFor(selectedRecipient)} nearest={nearest} onHeading={setHeading} />;
     } else if (cardFacility) {
       card = (
         <FacilityPreview
@@ -299,6 +301,7 @@ export function App() {
     <Rail
       facilities={facilities}
       recipients={recipients}
+      connections={connections}
       tab={tab}
       onTab={setTab}
       layers={layers}
@@ -370,6 +373,8 @@ export function App() {
             carbon={effCarbon}
             onCarbon={setCarbon}
             factorLabel={engine.factor.isFallback ? 'Fallback emission factors' : engine.factor.label}
+            connections={connections}
+            facilities={facilities}
           />
         ) : (
           <main className="ts-detail"><p>{COPY.unknownRoute}</p><a href={href.explore()}>Back to the map</a></main>
@@ -510,9 +515,15 @@ export function App() {
             ready={!!data}
             facts={data ? {
               facilities: facilities.length,
-              recipients: recipients.length,
+              recipients: recipients.filter((r) => r.rank).length,
               excerpts: facilities.reduce((n, f) => n + f.commitments.filter((c) => c.source).length, 0),
             } : null}
+            figure={data ? {
+              facilities: facilities.map((f) => f.position),
+              buildings: recipients.filter((r) => r.rank).map((r) => r.position),
+              arcs: connections.map((c) => [c.source, c.target]),
+            } : null}
+            briefHref={(() => { const top = recipients.find((r) => r.rank === 1); return top ? href.brief(top.id) : null; })()}
             onDemo={() => setVideoOpen(true)}
             onExplore={() => closeIntro(() => { setDemo(null); go(href.explore()); })}
           />

@@ -1,24 +1,25 @@
 /** Map colours for deck.gl and MapLibre, equal to the custom properties in tokens.css (mapTokens.test.ts checks).
  *  src/map/ takes every colour from here and contains no colour literals (spec 9.1). */
 export const MAP = {
-  ground: '#f3f2ee',
-  water: '#dde3df',
-  road: '#fbfaf6',
-  roof: '#e7e5df',
-  attention: '#c45f1c',
-  secondary: '#857a8c',
-  surface: '#fdfcf9',
-  ink: '#292925',
-  muted: '#716e67',
-  line: '#d9d7d1',
-  park: '#e9ebe3',
+  ground: '#f4efe6',
+  water: '#d9ded8',
+  road: '#ffffff',
+  roof: '#e8e1d4',
+  attention: '#b8441a',
+  secondary: '#4a4640',
+  surface: '#fbf8f2',
+  ink: '#1f1d1a',
+  muted: '#6b655c',
+  line: '#d8d0c2',
+  park: '#e6e6da',
 } as const;
 
-export const HEAT_RAMP = ['#f3cf9c', '#eea25c', '#de7233', '#bb4b1f', '#8e2d13'] as const;
+export const HEAT_RAMP = ['#f1d9b5', '#e3a673', '#cf7442', '#b8441a', '#7e2a10'] as const;
 
-/** The custom property each value mirrors. `park` has no token (spec 3.5 gives #e9ebe3 directly). */
+/** The custom property each value mirrors. */
 export const MAP_TOKEN_NAMES: Partial<Record<keyof typeof MAP, string>> = {
   ground: '--ts-map-ground',
+  park: '--ts-map-park',
   water: '--ts-map-water',
   road: '--ts-map-road',
   roof: '--ts-map-roof',
@@ -29,6 +30,9 @@ export const MAP_TOKEN_NAMES: Partial<Record<keyof typeof MAP, string>> = {
   muted: '--ts-muted',
   line: '--ts-line',
 };
+
+/** Arcs: solid brick, 1.25 px, 0.85 opacity, never animated. */
+export const ARC = { width: 1.25, opacity: 0.85 } as const;
 
 export type RGBA = [number, number, number, number];
 

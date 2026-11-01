@@ -7,7 +7,7 @@
     { "fg": "--ts-muted", "bg": "--ts-bg", "kind": "text", "where": "selected rail row sub-line, header subline, footer" },
     { "fg": "--ts-accent-text", "bg": "--ts-surface", "kind": "text", "where": "source links in panels" },
     { "fg": "--ts-accent-text", "bg": "--ts-bg", "kind": "text", "where": "links on pages" },
-    { "fg": "#fffdf6", "bg": "--ts-ink", "kind": "text", "where": "primary button label" },
+    { "fg": "--ts-surface", "bg": "--ts-ink", "kind": "text", "where": "primary button label" },
     { "fg": "--ts-ink", "bg": "#ffffff", "kind": "text", "where": "brief ink on paper" },
     { "fg": "--ts-muted", "bg": "#ffffff", "kind": "text", "where": "brief muted on paper" },
     { "fg": "--ts-accent-text", "bg": "#ffffff", "kind": "text", "where": "brief accents" },
@@ -21,7 +21,6 @@
     { "fg": "--ts-muted", "bg": "--ts-surface", "kind": "non-text", "where": "switch off knob" }
   ],
   "info": [
-    { "fg": "--ts-arc-source", "bg": "--ts-map-ground", "kind": "non-text", "where": "handoff arc token (not used on the map)" },
-    { "fg": "--ts-arc-target", "bg": "--ts-map-ground", "kind": "non-text", "where": "handoff arc token (not used on the map)" }
+    { "fg": "--ts-arc-source", "bg": "--ts-map-ground", "kind": "non-text", "where": "handoff arc token (not used on the map)" }
   ]
 }
