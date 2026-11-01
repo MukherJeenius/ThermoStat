@@ -31,9 +31,9 @@ export function groundDistanceM(a: readonly number[], b: readonly number[]): num
   return Math.hypot(dx, dy);
 }
 
-/** 48 points with height h × 4t(1 − t), h = clamp(0.2 × ground distance, 120 m, 800 m), between z0 and z1. */
+/** 48 points with height h × 4t(1 − t), h = clamp(0.25 × ground distance, 40 m, 700 m), between z0 and z1. */
 export function arcPath(src: readonly number[], dst: readonly number[], z0 = 0, z1 = 0): [number, number, number][] {
-  const h = Math.max(120, Math.min(800, 0.2 * groundDistanceM(src, dst)));   // tuned from 0.45 · [150, 1500] (decisions.md)
+  const h = Math.max(40, Math.min(700, 0.25 * groundDistanceM(src, dst)));   // tuned from 0.45 · [150, 1500] (decisions.md)
   const out: [number, number, number][] = [];
   for (let i = 0; i < SAMPLES; i++) {
     const t = i / (SAMPLES - 1);

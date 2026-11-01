@@ -173,18 +173,17 @@ export function MapView(props: MapViewProps) {
 
   const labels = useMemo<LabelDatum[]>(() => {
     const out: LabelDatum[] = [];
-    if (layers.facilities) {
-      for (const f of facilities) {
-        const selected = selection?.kind === 'facility' && selection.id === f.id;
-        out.push({ id: f.id, text: f.mapLabel, position: [f.position[0], f.position[1], 0], priority: selected ? 3 : 2 });
-      }
+    // only the selected place is labelled; the rail names the rest, so nothing overlaps
+    if (layers.facilities && selection?.kind !== 'recipient') {
+      const f = facilities.find((x) => x.id === props.focusFacilityId);
+      if (f) out.push({ id: f.id, text: f.mapLabel, position: [f.position[0], f.position[1], 0], priority: 3 });
     }
     if (selection?.kind === 'recipient') {
       const r = recById.get(selection.id);
       if (r) out.push({ id: r.id, text: r.name ?? 'Unnamed building', position: [r.position[0], r.position[1], (r.heightM ?? DEFAULT_HEIGHT_M) + 2], priority: 3 });
     }
     return out;
-  }, [layers.facilities, facilities, selection, recById]);
+  }, [layers.facilities, facilities, selection, recById, props.focusFacilityId]);
 
   // push layers to the overlay
   useEffect(() => {

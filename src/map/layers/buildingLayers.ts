@@ -65,7 +65,7 @@ export function recipientData(features: Feature<Poly, Recipient>[], enclose = fa
 }
 
 /** Recipients: the roof colour, slightly warmer. */
-const RECIPIENT_FILL = '#e9e2d6';
+const RECIPIENT_FILL = '#e8e4dc';
 
 function heatClass(mwh: number, breaks: readonly number[]): number {
   let i = 0;
@@ -84,9 +84,10 @@ export function buildingLayers(opts: {
   beforeId?: string;
 }) {
   const sel = opts.selectedId;
+  // only the ranked recipients carry the heat colours, so the twenty places to approach stand out
   const fill = (d: PolyDatum) => {
     let hex = RECIPIENT_FILL;
-    if (opts.heatOn && opts.rampBreaks && d.recipient) hex = HEAT_RAMP[heatClass(d.recipient.estimate.annualHeatMwh, opts.rampBreaks)];
+    if (opts.heatOn && opts.rampBreaks && d.recipient?.rank) hex = HEAT_RAMP[heatClass(d.recipient.estimate.annualHeatMwh, opts.rampBreaks)];
     if (d.id === sel) hex = darken(hex, 0.12);
     return rgba(hex, 1);
   };

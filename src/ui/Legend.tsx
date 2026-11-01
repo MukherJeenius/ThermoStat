@@ -76,7 +76,7 @@ export function Legend({ heatOn, breaks, basemapFailed, caption, illustrative, l
       </ul>
       {heatOn && breaks && (
         <div className="ts-ramp">
-          <p className="ts-legend-title">Heat demand, MWh a year</p>
+          <p className="ts-legend-title">Top 20 buildings to approach, heat a year (MWh)</p>
           <div className="ts-ramp-strip" aria-hidden="true">
             {HEAT_RAMP.map((c) => <span key={c} style={{ background: c }} />)}
           </div>
