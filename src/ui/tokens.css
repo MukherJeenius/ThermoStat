@@ -7,8 +7,8 @@
 
 /* ---- 1. handoff ---- */
 :root {
-  --ts-bg: #f1ece1; --ts-surface: #fbf9f4; --ts-ink: #17212c;
-  --ts-muted: #4f5d6b; --ts-line: #d3d6d4; --ts-accent: #1c5e7e;
+  --ts-bg: #f6f1e6; --ts-surface: #fffcf5; --ts-ink: #14213a;
+  --ts-muted: #4e5a6b; --ts-line: #e2dacb; --ts-accent: #d9641e;
   --ts-arc-source: #b8441a;
   --ts-radius: 4px; --ts-space: 8px;
   --ts-sans: 'Inter Variable', 'Inter', 'Helvetica Neue', Arial, sans-serif;
@@ -43,13 +43,16 @@
 
 /* ---- 2. token additions ---- */
 :root {
-  --ts-accent-text: #1c5e7e;
-  --ts-map-ground: #f1ece1; --ts-map-water: #c6dae6; --ts-map-road: #ffffff; --ts-map-roof: #e3e1da; --ts-map-park: #e6e6da;
-  --ts-map-attention: #b8441a; --ts-map-secondary: #17212c;
+  --ts-accent-text: #a9440f;
+  --ts-map-ground: #f3eee3; --ts-map-water: #c6dae6; --ts-map-road: #ffffff; --ts-map-roof: #e3e1da; --ts-map-park: #e6e6da;
+  --ts-map-attention: #b8441a; --ts-map-secondary: #14213a;
   --ts-heat-1: #f1d9b5; --ts-heat-2: #e3a673; --ts-heat-3: #cf7442; --ts-heat-4: #b8441a; --ts-heat-5: #7e2a10;
-  --ts-line-strong: #6f7d8a;  /* 3.46:1 on bg, 3.78:1 on surface: control boundaries only (WCAG 1.4.11) */
+  --ts-line-strong: #7a808b;  /* 3.46:1 on bg, 3.78:1 on surface: control boundaries only (WCAG 1.4.11) */
   --ts-rail-w: 272px; --ts-card-w: 404px; --ts-gutter: 32px; --ts-header-h: 56px; --ts-footer-h: 32px;
-  --ts-dur: 200ms; --ts-dur-fast: 120ms; --ts-ease: cubic-bezier(.2, 0, 0, 1);
+  --ts-dur: 200ms; --ts-dur-fast: 120ms; --ts-ease: cubic-bezier(.16, 1, .3, 1);  /* the keynote deck's curve */
+  /* navy bands (header, page titles, the homepage figures): cream text, a lighter muted and a lighter orange */
+  --ts-night: #14213a; --ts-on-night: #f6f1e6; --ts-on-night-muted: #b9c1cd; --ts-accent-on-night: #f39a5f;
+  --ts-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
 }
 .ts-primary, .ts-secondary { min-height: 44px; display: inline-flex; align-items: center; }
 .ts-secondary { padding: 0 4px; }

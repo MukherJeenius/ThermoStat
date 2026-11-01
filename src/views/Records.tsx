@@ -79,7 +79,7 @@ export function Records({ data, engine, anchor = null }: { data: AppData; engine
   const connections = data.connections.filter((c) => !c.synthetic);
   return (
     <main className="ts-page">
-      <div>
+      <div data-crumb="RECORDS">
         <h2 className="ts-page-title">A quieter way to investigate.</h2>
         <p className="ts-page-lede">Every record on the map, as a readable list.</p>
       </div>

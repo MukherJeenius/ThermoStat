@@ -37,7 +37,7 @@ function CostChart({ c }: { c: CostComparison }) {
         return (
           <g key={r.key} transform={`translate(0 ${i * 30})`}>
             <text x="0" y="10" className="ts-chart-label">{r.label}</text>
-            <rect x={labelW} y="14" width={w} height="12" fill={r.key === 'hce' ? '#1c5e7e' : '#a7b8c6'} />
+            <rect x={labelW} y="14" width={w} height="12" fill={r.key === 'hce' ? '#d9641e' : '#b9c1cd'} />
             <text x={labelW + w + 6} y="24" className="ts-chart-value">{money(r.v)}</text>
           </g>
         );

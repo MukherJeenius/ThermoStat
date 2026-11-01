@@ -649,3 +649,155 @@ dialog.ts-drawer,.ts-drawer{border-radius:0;box-shadow:none;border-right:1px sol
 @media (max-width:420px){.ts-wordmark,.ts-wordmark-text{letter-spacing:.1em!important;font-size:12px!important}.ts-nav{gap:0}.ts-nav a{padding-inline:5px!important}.ts-header{gap:2px}}
 @media (max-width:359.98px){.ts-search-toggle{display:none!important}.ts-header{padding-right:8px!important}}
 .ts-brief-mast-r{display:inline-flex;align-items:center;gap:10pt}.ts-brief-mast-r .ts-brief-logo{margin:0;width:64px;height:22px;font-size:7pt}
+
+/* =====================================================================================================
+   Studio (1 November 2026): cream, navy and orange, after the four references in docs/decisions.md.
+   A navy header and navy title bands (Tapasya, the keynote), count chips (Tapasya), monospace readouts and spec
+   cards (racing portfolio), eyebrow + serif section heads, line icons and the hover lift (diner), and one easing curve.
+   Last on purpose: it wins over the passes above.
+   ===================================================================================================== */
+:root{--ts-r:10px;--ts-r-pill:999px}
+::selection{background:var(--ts-accent);color:var(--ts-night)}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible,.ts-panel :focus-visible,.ts-home :focus-visible{outline:2px solid var(--ts-accent);outline-offset:3px}
+
+/* readouts: small monospace caps for labels, figures' captions and coordinates */
+.ts-label,.ts-kicker,.ts-kv dt,.ts-cost thead th,.ts-cost tbody th,.ts-legend-title,.ts-doc-n,.ts-place .ts-number,.ts-caption-step,.ts-detail-glance dt,.ts-glance dt,.ts-facts-table dt,figcaption,.ts-readout{font-family:var(--ts-mono)!important;font-weight:500!important;letter-spacing:.08em!important}
+.ts-label,.ts-kicker,.ts-kv dt,.ts-facts-table dt,.ts-legend-title{font-size:11px!important;text-transform:uppercase}
+figcaption{font-size:11px!important;letter-spacing:.02em!important;text-transform:none}
+.ts-readout{font-size:12px;color:var(--ts-muted);letter-spacing:.04em!important}
+
+/* header: navy band, cream wordmark, orange current bar (the keynote's night slides) */
+.ts-header{background:var(--ts-night);border-bottom:0;color:var(--ts-on-night)}
+.ts-wordmark,.ts-wordmark-text{color:var(--ts-on-night)!important}
+.ts-wordmark-lockup .ts-logo-mark{display:block;color:var(--ts-on-night)}
+.ts-subline{color:var(--ts-on-night-muted);font-family:var(--ts-mono);font-size:11px;letter-spacing:.04em}
+.ts-nav a{display:inline-flex;align-items:center;gap:8px;color:var(--ts-on-night-muted);text-decoration:none;transition:color var(--ts-dur) var(--ts-ease)}
+.ts-nav a:hover{color:var(--ts-on-night)}
+.ts-nav a[aria-current=page]{color:var(--ts-on-night);box-shadow:inset 0 -3px 0 var(--ts-accent)}
+.ts-nav .ts-icon{opacity:.85}
+.ts-search{height:36px;border-radius:var(--ts-r-pill);border:1px solid rgb(246 241 230 / .28);background:rgb(246 241 230 / .08);color:var(--ts-on-night-muted)}
+.ts-search input{color:var(--ts-on-night)}
+.ts-search input::placeholder{color:var(--ts-on-night-muted)}
+.ts-search:focus-within{background:var(--ts-surface);color:var(--ts-muted);border-color:var(--ts-surface)}
+.ts-search:focus-within input{color:var(--ts-ink)}
+.ts-search .ts-pop{color:var(--ts-ink)}
+.ts-icon-btn.ts-search-toggle{color:var(--ts-on-night);background:none;border:0}
+.ts-header .ts-header-key{color:var(--ts-on-night)}
+.ts-footer{background:var(--ts-bg);font-family:var(--ts-mono);font-size:11px;letter-spacing:.02em}
+
+/* buttons: navy pill, orange on hover; text links in orange with an arrow that nudges */
+.ts-primary,.ts-actions a.ts-primary,.ts-detail-actions .ts-primary,.ts-caption-actions .ts-primary,.ts-home-actions .ts-primary{height:44px;min-height:44px;padding:0 22px;border-radius:var(--ts-r-pill);background:var(--ts-night);color:var(--ts-on-night);font:600 14px/1 var(--ts-sans);transition:background-color var(--ts-dur) var(--ts-ease),color var(--ts-dur) var(--ts-ease),transform var(--ts-dur) var(--ts-ease)}
+.ts-primary:hover:not(:disabled){background:var(--ts-accent);color:var(--ts-night)}
+.ts-primary:active:not(:disabled){transform:translateY(1px)}
+.ts-primary .ts-icon{transition:transform var(--ts-dur) var(--ts-ease)}
+.ts-primary:hover .ts-icon,.ts-link:hover .ts-icon{transform:translateX(3px)}
+.ts-link,.ts-card-cite{color:var(--ts-accent-text);text-decoration:none;font-weight:600;background-image:linear-gradient(currentColor,currentColor);background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;padding-bottom:1px;transition:background-size var(--ts-dur) var(--ts-ease)}
+.ts-link:hover,.ts-card-cite:hover{background-size:0 1px}
+.ts-link--muted,.ts-card-cite{color:var(--ts-muted)}
+.ts-btn-outline{border-radius:var(--ts-r-pill);border-color:var(--ts-ink);display:inline-flex;align-items:center;gap:8px;transition:background-color var(--ts-dur) var(--ts-ease),color var(--ts-dur) var(--ts-ease)}
+.ts-btn-outline:hover{background:var(--ts-ink);color:var(--ts-on-night)}
+.ts-btn-outline[aria-pressed="true"]{background:var(--ts-accent);border-color:var(--ts-accent);color:var(--ts-night)}
+
+/* chips with counts (Tapasya's filters): the rail tabs and the carbon toggle */
+.ts-panel--rail .ts-tabs,.ts-doc-carbon.ts-tabs{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:16px 24px 12px}
+.ts-doc-carbon.ts-tabs{padding:0 0 16px}
+.ts-panel--rail .ts-tab,.ts-doc-carbon .ts-tab{min-height:36px;padding:0 14px;border:1px solid var(--ts-ink);border-radius:var(--ts-r-pill);background:var(--ts-surface);color:var(--ts-ink);font:600 13px/1 var(--ts-sans);letter-spacing:0;text-transform:none;box-shadow:none!important;transition:background-color var(--ts-dur) var(--ts-ease),color var(--ts-dur) var(--ts-ease)}
+.ts-panel--rail .ts-tab:hover,.ts-doc-carbon .ts-tab:hover{background:var(--ts-bg)}
+.ts-panel--rail .ts-tab[aria-selected=true],.ts-doc-carbon .ts-tab[aria-checked=true]{background:var(--ts-ink);color:var(--ts-on-night)}
+.ts-panel--rail .ts-tab-count{margin-left:6px;font:500 11px/1 var(--ts-mono);opacity:.8}
+.ts-panel--rail{background:var(--ts-surface)}
+
+/* rail rows: orange bar on the current row, mono numbers */
+.ts-place{transition:background-color var(--ts-dur) var(--ts-ease)}
+.ts-place[aria-current=true]{border-left-color:var(--ts-accent)}
+.ts-place .ts-number{font-size:11px!important;color:var(--ts-muted)}
+
+/* panels and cards: 10 px corners, hairline frame, a small lift on hover where a card is a link */
+.ts-panel{border-radius:var(--ts-r)}
+@media (min-width:640px) and (min-height:560px){.ts-panel.ts-panel--card{border-radius:var(--ts-r);border-color:var(--ts-line-strong);box-shadow:0 18px 40px -24px rgb(20 33 58 / .35)}}
+.ts-panel h2,.ts-panel--card h2,.ts-preview h2{letter-spacing:-.015em}
+.ts-kv{border-top:1px solid var(--ts-ink)}
+.ts-card-kicker{display:flex;align-items:center;gap:8px}
+.ts-card-kicker::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--ts-accent);flex:none}
+.ts-controls{border-radius:var(--ts-r);overflow:hidden;border-color:var(--ts-line-strong);background:var(--ts-surface)}
+.ts-frame.ts-legend{border-radius:var(--ts-r)}
+.ts-pill{border-radius:var(--ts-r-pill)}
+
+/* navy title bands on pages (Tapasya's coloured band, full bleed, no markup change) */
+.ts-doc-crumbs,.ts-doc-head,.ts-page>div:first-child{position:relative;background:var(--ts-night);color:var(--ts-on-night);box-shadow:0 0 0 100vmax var(--ts-night);clip-path:inset(0 -100vmax)}
+.ts-doc{padding-top:0}
+.ts-doc-crumbs{margin:0;padding:20px 0 8px}
+.ts-doc-crumbs .ts-link{color:var(--ts-on-night);background-image:none}
+.ts-doc-crumbs .ts-link:hover{color:var(--ts-accent-on-night)}
+.ts-doc-crumbs .ts-label{color:var(--ts-on-night-muted)}
+.ts-doc-head{padding:16px 0 40px;margin-bottom:0}
+.ts-doc-head .ts-label{color:var(--ts-accent-on-night)}
+.ts-doc-head h1{color:var(--ts-on-night)}
+.ts-doc-head .ts-doc-meta{color:var(--ts-on-night-muted);margin-bottom:0}
+.ts-doc-head .ts-val-unknown,.ts-doc-head em{color:var(--ts-on-night-muted)}
+.ts-doc-head+.ts-double-rule{display:none}
+.ts-page{padding-top:0}
+.ts-page>div:first-child{padding:48px 0 44px}
+.ts-page>div:first-child .ts-page-title{color:var(--ts-on-night);font-family:var(--ts-serif);font-weight:600;letter-spacing:-.015em}
+.ts-page>div:first-child .ts-page-lede{color:var(--ts-on-night-muted)}
+.ts-page>div:first-child::before{content:'THERMOSTAT / ' attr(data-crumb);display:block;margin-bottom:14px;font:500 11px/1 var(--ts-mono);letter-spacing:.08em;color:var(--ts-accent-on-night)}
+
+/* section heads: eyebrow + rule, as in the diner and the deck */
+.ts-doc-section>.ts-double-rule,.ts-home-section>.ts-double-rule{height:0;border:0;border-top:1px solid var(--ts-ink);background:none}
+.ts-doc-h2{display:flex;align-items:center;gap:10px;color:var(--ts-accent-text)!important}
+.ts-doc-h2::before{content:'';width:18px;height:2px;background:var(--ts-accent)}
+.ts-facts-table{border-top:1px solid var(--ts-ink)}
+.ts-panel--flow{border-radius:var(--ts-r);border-color:var(--ts-line)}
+.ts-panel--flow h3{font-family:var(--ts-serif);font-weight:600;letter-spacing:-.01em}
+.ts-row summary{transition:color var(--ts-dur) var(--ts-ease)}
+.ts-row summary:hover{color:var(--ts-accent-text)}
+.ts-table thead th{font:500 11px/1.4 var(--ts-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ts-muted)}
+
+/* cost bars and the brief keep heat warm; district heat in orange */
+.ts-bar-row[data-option=hce] .ts-bar-fill{background:var(--ts-accent)}
+
+/* homepage: cream hero with a readout line, a navy figures band, step cards with icons */
+.ts-home{background:var(--ts-bg)}
+.ts-home-mast{border-bottom-color:var(--ts-ink)}
+.ts-home-brand{display:inline-flex;align-items:center;gap:10px}
+.ts-home-edition{font:500 11px/1.4 var(--ts-mono);letter-spacing:.04em}
+.ts-home-lead .ts-label{display:inline-flex;align-items:center;gap:10px;color:var(--ts-accent-text)}
+.ts-home-lead .ts-label::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--ts-accent)}
+.ts-home-title{font-size:60px;line-height:1.02;letter-spacing:-.025em}
+.ts-home-title em{font-style:normal;color:var(--ts-accent-text)}
+.ts-home-fig{border-radius:var(--ts-r);background:var(--ts-surface);border:1px solid var(--ts-line-strong);padding:12px 12px 10px}
+.ts-home-fig figcaption{margin-top:8px;color:var(--ts-muted)}
+.ts-home-band{background:var(--ts-night);color:var(--ts-on-night);box-shadow:0 0 0 100vmax var(--ts-night);clip-path:inset(0 -100vmax);padding:40px 0 44px!important;margin-bottom:56px}
+.ts-home-band>.ts-double-rule{display:none}
+.ts-home-band dt{color:var(--ts-on-night-muted)!important}
+.ts-home-band dd{color:var(--ts-on-night);font-size:56px!important;line-height:1!important}
+.ts-home-band .ts-home-figures>div{gap:10px;padding-left:20px;border-left:2px solid var(--ts-accent)}
+.ts-home-how{gap:20px}
+.ts-home-how li{display:block;padding:24px;border:1px solid var(--ts-line);border-radius:var(--ts-r);background:var(--ts-surface);transition:transform .4s var(--ts-ease),box-shadow .4s var(--ts-ease),border-color .4s var(--ts-ease)}
+.ts-home-how li:hover{transform:translateY(-3px);border-color:var(--ts-line-strong);box-shadow:0 18px 40px -26px rgb(20 33 58 / .45)}
+.ts-home-step-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;color:var(--ts-accent-text)}
+.ts-home-step-top .ts-home-n{font:500 12px/1 var(--ts-mono)!important;letter-spacing:.08em;color:var(--ts-muted)}
+.ts-home-how h3{font:600 22px/1.2 var(--ts-serif)!important;margin:0 0 10px!important}
+.ts-home-colophon{font-family:var(--ts-mono);font-size:11px;letter-spacing:.02em}
+
+/* scroll reveals (Tapasya, the diner): opacity plus a 24 px rise, once; none under reduced motion */
+.ts-js [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .6s var(--ts-ease),transform .7s var(--ts-ease)}
+.ts-js [data-reveal].is-in{opacity:1;transform:none}
+.ts-js [data-reveal-d="1"]{transition-delay:.08s}.ts-js [data-reveal-d="2"]{transition-delay:.16s}.ts-js [data-reveal-d="3"]{transition-delay:.24s}
+@media (prefers-reduced-motion:reduce){.ts-js [data-reveal]{opacity:1;transform:none;transition:none}}
+@media print{.ts-js [data-reveal]{opacity:1;transform:none}}
+
+/* sheet and drawer pick up the corners */
+@media (max-width:639.98px),(max-height:559.98px){
+  .ts-card-slot{border-radius:20px 20px 0 0;box-shadow:0 -12px 30px -18px rgb(20 33 58 / .35)}
+  .ts-header{gap:4px}
+  .ts-nav .ts-icon{display:none}
+  .ts-subline{display:none}
+}
+@media (max-width:900px){.ts-home-title{font-size:48px}}
+@media (max-width:640px){.ts-home-title{font-size:38px}.ts-home-band dd{font-size:44px!important}.ts-page>div:first-child{padding:32px 0 28px}}
+.ts-doc-fig svg{max-height:300px;background:var(--ts-bg)}
+.ts-page{grid-template-columns:minmax(0,1fr)}
+.ts-page>*{min-width:0}
+@media (max-width:480px){.ts-home-edition{display:none}}
+@media (max-width:480px){.ts-page .ts-facts{grid-template-columns:1fr;gap:0}.ts-page .ts-facts dt{margin-top:10px;color:var(--ts-ink);font-weight:600}.ts-page .ts-facts dd{color:var(--ts-muted)}}

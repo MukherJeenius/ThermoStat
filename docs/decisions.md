@@ -192,3 +192,60 @@ per screen; a less "vibecoded" look. These changes override the handoff's look w
   instead of popping.
 - **Camera fits** no longer store padding on the map (MapLibre 5 subtracts stored padding as well as the padding passed
   to `cameraForBounds`, which made fits fail and fall back to a wide view).
+
+## Redesign from four references (owner, 1 November 2026)
+
+The owner asked for icons, style, colours, motion, themes and the organisation of information to come from four sites,
+in off-white cream, dark navy and an orange accent. We read each site's HTML, CSS and JS. We took patterns and
+mechanics only: no logos, images, copy or code blocks.
+
+- **Tapasya Studio (shop page):**
+  - a solid colour band behind the page title, with a breadcrumb above it
+  - filters as pill chips with counts (`All 31`), where the active chip is filled with ink
+  - a fully rounded search field and a plain sort select
+  - scroll reveals through a `data-reveal` attribute: opacity plus a 26 px rise over .7 s on `cubic-bezier(.2,.7,.2,1)`,
+    switched off under reduced motion
+  - focus rings drawn in ink
+
+  In ThermoStat this becomes the navy title band on the details, Records and Method pages, the rail tabs drawn as
+  count chips, and the reveal on the homepage and pages.
+- **Racing portfolio:**
+  - an instrument-panel register: small monospace readouts (coordinates and "2026 season" lines) above large sans
+    statements
+  - spec cards with a hairline top row ("label · value") and a 1 px strong border
+  - a status dot next to a word
+  - orange text links ending in "↗"
+  - a faint grid behind the hero
+
+  In ThermoStat this becomes monospace readouts (coordinates, record dates, "Fig." captions), spec-card fact grids, the
+  status dot beside facility states, and orange "→" links. It is a dark-and-light portfolio template that isn't ours,
+  so only its mechanics are used.
+- **West End Diner:**
+  - a serif display face for section heads, each with a small caps eyebrow
+  - alternating cream and dark bands to separate sections
+  - a sticky header that gains a hairline once you scroll
+  - 24 px line icons (stroke 1.6, `currentColor`)
+  - card hover lift (`transform` plus shadow over .4 s on `cubic-bezier(.22,1,.36,1)`)
+  - IntersectionObserver reveals that add `is-in`
+
+  In ThermoStat this becomes eyebrow-plus-serif section heads, a navy band on the homepage, the header hairline, line
+  icons and the hover lift on cards and list rows.
+- **ThermoStat keynote (`pitch/`):**
+  - Inter and Literata, both already vendored
+  - amber `#d16b24` as the single accent
+  - dark "night" slides with cream text
+  - tight-tracked sans display headings
+  - the easing `cubic-bezier(.16,1,.3,1)`
+
+  We adopt its easing as the app's one motion curve and keep its amber family for the accent, so the deck and the app
+  read as one product.
+
+**Palette:** cream `#F6F1E6` ground and `#FFFCF5` surfaces, dark navy `#14213A` ink and bands, muted `#4E5A6B`, and
+orange `#D9641E` as the accent fill. Orange text uses `#A9440F`, which reaches 4.5:1 on cream. Heat on the map stays
+warm (the same ramp), the water stays pale blue, and `npm run contrast` judges every pair.
+
+**Icons:** one set, Lucide (ISC), vendored as inline SVG in `src/ui/icons.tsx`, with its licence in
+`src/ui/icons.LICENSE`. No icon images are taken from the references.
+
+**Motion:** one easing curve (`--ts-ease: cubic-bezier(.16,1,.3,1)`): 200 ms for state changes, 600 ms for reveals.
+Everything stops under `prefers-reduced-motion`. The map camera keeps its own timing.

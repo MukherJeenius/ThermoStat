@@ -1,26 +1,157 @@
 {
-  "note": "Every foreground/background pair the UI declares. fg/bg are token names (--ts-*) or hex literals. kind: text (4.5:1), large-text or non-text (3:1). The map-arc, ramp and accent-text rules in spec 9.16 are built into contrast.mjs.",
-  "pairs": [
-    { "fg": "--ts-ink", "bg": "--ts-surface", "kind": "text", "where": "panel text" },
-    { "fg": "--ts-ink", "bg": "--ts-bg", "kind": "text", "where": "header, pages, selected row" },
-    { "fg": "--ts-muted", "bg": "--ts-surface", "kind": "text", "where": "meta, kickers, labels in panels" },
-    { "fg": "--ts-muted", "bg": "--ts-bg", "kind": "text", "where": "selected rail row sub-line, header subline, footer" },
-    { "fg": "--ts-accent-text", "bg": "--ts-surface", "kind": "text", "where": "source links in panels" },
-    { "fg": "--ts-accent-text", "bg": "--ts-bg", "kind": "text", "where": "links on pages" },
-    { "fg": "--ts-surface", "bg": "--ts-ink", "kind": "text", "where": "primary button label" },
-    { "fg": "--ts-ink", "bg": "#ffffff", "kind": "text", "where": "brief ink on paper" },
-    { "fg": "--ts-muted", "bg": "#ffffff", "kind": "text", "where": "brief muted on paper" },
-    { "fg": "--ts-accent-text", "bg": "#ffffff", "kind": "text", "where": "brief accents" },
-    { "fg": "--ts-ink", "bg": "--ts-map-ground", "kind": "text", "where": "map label core (always with a surface halo)" },
-    { "fg": "--ts-line-strong", "bg": "--ts-bg", "kind": "non-text", "where": "selected-row ring, control boundaries on bg" },
-    { "fg": "--ts-line-strong", "bg": "--ts-surface", "kind": "non-text", "where": "inputs, switch track, segment, search pill" },
-    { "fg": "--ts-ink", "bg": "--ts-surface", "kind": "non-text", "where": "switch on-track, segment checked ring" },
-    { "fg": "--ts-accent", "bg": "--ts-surface", "kind": "non-text", "where": "focus ring and kicker dot in panels" },
-    { "fg": "--ts-accent", "bg": "--ts-bg", "kind": "non-text", "where": "focus ring and header dot on bg" },
-    { "fg": "--ts-ink", "bg": "#bfc2bb", "kind": "non-text", "where": "map focus ring on a shaded wall" },
-    { "fg": "--ts-muted", "bg": "--ts-surface", "kind": "non-text", "where": "switch off knob" }
-  ],
-  "info": [
-    { "fg": "--ts-arc-source", "bg": "--ts-map-ground", "kind": "non-text", "where": "handoff arc token (not used on the map)" }
-  ]
+ "note": "Every foreground/background pair the UI declares. fg/bg are token names (--ts-*) or hex literals. kind: text (4.5:1), large-text or non-text (3:1). The map-arc, ramp and accent-text rules in spec 9.16 are built into contrast.mjs.",
+ "pairs": [
+  {
+   "fg": "--ts-ink",
+   "bg": "--ts-surface",
+   "kind": "text",
+   "where": "panel text"
+  },
+  {
+   "fg": "--ts-ink",
+   "bg": "--ts-bg",
+   "kind": "text",
+   "where": "header, pages, selected row"
+  },
+  {
+   "fg": "--ts-muted",
+   "bg": "--ts-surface",
+   "kind": "text",
+   "where": "meta, kickers, labels in panels"
+  },
+  {
+   "fg": "--ts-muted",
+   "bg": "--ts-bg",
+   "kind": "text",
+   "where": "selected rail row sub-line, header subline, footer"
+  },
+  {
+   "fg": "--ts-accent-text",
+   "bg": "--ts-surface",
+   "kind": "text",
+   "where": "source links in panels"
+  },
+  {
+   "fg": "--ts-accent-text",
+   "bg": "--ts-bg",
+   "kind": "text",
+   "where": "links on pages"
+  },
+  {
+   "fg": "--ts-surface",
+   "bg": "--ts-ink",
+   "kind": "text",
+   "where": "primary button label"
+  },
+  {
+   "fg": "--ts-ink",
+   "bg": "#ffffff",
+   "kind": "text",
+   "where": "brief ink on paper"
+  },
+  {
+   "fg": "--ts-muted",
+   "bg": "#ffffff",
+   "kind": "text",
+   "where": "brief muted on paper"
+  },
+  {
+   "fg": "--ts-accent-text",
+   "bg": "#ffffff",
+   "kind": "text",
+   "where": "brief accents"
+  },
+  {
+   "fg": "--ts-ink",
+   "bg": "--ts-map-ground",
+   "kind": "text",
+   "where": "map label core (always with a surface halo)"
+  },
+  {
+   "fg": "--ts-line-strong",
+   "bg": "--ts-bg",
+   "kind": "non-text",
+   "where": "selected-row ring, control boundaries on bg"
+  },
+  {
+   "fg": "--ts-line-strong",
+   "bg": "--ts-surface",
+   "kind": "non-text",
+   "where": "inputs, switch track, segment, search pill"
+  },
+  {
+   "fg": "--ts-ink",
+   "bg": "--ts-surface",
+   "kind": "non-text",
+   "where": "switch on-track, segment checked ring"
+  },
+  {
+   "fg": "--ts-accent",
+   "bg": "--ts-surface",
+   "kind": "non-text",
+   "where": "focus ring and kicker dot in panels"
+  },
+  {
+   "fg": "--ts-accent",
+   "bg": "--ts-bg",
+   "kind": "non-text",
+   "where": "focus ring and header dot on bg"
+  },
+  {
+   "fg": "--ts-ink",
+   "bg": "#bfc2bb",
+   "kind": "non-text",
+   "where": "map focus ring on a shaded wall"
+  },
+  {
+   "fg": "--ts-muted",
+   "bg": "--ts-surface",
+   "kind": "non-text",
+   "where": "switch off knob"
+  },
+  {
+   "fg": "--ts-on-night",
+   "bg": "--ts-night",
+   "kind": "text",
+   "where": "header, page title bands, homepage figures band"
+  },
+  {
+   "fg": "--ts-on-night-muted",
+   "bg": "--ts-night",
+   "kind": "text",
+   "where": "breadcrumbs and meta on navy bands"
+  },
+  {
+   "fg": "--ts-accent-on-night",
+   "bg": "--ts-night",
+   "kind": "text",
+   "where": "orange labels and links on navy"
+  },
+  {
+   "fg": "--ts-night",
+   "bg": "--ts-accent",
+   "kind": "large-text",
+   "where": "orange button hover label (bold)"
+  },
+  {
+   "fg": "--ts-accent",
+   "bg": "--ts-bg",
+   "kind": "non-text",
+   "where": "orange current-tab bar, status dots, focus ring on cream"
+  },
+  {
+   "fg": "--ts-accent",
+   "bg": "--ts-surface",
+   "kind": "non-text",
+   "where": "orange marks and focus ring on panels"
+  }
+ ],
+ "info": [
+  {
+   "fg": "--ts-arc-source",
+   "bg": "--ts-map-ground",
+   "kind": "non-text",
+   "where": "handoff arc token (not used on the map)"
+  }
+ ]
 }

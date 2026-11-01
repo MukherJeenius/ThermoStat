@@ -24,7 +24,7 @@ export function Method({ data, engine, anchor }: { data: AppData | null; engine:
   const meta = data?.meta;
   return (
     <main className="ts-page">
-      <div>
+      <div data-crumb="METHOD">
         <h2 className="ts-page-title">How ThermoStat knows what it shows.</h2>
         <p className="ts-page-lede">Every figure has a source, a date and a quality word. Unknowns stay unknown.</p>
       </div>

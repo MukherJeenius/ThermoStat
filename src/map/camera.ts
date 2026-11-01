@@ -19,13 +19,15 @@ export function cameraPadding(container: HTMLElement): PaddingOptions {
   const card = document.querySelector('.ts-stage .ts-panel--card')?.getBoundingClientRect();
   const legend = document.querySelector('.ts-stage .ts-legend')?.getBoundingClientRect();
   const caption = document.querySelector('.ts-stage .ts-caption')?.getBoundingClientRect();
-  const sheet = document.querySelector('.ts-sheet')?.getBoundingClientRect();
+  const slot = document.querySelector('.ts-card-slot');
+  const sheet = slot && getComputedStyle(slot).position === 'fixed' ? slot.getBoundingClientRect() : null;
   if (sheet && sheet.height > 0) {
     pad.bottom = Math.max(24, stage.bottom - sheet.top + 12);
+    pad.right = Math.min(200, stage.width * 0.5); // room for the label to the right of the selection
     return pad;
   }
   if (rail && rail.width > 0) pad.left = rail.right - stage.left + 24;
-  if (card && card.width > 0) pad.right = stage.right - card.left + 24;
+  if (card && card.width > 0) pad.right = stage.right - card.left + 24 + 210; // room for the selected place's label, drawn to its right
   if (legend && legend.height > 0) pad.bottom = stage.bottom - legend.top + 24;
   if (caption && caption.height > 0) pad.bottom = Math.max(pad.bottom ?? 24, stage.bottom - caption.top + 16);
   // keep at least 120 px of free map between the panels

@@ -11,7 +11,7 @@ import { date } from './engine/format';
 import { together } from './engine/totals';
 import { MapView } from './map/MapView';
 import { href, parseRoute, type Route } from './state/route';
-import { Close, Minus, Plus, Reset, Search as SearchIcon } from './ui/icons';
+import { BookOpen, Close, ListChecks, MapIcon, Minus, Plus, Reset, Search as SearchIcon } from './ui/icons';
 import { Intro } from './ui/Intro';
 import { Legend } from './ui/Legend';
 import { Wordmark } from './ui/Logo';
@@ -359,9 +359,9 @@ export function App() {
           <p className="ts-subline"><span className="ts-subline-dot" aria-hidden="true" />{COPY.subline}</p>
         </div>
         <nav className="ts-nav" aria-label="Main">
-          <a href={href.explore()} aria-current={view === 'explore' ? 'page' : undefined}>Explore</a>
-          <a href={href.records()} aria-current={view === 'records' ? 'page' : undefined}>Records</a>
-          <a href={href.method()} aria-current={view === 'method' ? 'page' : undefined}>Method</a>
+          <a href={href.explore()} aria-current={view === 'explore' ? 'page' : undefined}><MapIcon /> Explore</a>
+          <a href={href.records()} aria-current={view === 'records' ? 'page' : undefined}><ListChecks /> Records</a>
+          <a href={href.method()} aria-current={view === 'method' ? 'page' : undefined}><BookOpen /> Method</a>
         </nav>
         {data && (
           <Search

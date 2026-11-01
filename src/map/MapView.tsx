@@ -258,14 +258,15 @@ export function MapView(props: MapViewProps) {
       const f = facById.get(fid);
       if (!f) return;
       const own = connections.filter((c) => c.facilityId === fid);
-      if (fid === data.meta?.defaultFacilityId && !animate) {
+      if (fid === data.meta?.defaultFacilityId) {
         // opening view: the plant's proposed targets and the ranked recipients, not the plant itself
         const pts = [
           ...own.filter((c) => c.kind === 'proposed').map((c) => c.target),
           ...data.recipients.features.filter((x) => x.properties.rank && x.properties.rank <= 5).map((x) => x.properties.position),
         ];
         if (pts.length >= 2) {
-          fitPoints(map, pts, f.position, 15.2, padding, false, 14.4);
+          const mid = [pts.reduce((a, q) => a + q[0], 0) / pts.length, pts.reduce((a, q) => a + q[1], 0) / pts.length];
+          fitPoints(map, pts, mid, 15.2, padding, animate, 13.6);
           return;
         }
       }
