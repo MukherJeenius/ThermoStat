@@ -77,8 +77,9 @@ export function MapView(props: MapViewProps) {
     map.keyboard.enable();
     map.getCanvas().setAttribute('aria-label', 'Map of Hamilton facilities, connections and candidate buildings');
     map.on('error', (e) => {
-      const msg = String((e as unknown as { error?: Error }).error?.message ?? '');
-      if (msg.includes('pmtiles') || msg.includes('tiles')) props.onBasemapError?.();
+      const ev = e as unknown as { error?: Error; sourceId?: string };
+      const msg = String(ev.error?.message ?? '');
+      if (ev.sourceId === 'protomaps' || /pmtiles|tiles|magic number|404/i.test(msg)) props.onBasemapError?.();
     });
     const overlay = new MapboxOverlay({ interleaved: true, layers: [], effects: [lighting()], pickingRadius: 6 });
     map.addControl(overlay);
@@ -300,5 +301,5 @@ export function MapView(props: MapViewProps) {
     map.easeTo({ zoom: map.getZoom() + props.zoomDelta.d, duration: reducedMotion() ? 0 : 300 });
   }, [props.zoomDelta, ready]);
 
-  return <div ref={ref} className="ts-map" />;
+  return <div ref={ref} className={`ts-map${ready ? ' is-ready' : ''}`} />;
 }

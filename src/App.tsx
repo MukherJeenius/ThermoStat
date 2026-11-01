@@ -59,6 +59,21 @@ export interface Engine {
 }
 
 // ?testhooks&notesdelay=ms slows note writes so scripts/notes-shots.mjs can capture the "Saving…" state
+/** WebGL2 probe (spec 13): without it the map can't draw, and Records carries every record. */
+function hasWebGL2(): boolean {
+  try {
+    return !!document.createElement('canvas').getContext('webgl2');
+  } catch {
+    return false;
+  }
+}
+const WEBGL = hasWebGL2();
+const FILE_WORD: Record<string, string> = {
+  'facilities.json': 'facilities', 'connections.json': 'connections', 'sources.json': 'sources', 'recipients.geojson': 'recipients',
+  'context-buildings.geojson': 'context buildings', 'network.geojson': 'the network', 'places.json': 'places',
+  'prices.json': 'prices', 'factors.json': 'emission factors', 'meta.json': 'the record dates',
+};
+
 const notesParams = new URLSearchParams(window.location.search);
 const notesStore = new LocalNotesStore(undefined, notesParams.has('testhooks') ? Number(notesParams.get('notesdelay')) || 0 : 0);
 
@@ -78,10 +93,10 @@ export function App() {
   const [keyOpen, setKeyOpen] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
   const [progress, setProgress] = useState({ done: 0, total: 10 });
-  // the opening screen shows on a fresh visit; deep links and ?demo=1 go straight in
+  // the opening screen shows on a fresh visit; deep links, #demo and ?demo=1 go straight in
   const [intro, setIntro] = useState<'shown' | 'leaving' | 'gone'>(() => {
     const h = window.location.hash;
-    const direct = new URLSearchParams(window.location.search).get('demo') === '1' || (h !== '' && h !== '#/explore' && h !== '#demo');
+    const direct = new URLSearchParams(window.location.search).get('demo') === '1' || (h !== '' && h !== '#/explore');
     return direct ? 'gone' : 'shown';
   });
   const closeIntro = (then?: () => void) => {
@@ -90,7 +105,7 @@ export function App() {
     window.setTimeout(() => setIntro('gone'), 450);
   };
   const [demo, setDemo] = useState<number | null>(() =>
-    new URLSearchParams(window.location.search).get('demo') === '1' ? 1 : null,
+    new URLSearchParams(window.location.search).get('demo') === '1' || window.location.hash === '#demo' ? 1 : null,
   );
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const setHeading = useCallback((el: HTMLHeadingElement | null) => {
@@ -177,7 +192,10 @@ export function App() {
   // #demo starts the demo at any time, not only on page load
   useEffect(() => {
     const on = () => {
-      if (window.location.hash === '#demo') setDemo(1);
+      if (window.location.hash === '#demo') {
+        setDemo(1);
+        setIntro('gone');
+      }
     };
     window.addEventListener('hashchange', on);
     return () => window.removeEventListener('hashchange', on);
@@ -387,7 +405,13 @@ export function App() {
         );
       })()}
       <main className="ts-stage" hidden={view !== 'explore'} aria-label="Explore">
-        {data && (
+        {data && !WEBGL && (
+          <div className="ts-nogl" role="note">
+            <img src={baseUrl() + 'fallback/map.png'} alt="" />
+            <p>This device can&apos;t draw the 3D map. Every record is in <a className="ts-link" href={href.records()}>Records</a>.</p>
+          </div>
+        )}
+        {data && WEBGL && (
           <MapView
             data={data}
             facilities={facilities}
@@ -426,7 +450,7 @@ export function App() {
         {unknownId && <p className="ts-notice ts-stage-notice" role="status">{COPY.unknownRoute}</p>}
         {data?.failed.length ? (
           <p className="ts-notice ts-stage-notice" role="alert">
-            Couldn’t load {data.failed.join(', ')}. The map still works.{' '}
+            Couldn’t load {data.failed.map((f) => FILE_WORD[f] ?? f).join(', ')}. The map still works.{' '}
             <button type="button" className="ts-secondary" onClick={reload}>Retry</button>
           </p>
         ) : null}

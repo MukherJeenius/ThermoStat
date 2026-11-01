@@ -18,7 +18,9 @@
     "check:print": "node scripts/print-check.mjs",
     "shots": "node scripts/shots.mjs",
     "check:offline": "node scripts/offline-check.mjs",
-    "check": "npm run typecheck && npm run lint && npm test && npm run contrast"
+    "check": "npm run typecheck && npm run lint && npm test && npm run contrast",
+    "shots:notes": "node scripts/notes-shots.mjs",
+    "shots:states": "node scripts/states-shots.mjs"
   },
   "dependencies": {
     "@deck.gl/core": "9.4.0",

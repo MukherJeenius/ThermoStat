@@ -134,15 +134,21 @@ button{font:inherit}
   .ts-legend-slot{display:none}
   .ts-footer{display:none}
   .ts-app{grid-template-rows:var(--ts-header-h) 1fr}
-  .ts-card-slot{position:fixed;z-index:4;inset:auto 0 0 0;top:auto;right:0;max-height:62dvh;height:calc(min(160px,40dvh) + env(safe-area-inset-bottom));overflow:hidden;background:var(--ts-surface);border:1px solid var(--ts-line);border-bottom:0;border-radius:24px 24px 0 0;box-shadow:var(--ts-shadow);padding:0 22px max(22px,env(safe-area-inset-bottom))}
+  .ts-card-slot{position:fixed;z-index:4;inset:auto 0 0 0;top:auto;right:0;max-height:62dvh;height:calc(var(--ts-peek) + env(safe-area-inset-bottom));overflow:hidden;background:var(--ts-surface);border:1px solid var(--ts-line);border-bottom:0;border-radius:24px 24px 0 0;box-shadow:var(--ts-shadow);padding:0 22px max(22px,env(safe-area-inset-bottom))}
   .ts-card-slot.is-expanded{height:62dvh;overflow-y:auto}
   .ts-sheet-head{display:grid;position:sticky;top:0;z-index:1;grid-template-columns:auto 1fr auto;align-items:center;min-height:44px;background:var(--ts-surface)}
   .ts-card-slot .ts-panel{width:auto;max-height:none;overflow:visible;padding:0;border:0;border-radius:0;box-shadow:none;background:none;animation:none}
   .ts-card-slot .ts-panel--card>.ts-panel-body{padding:0;overflow:visible}
   .ts-card-slot.is-expanded .ts-panel--card>.ts-actions{position:sticky;bottom:0;padding:14px 0 18px}
   .ts-card-slot:not(.is-expanded) h2:not(.ts-kicker){font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .ts-controls{bottom:calc(min(160px,40dvh) + 12px);right:12px}
-  .maplibregl-ctrl-bottom-right{bottom:calc(min(160px,40dvh) + 70px)!important}
+  /* peek: kicker, name and the primary action only, so the action is visible without scrolling at 640 × 360 */
+  :root{--ts-peek:min(184px,52dvh)}
+  .ts-card-slot:not(.is-expanded) .ts-panel-body>:not(.ts-card-kicker):not(h2){display:none}
+  .ts-card-slot:not(.is-expanded) .ts-panel--card>.ts-actions{border-top:0;margin:0;padding:10px 0 0}
+  .ts-card-slot:not(.is-expanded) .ts-card-kicker{margin-bottom:6px}
+  .ts-card-slot:not(.is-expanded) h2:not(.ts-kicker){font-size:20px!important;margin:0}
+  .ts-controls{bottom:calc(var(--ts-peek) + 12px);right:12px}
+  .maplibregl-ctrl-bottom-right{bottom:calc(var(--ts-peek) + 70px)!important}
 }
 
 /* brief (spec 11) */
@@ -630,3 +636,16 @@ dialog.ts-drawer,.ts-drawer{border-radius:0;box-shadow:none;border-right:1px sol
 .ts-shortlist li a{margin-right:auto}
 .ts-shortlist-empty{font:italic 20px/1.5 var(--ts-serif);color:var(--ts-muted);margin:8px 0 4px}
 .ts-shortlist li .ts-meta{margin:0}
+
+/* first paint: the map area is plain ground, and the map fades in on its first idle (spec 13) */
+.ts-stage{background:var(--ts-map-ground)}
+.ts-map{opacity:0;transition:opacity 200ms linear}
+.ts-map.is-ready{opacity:1}
+@media (prefers-reduced-motion:reduce){.ts-map{transition:none}}
+.ts-nogl{position:absolute;inset:0;display:grid;place-items:center;background:var(--ts-map-ground)}
+.ts-nogl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.ts-nogl p{position:relative;max-width:420px;margin:0 24px;padding:20px 24px;background:var(--ts-surface);border:1px solid var(--ts-line);font-size:15px;line-height:1.5}
+@media (max-width:639.98px){.ts-nav{gap:4px}.ts-nav a{font-size:12px;padding-inline:6px}}
+@media (max-width:420px){.ts-wordmark,.ts-wordmark-text{letter-spacing:.1em!important;font-size:12px!important}.ts-nav{gap:0}.ts-nav a{padding-inline:5px!important}.ts-header{gap:2px}}
+@media (max-width:359.98px){.ts-search-toggle{display:none!important}.ts-header{padding-right:8px!important}}
+.ts-brief-mast-r{display:inline-flex;align-items:center;gap:10pt}.ts-brief-mast-r .ts-brief-logo{margin:0;width:64px;height:22px;font-size:7pt}

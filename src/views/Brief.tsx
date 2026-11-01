@@ -155,7 +155,10 @@ export function Brief({ recipient: r, comparison: c, data, engine }: { recipient
         <article className="ts-brief" style={{ ['--fit' as string]: String(fit) }} aria-label="Recipient brief">
           <header className="ts-brief-mast">
             <span className="ts-brief-wordmark">THERMOSTAT</span>
-            <span>Recipient brief · Prepared for Hamilton Community Enterprises{r.synthetic ? ' · Illustrative' : ''}</span>
+            <span className="ts-brief-mast-r">
+              <span>Recipient brief · {r.synthetic ? 'Illustrative' : 'Scenario'}</span>
+              <span className="ts-brief-logo" aria-label="Placeholder for the HCE logo">HCE logo</span>
+            </span>
           </header>
           <section className="ts-brief-title">
             <h1>{recipientName(r)}</h1>
