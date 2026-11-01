@@ -1,16 +1,16 @@
 /** Map colours for deck.gl and MapLibre, equal to the custom properties in tokens.css (mapTokens.test.ts checks).
  *  src/map/ takes every colour from here and contains no colour literals (spec 9.1). */
 export const MAP = {
-  ground: '#f4efe6',
-  water: '#d9ded8',
+  ground: '#f1ece1',
+  water: '#c6dae6',
   road: '#ffffff',
-  roof: '#e8e1d4',
+  roof: '#e3e1da',
   attention: '#b8441a',
-  secondary: '#4a4640',
-  surface: '#fbf8f2',
-  ink: '#1f1d1a',
-  muted: '#6b655c',
-  line: '#d8d0c2',
+  secondary: '#17212c',
+  surface: '#fbf9f4',
+  ink: '#17212c',
+  muted: '#4f5d6b',
+  line: '#d3d6d4',
   park: '#e6e6da',
 } as const;
 

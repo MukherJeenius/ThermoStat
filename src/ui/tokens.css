@@ -7,8 +7,8 @@
 
 /* ---- 1. handoff ---- */
 :root {
-  --ts-bg: #f4efe6; --ts-surface: #fbf8f2; --ts-ink: #1f1d1a;
-  --ts-muted: #6b655c; --ts-line: #d8d0c2; --ts-accent: #b8441a;
+  --ts-bg: #f1ece1; --ts-surface: #fbf9f4; --ts-ink: #17212c;
+  --ts-muted: #4f5d6b; --ts-line: #d3d6d4; --ts-accent: #1c5e7e;
   --ts-arc-source: #b8441a;
   --ts-radius: 4px; --ts-space: 8px;
   --ts-sans: 'Inter Variable', 'Inter', 'Helvetica Neue', Arial, sans-serif;
@@ -43,11 +43,11 @@
 
 /* ---- 2. token additions ---- */
 :root {
-  --ts-accent-text: #9a3714;
-  --ts-map-ground: #f4efe6; --ts-map-water: #d9ded8; --ts-map-road: #ffffff; --ts-map-roof: #e8e1d4; --ts-map-park: #e6e6da;
-  --ts-map-attention: #b8441a; --ts-map-secondary: #4a4640;
+  --ts-accent-text: #1c5e7e;
+  --ts-map-ground: #f1ece1; --ts-map-water: #c6dae6; --ts-map-road: #ffffff; --ts-map-roof: #e3e1da; --ts-map-park: #e6e6da;
+  --ts-map-attention: #b8441a; --ts-map-secondary: #17212c;
   --ts-heat-1: #f1d9b5; --ts-heat-2: #e3a673; --ts-heat-3: #cf7442; --ts-heat-4: #b8441a; --ts-heat-5: #7e2a10;
-  --ts-line-strong: #8a8276;  /* 3.46:1 on bg, 3.78:1 on surface: control boundaries only (WCAG 1.4.11) */
+  --ts-line-strong: #6f7d8a;  /* 3.46:1 on bg, 3.78:1 on surface: control boundaries only (WCAG 1.4.11) */
   --ts-rail-w: 272px; --ts-card-w: 404px; --ts-gutter: 32px; --ts-header-h: 56px; --ts-footer-h: 32px;
   --ts-dur: 200ms; --ts-dur-fast: 120ms; --ts-ease: cubic-bezier(.2, 0, 0, 1);
 }
