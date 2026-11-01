@@ -1,0 +1,52 @@
+[
+  {
+    "name": "hospital anchor, sum 83.5 rounds to 84",
+    "input": { "annualHeatMwh": 3000, "minM": 350, "heatingSystem": "hydronic", "type": "hospital", "ownerType": "institutional", "yearBuilt": 1960, "boilerYearsLeft": null, "quality": "actual", "activePermit": null },
+    "expected": { "score": 84, "band": "strong", "points": { "size": 30, "distance": 12.5, "heating": 15, "anchor": 15, "timing": 6, "data": 5 } }
+  },
+  {
+    "name": "large private office, sum 72.5 rounds to 73",
+    "input": { "annualHeatMwh": 3000, "minM": 150, "heatingSystem": "forced_air", "type": "office", "ownerType": null, "yearBuilt": 1995, "boilerYearsLeft": null, "quality": "checked", "activePermit": null },
+    "expected": { "score": 73, "band": "strong", "points": { "size": 30, "distance": 22.5, "heating": 3, "anchor": 8, "timing": 6, "data": 3 } }
+  },
+  {
+    "name": "score exactly 70 is a strong fit",
+    "input": { "annualHeatMwh": 1650, "minM": 50, "heatingSystem": "hydronic", "type": "office", "ownerType": null, "yearBuilt": 1990, "boilerYearsLeft": null, "quality": "estimate", "activePermit": null },
+    "expected": { "score": 70, "band": "strong", "points": { "size": 15, "distance": 25, "heating": 15, "anchor": 8, "timing": 6, "data": 1 } }
+  },
+  {
+    "name": "score 69 is a possible fit",
+    "input": { "annualHeatMwh": 1740, "minM": 50, "heatingSystem": "hydronic", "type": "office", "ownerType": null, "yearBuilt": 2010, "boilerYearsLeft": null, "quality": "checked", "activePermit": null },
+    "expected": { "score": 69, "band": "possible", "points": { "size": 16, "distance": 25, "heating": 15, "anchor": 8, "timing": 2, "data": 3 } }
+  },
+  {
+    "name": "score 45 is a possible fit",
+    "input": { "annualHeatMwh": 200, "minM": 120, "heatingSystem": null, "type": "office", "ownerType": null, "yearBuilt": 1980, "boilerYearsLeft": null, "quality": "actual", "activePermit": null },
+    "expected": { "score": 45, "band": "possible", "points": { "size": 0, "distance": 24, "heating": 7, "anchor": 3, "timing": 6, "data": 5 } }
+  },
+  {
+    "name": "score 44 is a weak fit",
+    "input": { "annualHeatMwh": 200, "minM": 80, "heatingSystem": null, "type": "office", "ownerType": null, "yearBuilt": 1980, "boilerYearsLeft": null, "quality": "checked", "activePermit": null },
+    "expected": { "score": 44, "band": "weak", "points": { "size": 0, "distance": 25, "heating": 7, "anchor": 3, "timing": 6, "data": 3 } }
+  },
+  {
+    "name": "distance not computed scores 0",
+    "input": { "annualHeatMwh": 900, "minM": null, "heatingSystem": null, "type": "multi_res", "ownerType": null, "yearBuilt": null, "boilerYearsLeft": null, "quality": "estimate", "activePermit": null },
+    "expected": { "score": 20, "band": "weak", "points": { "size": 6.666666666666667, "distance": 0, "heating": 7, "anchor": 3, "timing": 2, "data": 1 } }
+  },
+  {
+    "name": "public owner with an active permit",
+    "input": { "annualHeatMwh": 2400, "minM": 600, "heatingSystem": "forced_air", "type": "multi_res", "ownerType": "public", "yearBuilt": 2015, "boilerYearsLeft": null, "quality": "estimate", "activePermit": true },
+    "expected": { "score": 52, "band": "possible", "points": { "size": 23.333333333333332, "distance": 0, "heating": 3, "anchor": 15, "timing": 10, "data": 1 } }
+  },
+  {
+    "name": "boiler due within 5 years, size clamped at 30",
+    "input": { "annualHeatMwh": 3500, "minM": 700, "heatingSystem": "hydronic", "type": "retail", "ownerType": null, "yearBuilt": null, "boilerYearsLeft": 4, "quality": "estimate", "activePermit": false },
+    "expected": { "score": 62, "band": "possible", "points": { "size": 30, "distance": 0, "heating": 15, "anchor": 8, "timing": 8, "data": 1 } }
+  },
+  {
+    "name": "size boundary at 300 MWh, built in 2001",
+    "input": { "annualHeatMwh": 300, "minM": 600, "heatingSystem": null, "type": "civic", "ownerType": "public", "yearBuilt": 2001, "boilerYearsLeft": null, "quality": "estimate", "activePermit": null },
+    "expected": { "score": 29, "band": "weak", "points": { "size": 0, "distance": 0, "heating": 7, "anchor": 15, "timing": 6, "data": 1 } }
+  }
+]

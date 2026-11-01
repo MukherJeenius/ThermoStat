@@ -1,0 +1,13 @@
+{
+  "default": "eccc",
+  "sets": {
+    "eccc": { "id": "eccc", "label": "ECCC reference, by year", "isFallback": false, "gasKgPerM3": 1.9,
+              "gridTPerMwh": { "2025": 0.084, "2026": 0.070, "2027": 0.085, "2030": 0.055, "2035": 0.029 },
+              "gridTPerMwhFlat": null },
+    "taf": { "id": "taf", "label": "TAF/IESO forecast (conservative)", "isFallback": false, "gasKgPerM3": 1.9,
+             "gridTPerMwh": { "2025": 0.075, "2026": 0.081, "2027": 0.124, "2030": 0.106 },
+             "gridTPerMwhFlat": null },
+    "climatiq": null
+  },
+  "climatiqReason": "no API key"
+}

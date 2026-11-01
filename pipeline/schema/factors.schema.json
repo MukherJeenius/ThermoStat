@@ -1,0 +1,174 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/FactorsFile",
+  "definitions": {
+    "FactorsFile": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "type": "string",
+          "enum": [
+            "eccc",
+            "climatiq",
+            "taf"
+          ]
+        },
+        "sets": {
+          "type": "object",
+          "properties": {
+            "eccc": {
+              "$ref": "#/definitions/FactorSet"
+            },
+            "taf": {
+              "$ref": "#/definitions/FactorSet"
+            },
+            "climatiq": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "factorYear": {
+                      "type": "number"
+                    },
+                    "dataVersion": {
+                      "type": "string"
+                    },
+                    "selectors": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "retrieved": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string",
+                      "enum": [
+                        "eccc",
+                        "climatiq",
+                        "taf"
+                      ]
+                    },
+                    "gasKgPerM3": {
+                      "type": "number"
+                    },
+                    "gridTPerMwh": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number"
+                          }
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "gridTPerMwhFlat": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "isFallback": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "dataVersion",
+                    "factorYear",
+                    "gasKgPerM3",
+                    "gridTPerMwh",
+                    "gridTPerMwhFlat",
+                    "id",
+                    "isFallback",
+                    "label",
+                    "retrieved",
+                    "selectors"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "eccc",
+            "taf",
+            "climatiq"
+          ],
+          "additionalProperties": false
+        },
+        "climatiqReason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "default",
+        "sets",
+        "climatiqReason"
+      ],
+      "additionalProperties": false
+    },
+    "FactorSet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "eccc",
+            "climatiq",
+            "taf"
+          ]
+        },
+        "gasKgPerM3": {
+          "type": "number"
+        },
+        "gridTPerMwh": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gridTPerMwhFlat": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "isFallback": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "gasKgPerM3",
+        "gridTPerMwh",
+        "gridTPerMwhFlat",
+        "label",
+        "isFallback"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

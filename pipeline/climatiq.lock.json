@@ -1,0 +1,6 @@
+{
+ "dataVersion": null,
+ "note": "No Climatiq key yet. Add CLIMATIQ_API_KEY to pipeline/.env and rerun make data.",
+ "result": null,
+ "selectors": null
+}

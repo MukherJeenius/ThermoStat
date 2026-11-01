@@ -1,0 +1,66 @@
+# Facilities, existing customers and proposed-connection targets (spec 6.1, 06_places). Positions come from the
+# geocode queries (cached in raw/geocode_cache.json) or, for traced points, lon/lat entered by a person.
+# Every position is [Verify]. Never estimate coordinates from a figure.
+facilities:
+  - id: hce-recovery-plant
+    name: Central Energy Recovery Plant (proposed)
+    mapLabel: Proposed recovery plant
+    kind: energy_plant
+    operator: Hamilton Community Enterprises
+    address: null
+    locality: Bayfront, Hamilton, Ontario
+    lon: null          # traced by a person from the study's site figure; until then the illustrative midpoint
+    lat: null
+  - id: hce-downtown-plant
+    name: HCE downtown plant, 79 Bay St N
+    mapLabel: HCE plant, 79 Bay St N
+    kind: energy_plant
+    operator: Hamilton Community Enterprises
+    address: 79 Bay St N
+    locality: Downtown Hamilton, Ontario
+    geocode: ["79 Bay Street North, Hamilton, Ontario"]
+  - id: dofasco
+    name: ArcelorMittal Dofasco
+    mapLabel: ArcelorMittal Dofasco
+    kind: industrial_source
+    operator: ArcelorMittal Dofasco
+    address: null
+    locality: Bayfront, Hamilton, Ontario
+    geocode: ["ArcelorMittal Dofasco, Hamilton, Ontario", "Dofasco, Hamilton, Ontario"]
+  - id: air-liquide
+    name: Air Liquide, Hamilton (Bayfront)
+    mapLabel: Air Liquide
+    kind: industrial_source
+    operator: Air Liquide
+    address: null
+    locality: Bayfront, Hamilton, Ontario
+    geocode: ["Air Liquide, Hamilton, Ontario", "Air Liquide Canada, Hamilton"]
+  - id: dc-21-king-w
+    name: Data centres at 21 King St W (NetAccess; HCE Telecom)
+    mapLabel: Data centres, 21 King W
+    kind: data_centre
+    operator: NetAccess Systems; HCE Telecom (Hamilton Utilities Corporation)
+    operatorSources: [peeringdb-netaccess, peeringdb-hce-telecom]
+    address: 21 King St W
+    locality: Downtown Hamilton, Ontario
+    geocode: ["21 King Street West, Hamilton, Ontario"]
+  - id: dc-100-king-w
+    name: Data centre at 100 King St W
+    mapLabel: Data centre, 100 King W
+    kind: data_centre
+    operator: null     # directories name Rogers; no confirmed current operator (Qu not confirmed)
+    address: 100 King St W
+    locality: Downtown Hamilton, Ontario
+    geocode: ["100 King Street West, Hamilton, Ontario"]
+customers:          # existing HCE customers named in a cached public source (operational arcs)
+  - {id: city-hall, name: Hamilton City Hall, geocode: ["71 Main Street West, Hamilton, Ontario"], evidence: [customers-hce, customers-fvb]}
+  - {id: braley-hsc, name: David Braley Health Sciences Centre, geocode: ["100 Main Street West, Hamilton, Ontario"], evidence: [customers-hce]}
+  - {id: police-isf, name: Hamilton Police ISF, geocode: ["Hamilton Police Investigative Services Facility, Hamilton, Ontario", "400 Rebecca Street, Hamilton, Ontario"], evidence: [customers-hce]}
+  - {id: convention-centre, name: Hamilton Convention Centre, geocode: ["Hamilton Convention Centre, Hamilton, Ontario", "1 Summers Lane, Hamilton, Ontario"], evidence: [customers-hce-venues]}
+  - {id: concert-hall, name: FirstOntario Concert Hall (Hamilton Place), geocode: ["FirstOntario Concert Hall, Hamilton, Ontario", "10 MacNab Street South, Hamilton, Ontario"], evidence: [customers-hce-venues]}
+  - {id: art-gallery, name: Art Gallery of Hamilton, geocode: ["Art Gallery of Hamilton, Hamilton, Ontario", "123 King Street West, Hamilton, Ontario"], evidence: [customers-hce-venues]}
+  - {id: first-ontario-centre, name: FirstOntario Centre (TD Coliseum), geocode: ["101 York Boulevard, Hamilton, Ontario"], evidence: [customers-fvb]}
+  - {id: lister-block, name: Lister Block, geocode: ["Lister Block, Hamilton, Ontario", "28 James Street North, Hamilton, Ontario"], evidence: [customers-fvb]}
+  - {id: jackson-square, name: Jackson Square, geocode: ["Jackson Square, Hamilton, Ontario", "2 King Street West, Hamilton, Ontario"], evidence: [customers-fvb]}
+proposed:           # targets of proposed connections (HCE study); endpoints, never ranked
+  - {id: hamilton-general, name: Hamilton General Hospital, phase: Phase 1, geocode: ["237 Barton Street East, Hamilton, Ontario"], campusName: Hamilton General, campusRadiusM: 250, evidence: [study-phase12-route]}

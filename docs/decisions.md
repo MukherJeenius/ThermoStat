@@ -71,3 +71,68 @@ Node 26.5.1, npm 11.17.0. `pmtiles` CLI 1.31.2 installed with Homebrew.
 - No `CLIMATIQ_API_KEY` exists, so `factors.json` carries the ECCC (default) and TAF sets and `sets.climatiq: null`
   with `climatiqReason: "no API key"`. To add it later: put `CLIMATIQ_API_KEY=…` in `pipeline/.env` and rerun
   `make data`.
+
+## Milestones 1 to 5, demo build (31 October to 1 November 2026)
+
+### Owner request: a hackathon demo first
+
+- On 31 October 2026 (about 23:10) the owner asked for a working demo within 3 to 4 hours. The demo path (map,
+  facility and evidence records, recipients with the cost comparison, the brief) is built first. Field notes, the full
+  Records and Method views, the guided `#demo` tour, the state screenshots and the shots/print/offline scripts follow
+  after the demo.
+
+### Map stack
+
+- **maplibre-gl stepped down to 5.24.0** (newest qualifying 5.x), as spec 3.1 prescribes on a smoke-test failure:
+  with maplibre-gl 6.14.0, deck.gl 9.4.0's interleaved `MapboxOverlay` throws in `getViewport`
+  (`map.transform` is gone in MapLibre 6), so no deck layer draws. With 5.24.0, interleaving works.
+- The label `TextLayer` runs without `CollisionFilterExtension` for now (the labels did not draw with it); the
+  facility labels are short `mapLabel`s and were checked by eye. [Verify] at the look check.
+
+### OpenStreetMap download
+
+- On 31 October 2026 every Overpass server tried timed out (HTTP 504) on the full frame, on quadrants and on most
+  1/48 tiles: overpass-api.de, overpass.private.coffee and the VK Maps mirror (maps.mail.ru, also listed on the
+  OpenStreetMap wiki). The spec allows one mirror; VK replaced private.coffee because private.coffee did not answer
+  at all. Tiles are split further on timeout (a deviation from the 4-quadrant rule).
+- **Interim for the demo:** a tag-filtered query (`queries/candidates.overpassql`: named, amenity, office, shop,
+  tourism, leisure, healthcare, the residential and commercial building values, 4+ levels or a height) over the study
+  area supplies the recipient candidates. Context buildings are drawn by MapLibre from the basemap's own `buildings`
+  layer (Protomaps tiles, offline) while `context-buildings.geojson` is empty, instead of deck.gl. Unnamed
+  `building=yes` footprints of 600 m² or more with fewer than 4 levels are missed in this mode. The full-frame fetch
+  resumes afterwards and restores the spec path.
+
+### Sources
+
+- The CEEP final plan (City meeting system, eScribe) answers HTTP 403 to automated downloads. The 2022 draft
+  (Appendix A to Report PED22058/HSC22030, on the City's hamiltoncivicmuseums.ca site) is cached and cited as
+  "City climate plan (CEEP), 2022 draft". [Verify] the passage in the final plan.
+- The City of Hamilton building footprints layer exists (City of Hamilton Open Data Licence v1.1) but is not used in
+  this build: OSM geometry only. Development applications (point layer) exist; permits are not used, so
+  `activePermit` is null everywhere.
+- 100 King St W: no current operator could be confirmed (directories name Rogers; Qu was not confirmed), so the
+  facility is named by its address with `operator: null`.
+- HCE study document dates are taken from the PDF modification date (25 May 2025); the study page says the study was
+  completed in June 2025. [Verify]
+- Customer geocodes: several queries use street addresses supplied by the team for public buildings (City Hall,
+  the Convention Centre, Hamilton Place, the Art Gallery, FirstOntario Centre, Lister Block, Jackson Square, the
+  Police ISF). Every position is [Verify].
+
+### Evidence extraction
+
+- Two-column pages are read column by column first (words split into two x-bands with under 2 % crossing the gap),
+  then as a whole page. Short label lines and title-like heading lines glued to the front of a passage are dropped
+  only when the remaining text still holds every anchor. All 14 found excerpts were read in the evidence report.
+
+### Calibration
+
+- EWRB 2024 publishes gas intensity in bins (62 distinct values, steps of 3.044 m³/m²), so type medians are bin
+  values. Zero-gas buildings are excluded. The office median (80 kWh/m² heating proxy) falls outside 0.5× to 2× of
+  190, so offices keep the start value; schools and hospitals have fewer than 8 rows and keep theirs.
+
+### Tooling
+
+- Test files typecheck in `tsconfig.test.json` with Node types (`@types/node` 25.9.9, already installed by vite), so
+  app code stays free of Node globals.
+- Explicit table roles (`role="table"`, `row`, `cell`, `columnheader`) are kept as spec 9.6 requires;
+  jsx-a11y's `no-redundant-roles` and `no-interactive-element-to-noninteractive-role` allow them for table elements.

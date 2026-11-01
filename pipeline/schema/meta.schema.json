@@ -1,0 +1,228 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/MetaFile",
+  "definitions": {
+    "MetaFile": {
+      "type": "object",
+      "properties": {
+        "generatedAt": {
+          "type": "string"
+        },
+        "osmBase": {
+          "type": "string"
+        },
+        "protomapsBuild": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "frameBbox": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "analysisBbox": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "retrieved": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "counts": {
+          "type": "object",
+          "properties": {
+            "buildings": {
+              "type": "number"
+            },
+            "recipients": {
+              "type": "number"
+            },
+            "byQuality": {
+              "type": "object",
+              "properties": {
+                "actual": {
+                  "type": "number"
+                },
+                "checked": {
+                  "type": "number"
+                },
+                "estimate": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "actual",
+                "checked",
+                "estimate"
+              ],
+              "additionalProperties": false
+            },
+            "synthetic": {
+              "type": "number"
+            },
+            "facilities": {
+              "type": "number"
+            },
+            "connectionsByKind": {
+              "type": "object",
+              "properties": {
+                "scenario": {
+                  "type": "number"
+                },
+                "proposed": {
+                  "type": "number"
+                },
+                "operational": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "scenario",
+                "proposed",
+                "operational"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "buildings",
+            "recipients",
+            "byQuality",
+            "synthetic",
+            "facilities",
+            "connectionsByKind"
+          ],
+          "additionalProperties": false
+        },
+        "rampBreaksMwh": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "calibration": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "$ref": "#/definitions/Archetype"
+              },
+              "n": {
+                "type": "number"
+              },
+              "medianKwhM2": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "used": {
+                "type": "boolean"
+              },
+              "column": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "year": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "bpsRatio": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "type",
+              "n",
+              "medianKwhM2",
+              "used",
+              "column",
+              "year",
+              "bpsRatio"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "evidence": {
+          "type": "object",
+          "properties": {
+            "claims": {
+              "type": "number"
+            },
+            "found": {
+              "type": "number"
+            },
+            "unknown": {
+              "type": "number"
+            },
+            "humanChecked": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "claims",
+            "found",
+            "unknown",
+            "humanChecked"
+          ],
+          "additionalProperties": false
+        },
+        "defaultFacilityId": {
+          "type": "string"
+        },
+        "demoRecipientId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "generatedAt",
+        "osmBase",
+        "protomapsBuild",
+        "frameBbox",
+        "analysisBbox",
+        "retrieved",
+        "counts",
+        "rampBreaksMwh",
+        "calibration",
+        "evidence",
+        "defaultFacilityId",
+        "demoRecipientId"
+      ],
+      "additionalProperties": false
+    },
+    "Archetype": {
+      "type": "string",
+      "enum": [
+        "office",
+        "multi_res",
+        "retail",
+        "school",
+        "hotel",
+        "civic",
+        "hospital",
+        "mixed"
+      ]
+    }
+  }
+}

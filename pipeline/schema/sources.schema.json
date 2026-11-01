@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/SourcesFile",
+  "definitions": {
+    "SourcesFile": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SourceRecord"
+      }
+    },
+    "SourceRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "documentDate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retrievedAt": {
+          "type": "string"
+        },
+        "page": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "docKind": {
+          "type": "string",
+          "enum": [
+            "pdf",
+            "html",
+            "dataset"
+          ]
+        },
+        "pdfPageIndex": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "excerptNormalisation": {
+          "type": "string",
+          "enum": [
+            "none",
+            "whitespace",
+            "whitespace+hyphenation",
+            "whitespace+hyphenation+ligatures"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "licence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "humanCheck": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "checkedBy": {
+                  "type": "string"
+                },
+                "checkedOn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "checkedBy",
+                "checkedOn"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "url",
+        "documentDate",
+        "retrievedAt",
+        "page",
+        "excerpt",
+        "synthetic",
+        "shortTitle",
+        "publisher",
+        "docKind",
+        "pdfPageIndex",
+        "excerptNormalisation",
+        "sha256",
+        "licence",
+        "humanCheck"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

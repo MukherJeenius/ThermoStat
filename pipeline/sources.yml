@@ -22,11 +22,12 @@
   docKind: dataset
   licence: ODbL 1.0
   documentDate: null
-  url: https://overpass.private.coffee/api/interpreter
+  url: https://maps.mail.ru/osm/tools/overpass/api/interpreter
   probe: overpass
   found_by: wiki
   found_on: '2026-10-31'
-  note: one public instance from the OpenStreetMap wiki page "Overpass API"
+  note: VK Maps, a public instance from the OpenStreetMap wiki page "Overpass API" (private.coffee timed out on
+    31 October 2026)
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
@@ -36,14 +37,20 @@
   shortTitle: City of Hamilton footprints
   publisher: City of Hamilton
   docKind: dataset
-  licence: null
+  licence: City of Hamilton Open Data Licence v1.1
   documentDate: null
-  url: null
+  url: https://open.hamilton.ca/datasets/6af6534637e241a8b46ae83c419673d5_8/about
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  attribution: Contains public sector Data made available under the City of Hamilton's Open Data Licence
+  used: false
+  note: 'Buildings layer (214,292 records, data updated 6 October 2026). Not used in this build: OSM geometry only
+    (docs/decisions.md).'
 - key: bps
   row: 4
   title: Energy use and greenhouse gas emissions for the Broader Public Sector
@@ -302,26 +309,33 @@
   docKind: dataset
   licence: Open Government Licence – Canada
   documentDate: null
-  url: null
+  url: https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/menus/trends/comprehensive/trends_com_on.cfm
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  note: Commercial/institutional, Ontario. Start intensities (plan B5.1) are team values informed by CEUD; no table
+    is parsed.
 - key: eccc-climate
   row: 7
-  title: Historical climate data, Hamilton
+  title: Historical climate data, Hamilton RBG CS (climate ID 6153301)
   shortTitle: ECCC climate data, Hamilton
   publisher: Environment and Climate Change Canada
   docKind: dataset
   licence: Open Government Licence – Canada
   documentDate: null
-  url: null
+  url: https://climate.weather.gc.ca/historical_data/search_historic_data_stations_e.html?searchType=stnName&timeframe=1&txtStationName=Hamilton&searchMethod=contains&optLimit=yearRange&StartYear=1840&EndYear=2026&Year=2026&Month=10&Day=31&selRowPerPage=25
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  note: Daily data with heating degree days; shown in Method only.
 - key: nominatim
   row: 8
   title: Nominatim geocoder (OpenStreetMap)
@@ -359,12 +373,16 @@
   docKind: html
   licence: null
   documentDate: null
-  url: null
+  url: https://www.enbridgegas.com/ontario/business-industrial/business/rates
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  note: 'Union South M1 (October 2026): gas supply 17.7009 c/m3 effective, delivery 7.43-8.70 c/m3, monthly $28.91;
+    M2 system-gas supply not confirmed. The $0.32/m3 all-in default stays [Verify].'
 - key: oeb-rates
   row: 11
   title: Ontario Energy Board electricity rates
@@ -373,12 +391,15 @@
   docKind: html
   licence: null
   documentDate: null
-  url: null
+  url: https://www.oeb.ca/consumer-information-and-protection/electricity-rates
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  note: Residential and small business only; larger customers use the local tariff (alectra-tariff).
 - key: ieso-ga
   row: 11
   title: IESO Global Adjustment
@@ -387,40 +408,48 @@
   docKind: html
   licence: null
   documentDate: null
-  url: null
+  url: https://ieso.ca/Sector-Participants/Settlements/Global-Adjustment-for-Class-B
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
 - key: eccc-grid
   row: 12
-  title: National Inventory Report, electricity generation intensity, Ontario
+  title: Canada's official greenhouse gas inventory, Annex 7 electricity intensity tables
   shortTitle: ECCC grid intensity (NIR)
   publisher: Environment and Climate Change Canada
   docKind: dataset
   licence: Open Government Licence – Canada
   documentDate: null
-  url: null
+  url: https://data-donnees.az.ec.gc.ca/data/substances/monitor/canada-s-official-greenhouse-gas-inventory/C-Tables-Electricity-Canada-Provinces-Territories?lang=en
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  note: 2026 edition (Annex 7, not 13). The plan B5.5 ECCC row stays [Verify] against it.
 - key: taf-grid
   row: 12
-  title: Ontario electricity emissions factors and forecast
+  title: Ontario Electricity Emissions Factors and Guidelines (2025)
   shortTitle: TAF electricity emissions forecast
   publisher: The Atmospheric Fund
-  docKind: pdf
+  docKind: html
   licence: null
   documentDate: null
-  url: null
+  url: https://taf.ca/publications/ontario-electricity-emissions-factors-and-guidelines/
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  note: 2025 edition with a data workbook (forecast average and marginal factors). The plan B5.5 TAF row stays [Verify].
 - key: protomaps-builds
   row: 13
   title: Protomaps daily basemap builds
@@ -484,7 +513,7 @@
   publisher: Hamilton Community Enterprises
   docKind: pdf
   licence: null
-  documentDate: null
+  documentDate: '2025-05-25'
   url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf
   probe: head
   found_by: hce-reports-page
@@ -492,6 +521,7 @@
   probe_status: 200
   probe_method: HEAD
   probe_bytes: 1304502
+  documentDateNote: from the PDF modification date; the study page says it was completed in June 2025 [Verify]
 - key: hce-full
   row: 14
   title: Hamilton Energy Harvesting Study, Final Report
@@ -499,7 +529,7 @@
   publisher: Hamilton Community Enterprises
   docKind: pdf
   licence: null
-  documentDate: null
+  documentDate: '2025-05-25'
   url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6890ced50e9bb577c_Hamilton%20Energy%20Harvesting%20Study%20FINAL%20REPORT%20May%20_25.pdf
   probe: head
   found_by: hce-reports-page
@@ -507,6 +537,7 @@
   probe_status: 200
   probe_method: HEAD
   probe_bytes: 5861862
+  documentDateNote: from the PDF modification date; the study page says it was completed in June 2025 [Verify]
 - key: hce-overview
   row: 14
   title: Hamilton Energy Harvesting Study, Overview Report
@@ -514,7 +545,7 @@
   publisher: Hamilton Community Enterprises
   docKind: pdf
   licence: null
-  documentDate: null
+  documentDate: '2025-05-25'
   url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c62a30e9d3099bf553_Hamilton%20Energy%20Harvesting%20Study%20OVERVIEW%20REPORT.pdf
   probe: head
   found_by: hce-reports-page
@@ -522,6 +553,7 @@
   probe_status: 200
   probe_method: HEAD
   probe_bytes: 459848
+  documentDateNote: from the PDF modification date; the study page says it was completed in June 2025 [Verify]
 - key: hce-mcmaster-policy
   row: 14
   title: McMaster University Energy Harvesting Policy Report, commissioned by HCE
@@ -569,32 +601,114 @@
   probe_bytes: 361577
 - key: ceep
   row: 15
-  title: City of Hamilton Community Energy and Emissions Plan
+  title: 'ReCharge Hamilton: Our Community Energy and Emissions Plan (Appendix C, General Issues Committee, 8 August
+    2022)'
   shortTitle: City climate plan (CEEP)
   publisher: City of Hamilton
   docKind: pdf
   licence: null
-  documentDate: null
-  url: null
+  documentDate: '2022-08-08'
+  url: https://pub-hamilton.escribemeetings.com/filestream.ashx?DocumentId=335400
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  note: Linked from the City CEEP page as the plan download; the City meeting system refused automated fetches during
+    discovery.
 - key: hce-network
   row: 16
-  title: HCE district energy (downtown system)
+  title: HCE District Energy
   shortTitle: HCE district energy page
   publisher: Hamilton Community Enterprises
   docKind: html
   licence: null
   documentDate: null
-  url: null
+  url: https://hce.net/energy
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  snapshot: true
+  note: Names downtown customers; no plant address or building count.
+- key: ceep-draft
+  row: 15
+  title: 'ReCharge Hamilton: Our Community Energy and Emissions Plan, 2022 draft (Appendix A to Report PED22058/HSC22030)'
+  shortTitle: City climate plan (CEEP), 2022 draft
+  publisher: City of Hamilton
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: https://hamiltoncivicmuseums.ca/wp-content/uploads/2022/09/Rechargehamilton-draft-our-community-energy-emissions-plan-compressed-1.pdf
+  probe: head
+  found_by: search
+  found_on: '2026-10-31'
+  verify: true
+  note: Used only if the final plan cannot be fetched; cited as the draft.
+- key: fvb-hamilton
+  row: 16
+  title: Hamilton Community Energy District Energy System
+  shortTitle: FVB Energy project page
+  publisher: FVB Energy
+  docKind: html
+  licence: null
+  documentDate: null
+  url: https://fvbenergy.com/astra-portfolio/hamilton-community-des/
+  probe: head
+  snapshot: true
+  found_by: search
+  found_on: '2026-10-31'
+  verify: true
+  note: 12 connected buildings, 3.5 MW gas combined heat and power; names customers.
+- key: peeringdb-hce-telecom
+  row: 16
+  title: HCE Telecom Hamilton (PeeringDB facility 8053)
+  shortTitle: 'PeeringDB: HCE Telecom Hamilton'
+  publisher: PeeringDB
+  docKind: html
+  licence: null
+  documentDate: null
+  url: https://www.peeringdb.com/fac/8053
+  probe: head
+  snapshot: true
+  found_by: search
+  found_on: '2026-10-31'
+  verify: true
+  note: 21 King St W, floor 14; operator Hamilton Utilities Corporation.
+- key: peeringdb-netaccess
+  row: 16
+  title: NetAccess Hamilton HAM02 (PeeringDB facility 6118)
+  shortTitle: 'PeeringDB: NetAccess Hamilton'
+  publisher: PeeringDB
+  docKind: html
+  licence: null
+  documentDate: null
+  url: https://as.peeringdb.com/fac/6118
+  probe: head
+  snapshot: true
+  found_by: search
+  found_on: '2026-10-31'
+  verify: true
+  note: 21 King St W, suite 1500; operator NetAccess Systems Inc.
+- key: alectra-tariff
+  row: 11
+  title: Alectra Utilities 2026 tariff of rates and charges, Horizon Utilities rate zone
+  shortTitle: Alectra (Horizon zone) 2026 tariff
+  publisher: Alectra Utilities
+  docKind: pdf
+  licence: null
+  documentDate: '2026-01-01'
+  url: https://alectrautilities.com/sites/default/files/assets/pdf/rates_2026/2026-tariff-of-rates-and-charges_horizon-rz.pdf
+  probe: head
+  found_by: search
+  found_on: '2026-10-31'
+  verify: true
+  note: General Service 50 to 4,999 kW class; Global Adjustment billed separately.
 - key: route
   row: 17
   title: Planned route, traced by a person from the study figure
@@ -612,15 +726,20 @@
   probe_method: '-'
 - key: permits
   row: 18
-  title: City of Hamilton building permits
+  title: City of Hamilton development applications
   shortTitle: City of Hamilton permits
   publisher: City of Hamilton
   docKind: dataset
-  licence: null
+  licence: City of Hamilton Open Data Licence v1.1
   documentDate: null
-  url: null
+  url: https://open.hamilton.ca/datasets/SpatialSolutions::development-applications-1/about
   probe: head
   found_by: search
   probed_on: '2026-10-31'
   probe_status: null
   probe_method: '-'
+  found_on: '2026-10-31'
+  verify: true
+  used: false
+  note: Point layer, last 5 years. Building permits (2017 to present) carry no coordinates. Not used in this build,
+    so activePermit is null.

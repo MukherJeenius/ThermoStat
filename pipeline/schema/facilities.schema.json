@@ -1,0 +1,306 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/FacilitiesFile",
+  "definitions": {
+    "FacilitiesFile": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Facility"
+      }
+    },
+    "Facility": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "locality": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/definitions/Position"
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "commitments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Commitment"
+          }
+        },
+        "kind": {
+          "$ref": "#/definitions/FacilityKind"
+        },
+        "operator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "address": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "positionQuality": {
+          "$ref": "#/definitions/PositionQuality"
+        },
+        "mapLabel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "locality",
+        "position",
+        "synthetic",
+        "commitments",
+        "kind",
+        "operator",
+        "address",
+        "positionQuality",
+        "mapLabel"
+      ],
+      "additionalProperties": false
+    },
+    "Position": {
+      "type": "array",
+      "minItems": 2,
+      "items": [
+        {
+          "type": "number",
+          "title": "longitude"
+        },
+        {
+          "type": "number",
+          "title": "latitude"
+        }
+      ],
+      "maxItems": 2,
+      "description": "ThermoStat data contract. Extends design/handoff/code/data-contract.ts; handoff names are unchanged. Timestamps and dates are ISO 8601. Unknown values are null, never 0 or ''."
+    },
+    "Commitment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "topic": {
+          "$ref": "#/definitions/CommitmentTopic"
+        },
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/EvidenceStatus"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/SourceRecord"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "question": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interpretation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "holder": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "topic",
+        "title",
+        "summary",
+        "status",
+        "source",
+        "question",
+        "interpretation",
+        "holder"
+      ],
+      "additionalProperties": false
+    },
+    "CommitmentTopic": {
+      "type": "string",
+      "enum": [
+        "heat",
+        "water",
+        "noise",
+        "energy",
+        "emissions"
+      ]
+    },
+    "EvidenceStatus": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "required",
+        "reported",
+        "verified",
+        "unknown"
+      ]
+    },
+    "SourceRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "documentDate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retrievedAt": {
+          "type": "string"
+        },
+        "page": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "shortTitle": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "docKind": {
+          "type": "string",
+          "enum": [
+            "pdf",
+            "html",
+            "dataset"
+          ]
+        },
+        "pdfPageIndex": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "excerptNormalisation": {
+          "type": "string",
+          "enum": [
+            "none",
+            "whitespace",
+            "whitespace+hyphenation",
+            "whitespace+hyphenation+ligatures"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "licence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "humanCheck": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "checkedBy": {
+                  "type": "string"
+                },
+                "checkedOn": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "checkedBy",
+                "checkedOn"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "url",
+        "documentDate",
+        "retrievedAt",
+        "page",
+        "excerpt",
+        "synthetic",
+        "shortTitle",
+        "publisher",
+        "docKind",
+        "pdfPageIndex",
+        "excerptNormalisation",
+        "sha256",
+        "licence",
+        "humanCheck"
+      ],
+      "additionalProperties": false
+    },
+    "FacilityKind": {
+      "type": "string",
+      "enum": [
+        "industrial_source",
+        "energy_plant",
+        "data_centre"
+      ]
+    },
+    "PositionQuality": {
+      "type": "string",
+      "enum": [
+        "address",
+        "approximate",
+        "illustrative"
+      ]
+    }
+  }
+}

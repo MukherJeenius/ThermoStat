@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/PlacesFile",
+  "definitions": {
+    "PlacesFile": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Place"
+      }
+    },
+    "Place": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "const": "neighbourhood"
+        },
+        "position": {
+          "$ref": "#/definitions/Position"
+        }
+      },
+      "required": [
+        "name",
+        "kind",
+        "position"
+      ],
+      "additionalProperties": false
+    },
+    "Position": {
+      "type": "array",
+      "minItems": 2,
+      "items": [
+        {
+          "type": "number",
+          "title": "longitude"
+        },
+        {
+          "type": "number",
+          "title": "latitude"
+        }
+      ],
+      "maxItems": 2,
+      "description": "ThermoStat data contract. Extends design/handoff/code/data-contract.ts; handoff names are unchanged. Timestamps and dates are ISO 8601. Unknown values are null, never 0 or ''."
+    }
+  }
+}

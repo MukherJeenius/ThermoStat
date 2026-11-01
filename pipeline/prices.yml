@@ -1,0 +1,116 @@
+# One entry per PriceKey (spec 7.1): value, unit, sourceId (a sources.yml key or null), date, verify.
+# Must equal src/engine/fixtures/prices.default.json value for value (pytest); a verified price that differs is an ASK.
+gasPriceM3:
+  value: 0.32
+  unit: $/m³
+  sourceId: enbridge-rates
+  date: '2026-10-31'
+  verify: true
+boilerEff:
+  value: 0.85
+  unit: fraction
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+kwhPerM3:
+  value: 10.36
+  unit: kWh/m³
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+elecPriceKwh:
+  value: 0.15
+  unit: $/kWh
+  sourceId: oeb-rates
+  date: '2026-10-31'
+  verify: true
+hpCop:
+  value: 2.8
+  unit: seasonal COP
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+hpCopDesign:
+  value: 2.0
+  unit: design-day COP
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+hpCapexKw:
+  value: 1800
+  unit: $/kW
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+elecUpgradeKw:
+  value: 150
+  unit: $/kW
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+boilerCapexKw:
+  value: 250
+  unit: $/kW
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+boilerLife:
+  value: 25
+  unit: years
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+maintGas:
+  value: 0.02
+  unit: of boiler capex a year
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+maintHp:
+  value: 0.03
+  unit: of heat-pump capex a year
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+discountRate:
+  value: 0.05
+  unit: a year
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+carbonPriceT:
+  value: 0
+  unit: $/t CO2
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+hceRateAdj:
+  value: 0
+  unit: fraction of gas parity
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+connectionFeeOn:
+  value: 0
+  unit: 0 or 1
+  sourceId: hce-full
+  date: '2026-10-31'
+  verify: false
+fullLoadHoursBuilding:
+  value: 2000
+  unit: h
+  sourceId: null
+  date: '2026-10-31'
+  verify: false
+fullLoadHoursNetwork:
+  value: 3600
+  unit: h
+  sourceId: hce-summary
+  date: '2026-10-31'
+  verify: false
+hceCo2Share:
+  value: 0.2
+  unit: of the gas option
+  sourceId: hce-summary
+  date: '2026-10-31'
+  verify: false

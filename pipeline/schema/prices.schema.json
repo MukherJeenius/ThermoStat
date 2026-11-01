@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/PricesFile",
+  "definitions": {
+    "PricesFile": {
+      "$ref": "#/definitions/Prices"
+    },
+    "Prices": {
+      "type": "object",
+      "properties": {
+        "gasPriceM3": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "boilerEff": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "kwhPerM3": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "elecPriceKwh": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "hpCop": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "hpCopDesign": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "hpCapexKw": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "elecUpgradeKw": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "boilerCapexKw": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "boilerLife": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "maintGas": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "maintHp": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "discountRate": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "carbonPriceT": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "hceRateAdj": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "connectionFeeOn": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "fullLoadHoursBuilding": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "fullLoadHoursNetwork": {
+          "$ref": "#/definitions/Assumption"
+        },
+        "hceCo2Share": {
+          "$ref": "#/definitions/Assumption"
+        }
+      },
+      "required": [
+        "gasPriceM3",
+        "boilerEff",
+        "kwhPerM3",
+        "elecPriceKwh",
+        "hpCop",
+        "hpCopDesign",
+        "hpCapexKw",
+        "elecUpgradeKw",
+        "boilerCapexKw",
+        "boilerLife",
+        "maintGas",
+        "maintHp",
+        "discountRate",
+        "carbonPriceT",
+        "hceRateAdj",
+        "connectionFeeOn",
+        "fullLoadHoursBuilding",
+        "fullLoadHoursNetwork",
+        "hceCo2Share"
+      ],
+      "additionalProperties": false
+    },
+    "Assumption": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "sourceId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verify": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "sourceId",
+        "date",
+        "verify"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

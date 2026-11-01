@@ -1,0 +1,268 @@
+# What to look for in the cached documents (spec 6.3). Search phrases, not quotations: every anchor must occur in
+# the chosen passage, which 08_evidence copies verbatim from the page. Each found excerpt is [Verify] by a person
+# in evidence/checks.csv before the demo.
+- id: study-phase12-route
+  facility: hce-recovery-plant
+  topic: heat
+  title: Heat for Hamilton General, then downtown
+  status: proposed
+  doc: hce-summary
+  anchors: ["Hamilton General Hospital campus in Phase 1", "Phase 2"]
+  page_hint: null
+  summary: A proposed network. Customers still to commit.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: Which buildings have committed so far?
+- id: study-phase12-volume
+  facility: hce-recovery-plant
+  topic: heat
+  title: Phases 1 and 2, sized
+  status: proposed
+  doc: hce-summary
+  anchors: ["65,000 MWh", "18 MW"]
+  page_hint: null
+  summary: About 65,000 MWh a year and an 18 MW peak, as estimated.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: How much of that demand is already signed?
+- id: study-emissions-80
+  facility: hce-recovery-plant
+  topic: emissions
+  title: About 80 % less CO2 at full build-out
+  status: proposed
+  doc: hce-summary
+  anchors: ["143,000 MWh", "27,000 tonnes"]
+  page_hint: null
+  summary: Five phases over about ten years, if they are built.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: Which phase has funding committed?
+- id: study-commercialization
+  facility: hce-recovery-plant
+  topic: heat
+  title: Next step, commitments
+  status: proposed
+  doc: hce-summary
+  anchors: ["Commercialization Phase", "firming up supply and demand"]
+  page_hint: null
+  summary: The study's own next step is to firm up suppliers and customers.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: Has the Commercialization Phase started?
+- id: study-capex-32
+  facility: hce-recovery-plant
+  topic: energy
+  title: Phase 1 and 2 cost estimate
+  status: reported
+  doc: hce-summary
+  anchors: ["32% higher than noted in the Conceptual"]
+  page_hint: null
+  summary: The capital estimate came in about a third above the earlier design.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: Has the cost been funded?
+- id: study-no-green-premium
+  facility: hce-recovery-plant
+  topic: heat
+  title: Priced against gas, no green premium
+  status: proposed
+  doc: hce-summary
+  anchors: ["No green premiums"]
+  page_hint: null
+  summary: Heat would be priced like a gas boiler, not above it.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: What rate would a new customer be quoted?
+- id: dofasco-source
+  facility: dofasco
+  topic: heat
+  title: Named as a waste-heat source
+  status: proposed
+  doc: hce-summary
+  anchors: ["ArcelorMittal", "14.3%"]
+  page_hint: null
+  summary: A high-temperature source in the study's business case.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: Has a heat supply agreement been signed?
+- id: dofasco-agreement
+  facility: dofasco
+  topic: heat
+  title: Supply agreement
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public record of a signed heat supply agreement.
+  holder: null
+  interpretation: null
+  question: Has a heat supply agreement been signed?
+- id: airliquide-source
+  facility: air-liquide
+  topic: heat
+  title: Named as a waste-heat source
+  status: proposed
+  doc: hce-summary
+  anchors: ["Air Liquide", "11.5%"]
+  page_hint: null
+  summary: A low-temperature source in the study's business case.
+  holder: HCE (Energy Harvesting Study)
+  interpretation: null
+  question: Has a heat supply agreement been signed?
+- id: airliquide-agreement
+  facility: air-liquide
+  topic: heat
+  title: Supply agreement
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public record of a signed heat supply agreement.
+  holder: null
+  interpretation: null
+  question: Has a heat supply agreement been signed?
+- id: downtown-buildings
+  facility: hce-downtown-plant
+  topic: heat
+  title: Downtown buildings served
+  status: reported
+  doc: fvb-hamilton
+  anchors: ["12 Connected Buildings"]
+  page_hint: null
+  summary: About 12 downtown buildings take heat from this plant today.
+  holder: FVB Energy (project page)
+  interpretation: null
+  question: Which buildings could join next?
+- id: downtown-chp
+  facility: hce-downtown-plant
+  topic: energy
+  title: Gas combined heat and power
+  status: reported
+  doc: fvb-hamilton
+  anchors: ["3.5 MW of gas fired combined heat and power"]
+  page_hint: null
+  summary: The plant runs on natural gas today.
+  holder: FVB Energy (project page)
+  interpretation: null
+  question: When would industrial heat replace gas here?
+- id: downtown-ceep
+  facility: hce-downtown-plant
+  topic: emissions
+  title: City plan, decarbonize and expand
+  status: proposed
+  doc: ceep-draft
+  anchors: ["decarbonizing and", "industrial residual heat"]
+  page_hint: null
+  summary: The City's climate plan names this system for residual heat.
+  holder: City of Hamilton (climate plan, 2022 draft)
+  interpretation: null
+  question: Is this action in the final plan's budget?
+- id: dc21-heat
+  facility: dc-21-king-w
+  topic: heat
+  title: Heat reuse
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public, site-specific record of heat reuse.
+  holder: null
+  interpretation: null
+  question: Is this site's waste heat reused anywhere?
+- id: dc21-water
+  facility: dc-21-king-w
+  topic: water
+  title: Water use
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public, site-specific record of water use.
+  holder: null
+  interpretation: null
+  question: Does this site report its water use anywhere public?
+- id: dc21-energy
+  facility: dc-21-king-w
+  topic: energy
+  title: Energy use
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public, site-specific record of energy use.
+  holder: null
+  interpretation: null
+  question: Does this site report its energy use anywhere public?
+- id: dc100-heat
+  facility: dc-100-king-w
+  topic: heat
+  title: Heat reuse
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public, site-specific record of heat reuse.
+  holder: null
+  interpretation: null
+  question: Who operates this site today, and is its heat reused?
+- id: dc100-water
+  facility: dc-100-king-w
+  topic: water
+  title: Water use
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public, site-specific record of water use.
+  holder: null
+  interpretation: null
+  question: Does this site report its water use anywhere public?
+- id: dc100-energy
+  facility: dc-100-king-w
+  topic: energy
+  title: Energy use
+  status: unknown
+  doc: null
+  anchors: []
+  page_hint: null
+  summary: No public, site-specific record of energy use.
+  holder: null
+  interpretation: null
+  question: Does this site report its energy use anywhere public?
+# connection evidence: passages that name existing customers (not facility commitments)
+- id: customers-hce
+  facility: null
+  topic: heat
+  title: Customers named by HCE
+  status: reported
+  doc: hce-network
+  anchors: ["Hamilton City Hall"]
+  page_hint: null
+  summary: Customers named on HCE's district energy page.
+  holder: HCE
+  interpretation: null
+  question: null
+- id: customers-hce-venues
+  facility: null
+  topic: heat
+  title: Venues named by HCE
+  status: reported
+  doc: hce-network
+  anchors: ["Hamilton Convention Centre", "Art Gallery of Hamilton"]
+  page_hint: null
+  summary: Venues named on HCE's district energy page.
+  holder: HCE
+  interpretation: null
+  question: null
+- id: customers-fvb
+  facility: null
+  topic: heat
+  title: Customers named by FVB
+  status: reported
+  doc: fvb-hamilton
+  anchors: ["Lister Block", "Jackson Square"]
+  page_hint: null
+  summary: Customers named on FVB's project page.
+  holder: FVB Energy
+  interpretation: null
+  question: null

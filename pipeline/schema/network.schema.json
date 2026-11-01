@@ -1,0 +1,210 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/NetworkFile",
+  "definitions": {
+    "NetworkFile": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "FeatureCollection"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Feature%3C(structure-2036489174-8881-8926-2036489174-8881-8983-2036489174-8872-9005-2036489174-8872-9007-2036489174-8860-9008-2036489174-8800-9010-2036489174-0-10697%7Cstructure-2036489174-8928-8976-2036489174-8881-8983-2036489174-8872-9005-2036489174-8872-9007-2036489174-8860-9008-2036489174-8800-9010-2036489174-0-10697%7CPoly)%2CNetworkProps%3E"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "features"
+      ],
+      "additionalProperties": false
+    },
+    "Feature<(structure-2036489174-8881-8926-2036489174-8881-8983-2036489174-8872-9005-2036489174-8872-9007-2036489174-8860-9008-2036489174-8800-9010-2036489174-0-10697|structure-2036489174-8928-8976-2036489174-8881-8983-2036489174-8872-9005-2036489174-8872-9007-2036489174-8860-9008-2036489174-8800-9010-2036489174-0-10697|Poly),NetworkProps>": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "Feature"
+        },
+        "id": {
+          "type": "string"
+        },
+        "geometry": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "Point"
+                },
+                "coordinates": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "coordinates"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "LineString"
+                },
+                "coordinates": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "type",
+                "coordinates"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "$ref": "#/definitions/Poly"
+            }
+          ]
+        },
+        "properties": {
+          "$ref": "#/definitions/NetworkProps"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "geometry",
+        "properties"
+      ],
+      "additionalProperties": false
+    },
+    "Poly": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "Polygon"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "type",
+            "coordinates"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "MultiPolygon"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "type",
+            "coordinates"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "NetworkProps": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "plant",
+            "customer",
+            "route",
+            "corridor"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "quality": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PositionQuality"
+            },
+            {
+              "type": "string",
+              "const": "known_customer"
+            },
+            {
+              "type": "string",
+              "const": "approx_route"
+            },
+            {
+              "type": "string",
+              "const": "illustrative_route"
+            }
+          ]
+        }
+      },
+      "required": [
+        "role",
+        "name",
+        "quality"
+      ],
+      "additionalProperties": false
+    },
+    "PositionQuality": {
+      "type": "string",
+      "enum": [
+        "address",
+        "approximate",
+        "illustrative"
+      ]
+    }
+  }
+}

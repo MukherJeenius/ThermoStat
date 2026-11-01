@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/ConnectionsFile",
+  "definitions": {
+    "ConnectionsFile": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/HeatConnection"
+      }
+    },
+    "HeatConnection": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "facilityId": {
+          "type": "string"
+        },
+        "recipientName": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/Position"
+        },
+        "target": {
+          "$ref": "#/definitions/Position"
+        },
+        "kind": {
+          "$ref": "#/definitions/ConnectionKind"
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "recipientId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phase": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "targetQuality": {
+          "$ref": "#/definitions/PositionQuality"
+        }
+      },
+      "required": [
+        "id",
+        "facilityId",
+        "recipientName",
+        "source",
+        "target",
+        "kind",
+        "evidenceIds",
+        "synthetic",
+        "recipientId",
+        "phase",
+        "targetQuality"
+      ],
+      "additionalProperties": false
+    },
+    "Position": {
+      "type": "array",
+      "minItems": 2,
+      "items": [
+        {
+          "type": "number",
+          "title": "longitude"
+        },
+        {
+          "type": "number",
+          "title": "latitude"
+        }
+      ],
+      "maxItems": 2,
+      "description": "ThermoStat data contract. Extends design/handoff/code/data-contract.ts; handoff names are unchanged. Timestamps and dates are ISO 8601. Unknown values are null, never 0 or ''."
+    },
+    "ConnectionKind": {
+      "type": "string",
+      "enum": [
+        "scenario",
+        "proposed",
+        "operational"
+      ]
+    },
+    "PositionQuality": {
+      "type": "string",
+      "enum": [
+        "address",
+        "approximate",
+        "illustrative"
+      ]
+    }
+  }
+}
