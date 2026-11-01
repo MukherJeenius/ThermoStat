@@ -5,7 +5,7 @@ import { defineConfig } from 'vitest/config';
 // Production only: the dev server needs its websocket (spec 3.5).
 const CSP =
   "default-src 'self'; img-src 'self' data: blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; " +
-  "font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'";
+  "font-src 'self'; connect-src 'self' data:; object-src 'none'; base-uri 'self'";
 
 function contentSecurityPolicy(): Plugin {
   return {
