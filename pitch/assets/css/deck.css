@@ -344,3 +344,19 @@ body.overview *, body.overview *::before { animation: none !important; }
 .gsap .draw { transition: none; stroke-dasharray: none; stroke-dashoffset: 0; }
 .gsap .mask { overflow: visible; }
 .gsap .w-mask { padding: .06em 0 .2em; margin: -.06em 0 -.2em; }
+
+/* ---------- competition · business model ---------- */
+.cmp { position: absolute; left: 96px; right: 96px; top: 520px; display: grid; grid-template-columns: 1fr 1fr; gap: 96px; }
+.cmp-col { border-top: 2px solid var(--line); padding-top: 34px; }
+.cmp-col.us { border-top-color: var(--amber); }
+.cmp-col .n { font-size: 15px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 26px; }
+.cmp-col ul, .cmp-col ol { list-style: none; margin: 0; padding: 0; }
+.cmp-col li { font-size: 34px; letter-spacing: -.02em; line-height: 1.55; color: var(--muted); }
+.cmp-col.us li { color: var(--ink); font-weight: 500; }
+.cmp-col ol { counter-reset: s; }
+.cmp-col ol li { counter-increment: s; }
+.cmp-col ol li::before { content: '0' counter(s) '  '; font-size: 18px; color: var(--amber); letter-spacing: .1em; font-weight: 400; margin-right: 18px; }
+.stages.two { grid-template-columns: 1fr 1fr; top: 520px; }
+.stages.two .stage-i .t { font-size: 120px; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.stages.two .stage-i .per { margin-left: .2em; font-size: .3em; color: var(--muted); letter-spacing: -.01em; }
+.h .dim { color: #b1ada4; }
