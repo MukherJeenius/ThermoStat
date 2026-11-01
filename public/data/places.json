@@ -1,0 +1,106 @@
+[
+ {
+  "kind": "neighbourhood",
+  "name": "Bartonville",
+  "position": [
+   -79.808278,
+   43.234804
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Beasley",
+  "position": [
+   -79.861012,
+   43.259204
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Buchanan",
+  "position": [
+   -79.896646,
+   43.233216
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Corktown",
+  "position": [
+   -79.868619,
+   43.250681
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Durand",
+  "position": [
+   -79.876804,
+   43.250911
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Hess Village",
+  "position": [
+   -79.877745,
+   43.258145
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Inch Park",
+  "position": [
+   -79.861595,
+   43.23806
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Kirkendall North",
+  "position": [
+   -79.886566,
+   43.253264
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Kirkendall South",
+  "position": [
+   -79.889944,
+   43.247663
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Normanhurst",
+  "position": [
+   -79.800081,
+   43.242027
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "North End",
+  "position": [
+   -79.857872,
+   43.269583
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "Strathcona",
+  "position": [
+   -79.883062,
+   43.261677
+  ]
+ },
+ {
+  "kind": "neighbourhood",
+  "name": "The Delta",
+  "position": [
+   -79.824152,
+   43.243622
+  ]
+ }
+]

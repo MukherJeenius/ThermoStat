@@ -1,0 +1,539 @@
+[
+ {
+  "address": null,
+  "commitments": [
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "study-phase12-route",
+    "interpretation": null,
+    "question": "Which buildings have committed so far?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "It would begin with underground pipe connections from waste heat suppliers in Hamilton’s Bayfront Industrial Area to the Hamilton General Hospital campus in Phase 1, followed by an extension to HCE’s existing downtown district energy system in Phase 2.",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-study-phase12-route",
+     "licence": null,
+     "page": "5",
+     "pdfPageIndex": 5,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "proposed",
+    "summary": "A proposed network. Customers still to commit.",
+    "title": "Heat for Hamilton General, then downtown",
+    "topic": "heat"
+   },
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "study-phase12-volume",
+    "interpretation": null,
+    "question": "How much of that demand is already signed?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "For Phases 1 and 2, an annual demand of 65,000 MWh with a peak of 18 MW was estimated.",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-study-phase12-volume",
+     "licence": null,
+     "page": "24",
+     "pdfPageIndex": 24,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "proposed",
+    "summary": "About 65,000 MWh a year and an 18 MW peak, as estimated.",
+    "title": "Phases 1 and 2, sized",
+    "topic": "heat"
+   },
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "study-emissions-80",
+    "interpretation": null,
+    "question": "Which phase has funding committed?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "When these initial five phases are complete, the DES will meet an annual heating demand of 143,000 MWh, with a peak demand of 51 MW, and reduce annual GHG emissions by more than 27,000 tonnes or 80% from business-as-usual.",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-study-emissions-80",
+     "licence": null,
+     "page": "5",
+     "pdfPageIndex": 5,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "proposed",
+    "summary": "Five phases over about ten years, if they are built.",
+    "title": "About 80 % less CO2 at full build-out",
+    "topic": "emissions"
+   },
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "study-commercialization",
+    "interpretation": null,
+    "question": "Has the Commercialization Phase started?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "Based on the positive results of this Study, the key next step toward building Canada’s Thermal Corridor is to proceed with a pre-construction Commercialization Phase of development. In this phase, the proven business case will evolve with greater Project certainty by firming up supply and demand, securing funding and financing, and refining engineering.",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-study-commercialization",
+     "licence": null,
+     "page": "7",
+     "pdfPageIndex": 7,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "proposed",
+    "summary": "The study's own next step is to firm up suppliers and customers.",
+    "title": "Next step, commitments",
+    "topic": "heat"
+   },
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "study-capex-32",
+    "interpretation": null,
+    "question": "Has the cost been funded?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "Capital cost estimates for Phases 1 and 2 were 32% higher than noted in the Conceptual Design Report.",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-study-capex-32",
+     "licence": null,
+     "page": "25",
+     "pdfPageIndex": 25,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "reported",
+    "summary": "The capital estimate came in about a third above the earlier design.",
+    "title": "Phase 1 and 2 cost estimate",
+    "topic": "energy"
+   },
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "study-no-green-premium",
+    "interpretation": null,
+    "question": "What rate would a new customer be quoted?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "No green premiums that might negatively impact commercial viability",
+     "excerptNormalisation": "none",
+     "humanCheck": null,
+     "id": "src-study-no-green-premium",
+     "licence": null,
+     "page": "18",
+     "pdfPageIndex": 18,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "proposed",
+    "summary": "Heat would be priced like a gas boiler, not above it.",
+    "title": "Priced against gas, no green premium",
+    "topic": "heat"
+   }
+  ],
+  "id": "hce-recovery-plant",
+  "kind": "energy_plant",
+  "locality": "Bayfront, Hamilton, Ontario",
+  "mapLabel": "Proposed recovery plant",
+  "name": "Central Energy Recovery Plant (proposed)",
+  "operator": "Hamilton Community Enterprises",
+  "position": [
+   -79.815784,
+   43.267605
+  ],
+  "positionQuality": "illustrative",
+  "synthetic": false
+ },
+ {
+  "address": "79 Bay St N",
+  "commitments": [
+   {
+    "holder": "FVB Energy (project page)",
+    "id": "downtown-buildings",
+    "interpretation": null,
+    "question": "Which buildings could join next?",
+    "source": {
+     "docKind": "html",
+     "documentDate": null,
+     "excerpt": "12 Connected Buildings, over 2M sq. ft. of commercial, institutional and residential customers",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-downtown-buildings",
+     "licence": null,
+     "page": null,
+     "pdfPageIndex": null,
+     "publisher": "FVB Energy",
+     "retrievedAt": "2026-10-31",
+     "sha256": "b427348482b8bb85338a9df01c762471d61cb2496249879f333a7d2183bf2366",
+     "shortTitle": "FVB Energy project page",
+     "synthetic": false,
+     "title": "Hamilton Community Energy District Energy System",
+     "url": "https://fvbenergy.com/astra-portfolio/hamilton-community-des/"
+    },
+    "status": "reported",
+    "summary": "About 12 downtown buildings take heat from this plant today.",
+    "title": "Downtown buildings served",
+    "topic": "heat"
+   },
+   {
+    "holder": "FVB Energy (project page)",
+    "id": "downtown-chp",
+    "interpretation": null,
+    "question": "When would industrial heat replace gas here?",
+    "source": {
+     "docKind": "html",
+     "documentDate": null,
+     "excerpt": "An additional feature is the incorporation of 3.5 MW of gas fired combined heat and power engine into the plant design.",
+     "excerptNormalisation": "none",
+     "humanCheck": null,
+     "id": "src-downtown-chp",
+     "licence": null,
+     "page": null,
+     "pdfPageIndex": null,
+     "publisher": "FVB Energy",
+     "retrievedAt": "2026-10-31",
+     "sha256": "b427348482b8bb85338a9df01c762471d61cb2496249879f333a7d2183bf2366",
+     "shortTitle": "FVB Energy project page",
+     "synthetic": false,
+     "title": "Hamilton Community Energy District Energy System",
+     "url": "https://fvbenergy.com/astra-portfolio/hamilton-community-des/"
+    },
+    "status": "reported",
+    "summary": "The plant runs on natural gas today.",
+    "title": "Gas combined heat and power",
+    "topic": "energy"
+   },
+   {
+    "holder": "City of Hamilton (climate plan, 2022 draft)",
+    "id": "downtown-ceep",
+    "interpretation": null,
+    "question": "Is this action in the final plan's budget?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": null,
+     "excerpt": "With its partners, the City can work towards decarbonizing and expanding the downtown district energy system, drawing on RNG and industrial residual heat.",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-downtown-ceep",
+     "licence": null,
+     "page": "42",
+     "pdfPageIndex": 42,
+     "publisher": "City of Hamilton",
+     "retrievedAt": "2026-10-31",
+     "sha256": "01ffab37906cf00bfe0dd16f616b2bee5e320ecbef0331a3cda7bea1c1363224",
+     "shortTitle": "City climate plan (CEEP), 2022 draft",
+     "synthetic": false,
+     "title": "ReCharge Hamilton: Our Community Energy and Emissions Plan, 2022 draft (Appendix A to Report PED22058/HSC22030)",
+     "url": "https://hamiltoncivicmuseums.ca/wp-content/uploads/2022/09/Rechargehamilton-draft-our-community-energy-emissions-plan-compressed-1.pdf"
+    },
+    "status": "proposed",
+    "summary": "The City's climate plan names this system for residual heat.",
+    "title": "City plan, decarbonize and expand",
+    "topic": "emissions"
+   }
+  ],
+  "id": "hce-downtown-plant",
+  "kind": "energy_plant",
+  "locality": "Downtown Hamilton, Ontario",
+  "mapLabel": "HCE plant, 79 Bay St N",
+  "name": "HCE downtown plant, 79 Bay St N",
+  "operator": "Hamilton Community Enterprises",
+  "position": [
+   -79.873207,
+   43.260706
+  ],
+  "positionQuality": "address",
+  "synthetic": false
+ },
+ {
+  "address": null,
+  "commitments": [
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "dofasco-source",
+    "interpretation": null,
+    "question": "Has a heat supply agreement been signed?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "Unlevered Internal Rates of Return (UIRR) were determined for a low temperature waste heat source (Air Liquide ~ 11.5%) and a high temperature waste heat source (ArcelorMittal Dofasco ~ 14.3%).",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-dofasco-source",
+     "licence": null,
+     "page": "16",
+     "pdfPageIndex": 16,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "proposed",
+    "summary": "A high-temperature source in the study's business case.",
+    "title": "Named as a waste-heat source",
+    "topic": "heat"
+   },
+   {
+    "holder": null,
+    "id": "dofasco-agreement",
+    "interpretation": null,
+    "question": "Has a heat supply agreement been signed?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public record of a signed heat supply agreement.",
+    "title": "Supply agreement",
+    "topic": "heat"
+   }
+  ],
+  "id": "dofasco",
+  "kind": "industrial_source",
+  "locality": "Bayfront, Hamilton, Ontario",
+  "mapLabel": "ArcelorMittal Dofasco",
+  "name": "ArcelorMittal Dofasco",
+  "operator": "ArcelorMittal Dofasco",
+  "position": [
+   -79.794832,
+   43.269014
+  ],
+  "positionQuality": "approximate",
+  "synthetic": false
+ },
+ {
+  "address": null,
+  "commitments": [
+   {
+    "holder": "HCE (Energy Harvesting Study)",
+    "id": "airliquide-source",
+    "interpretation": null,
+    "question": "Has a heat supply agreement been signed?",
+    "source": {
+     "docKind": "pdf",
+     "documentDate": "2025-05-25",
+     "excerpt": "Unlevered Internal Rates of Return (UIRR) were determined for a low temperature waste heat source (Air Liquide ~ 11.5%) and a high temperature waste heat source (ArcelorMittal Dofasco ~ 14.3%).",
+     "excerptNormalisation": "whitespace",
+     "humanCheck": null,
+     "id": "src-airliquide-source",
+     "licence": null,
+     "page": "16",
+     "pdfPageIndex": 16,
+     "publisher": "Hamilton Community Enterprises",
+     "retrievedAt": "2026-10-31",
+     "sha256": "6e3208617e139f555fab91521c2c5eb1e78aa45215646a185997b43517975cd5",
+     "shortTitle": "Energy Harvesting Study, Summary",
+     "synthetic": false,
+     "title": "Hamilton Energy Harvesting Study, Summary Report",
+     "url": "https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf"
+    },
+    "status": "proposed",
+    "summary": "A low-temperature source in the study's business case.",
+    "title": "Named as a waste-heat source",
+    "topic": "heat"
+   },
+   {
+    "holder": null,
+    "id": "airliquide-agreement",
+    "interpretation": null,
+    "question": "Has a heat supply agreement been signed?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public record of a signed heat supply agreement.",
+    "title": "Supply agreement",
+    "topic": "heat"
+   }
+  ],
+  "id": "air-liquide",
+  "kind": "industrial_source",
+  "locality": "Bayfront, Hamilton, Ontario",
+  "mapLabel": "Air Liquide",
+  "name": "Air Liquide, Hamilton (Bayfront)",
+  "operator": "Air Liquide",
+  "position": [
+   -79.836736,
+   43.266196
+  ],
+  "positionQuality": "approximate",
+  "synthetic": false
+ },
+ {
+  "address": "21 King St W",
+  "commitments": [
+   {
+    "holder": null,
+    "id": "dc21-heat",
+    "interpretation": null,
+    "question": "Is this site's waste heat reused anywhere?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public, site-specific record of heat reuse.",
+    "title": "Heat reuse",
+    "topic": "heat"
+   },
+   {
+    "holder": null,
+    "id": "dc21-water",
+    "interpretation": null,
+    "question": "Does this site report its water use anywhere public?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public, site-specific record of water use.",
+    "title": "Water use",
+    "topic": "water"
+   },
+   {
+    "holder": null,
+    "id": "dc21-energy",
+    "interpretation": null,
+    "question": "Does this site report its energy use anywhere public?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public, site-specific record of energy use.",
+    "title": "Energy use",
+    "topic": "energy"
+   }
+  ],
+  "id": "dc-21-king-w",
+  "kind": "data_centre",
+  "locality": "Downtown Hamilton, Ontario",
+  "mapLabel": "Data centres, 21 King W",
+  "name": "Data centres at 21 King St W (NetAccess; HCE Telecom)",
+  "operator": "NetAccess Systems; HCE Telecom (Hamilton Utilities Corporation)",
+  "position": [
+   -79.884155,
+   43.260741
+  ],
+  "positionQuality": "address",
+  "synthetic": false
+ },
+ {
+  "address": "100 King St W",
+  "commitments": [
+   {
+    "holder": null,
+    "id": "dc100-heat",
+    "interpretation": null,
+    "question": "Who operates this site today, and is its heat reused?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public, site-specific record of heat reuse.",
+    "title": "Heat reuse",
+    "topic": "heat"
+   },
+   {
+    "holder": null,
+    "id": "dc100-water",
+    "interpretation": null,
+    "question": "Does this site report its water use anywhere public?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public, site-specific record of water use.",
+    "title": "Water use",
+    "topic": "water"
+   },
+   {
+    "holder": null,
+    "id": "dc100-energy",
+    "interpretation": null,
+    "question": "Does this site report its energy use anywhere public?",
+    "source": null,
+    "status": "unknown",
+    "summary": "No public, site-specific record of energy use.",
+    "title": "Energy use",
+    "topic": "energy"
+   }
+  ],
+  "id": "dc-100-king-w",
+  "kind": "data_centre",
+  "locality": "Downtown Hamilton, Ontario",
+  "mapLabel": "Data centre, 100 King W",
+  "name": "Data centre at 100 King St W",
+  "operator": null,
+  "position": [
+   -79.870193,
+   43.257343
+  ],
+  "positionQuality": "address",
+  "synthetic": false
+ },
+ {
+  "address": null,
+  "commitments": [
+   {
+    "holder": null,
+    "id": "demo-heat",
+    "interpretation": null,
+    "question": "Has a heat customer been identified?",
+    "source": null,
+    "status": "unknown",
+    "summary": "A proposed connection. A delivery still to verify.",
+    "title": "Heat reuse",
+    "topic": "heat"
+   },
+   {
+    "holder": null,
+    "id": "demo-water",
+    "interpretation": null,
+    "question": "What operating data would allow the estimate to be checked?",
+    "source": null,
+    "status": "unknown",
+    "summary": "The operating figure is not available in this demo.",
+    "title": "Water demand",
+    "topic": "water"
+   }
+  ],
+  "id": "demo-bayfront",
+  "kind": "data_centre",
+  "locality": "Hamilton, Ontario (illustrative location)",
+  "mapLabel": "Bayfront Compute",
+  "name": "Bayfront Compute",
+  "operator": null,
+  "position": [
+   -79.8663,
+   43.2557
+  ],
+  "positionQuality": "illustrative",
+  "synthetic": true
+ }
+]

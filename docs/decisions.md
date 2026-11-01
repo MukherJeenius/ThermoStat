@@ -136,3 +136,9 @@ Node 26.5.1, npm 11.17.0. `pmtiles` CLI 1.31.2 installed with Homebrew.
   app code stays free of Node globals.
 - Explicit table roles (`role="table"`, `row`, `cell`, `columnheader`) are kept as spec 9.6 requires;
   jsx-a11y's `no-redundant-roles` and `no-interactive-element-to-noninteractive-role` allow them for table elements.
+- **Arc height tuned** (spec 9.3 calls it a starting value): h = clamp(0.2 × ground distance, 120 m, 800 m) instead of
+  clamp(0.45 × d, 150 m, 1,500 m). With the recovery plant about 5 km east of downtown, the starting value sent its
+  arcs off the top of the screen as near-vertical lines at pitch 50°.
+- The brief cites the study passages behind the price rule (page 18), the route (page 5) and the CO2 share (page 5).
+- In the candidates-only mode the brief's locator shows the recipient and the nearest network element without
+  surrounding context footprints (`context-buildings.geojson` is empty until the full-frame fetch completes).

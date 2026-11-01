@@ -1,0 +1,633 @@
+[
+ {
+  "evidenceIds": [],
+  "facilityId": "demo-bayfront",
+  "id": "demo-connection-01",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "Illustrative housing cluster",
+  "source": [
+   -79.8663,
+   43.2557
+  ],
+  "synthetic": true,
+  "target": [
+   -79.8784,
+   43.2588
+  ],
+  "targetQuality": "illustrative"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-hce-venues"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-art-gallery",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "Art Gallery of Hamilton",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.872494,
+   43.257119
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-hce"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-braley-hsc",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "David Braley Health Sciences Centre",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.873543,
+   43.256741
+  ],
+  "targetQuality": "address"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-hce",
+   "src-customers-fvb"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-city-hall",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "Hamilton City Hall",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.87334,
+   43.255507
+  ],
+  "targetQuality": "address"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-hce-venues"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-concert-hall",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "FirstOntario Concert Hall (Hamilton Place)",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.871726,
+   43.256287
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-hce-venues"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-convention-centre",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "Hamilton Convention Centre",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.871726,
+   43.256287
+  ],
+  "targetQuality": "address"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-fvb"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-first-ontario-centre",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "FirstOntario Centre (TD Coliseum)",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.872196,
+   43.259095
+  ],
+  "targetQuality": "address"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-fvb"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-jackson-square",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "Jackson Square",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.871602,
+   43.258129
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-fvb"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-lister-block",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "Lister Block",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.8682,
+   43.257797
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [
+   "src-customers-hce"
+  ],
+  "facilityId": "hce-downtown-plant",
+  "id": "op-police-isf",
+  "kind": "operational",
+  "phase": null,
+  "recipientId": null,
+  "recipientName": "Hamilton Police ISF",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.860865,
+   43.256203
+  ],
+  "targetQuality": "address"
+ },
+ {
+  "evidenceIds": [
+   "src-study-phase12-route"
+  ],
+  "facilityId": "hce-recovery-plant",
+  "id": "prop-downtown-plant",
+  "kind": "proposed",
+  "phase": "Phase 2",
+  "recipientId": null,
+  "recipientName": "HCE downtown plant, 79 Bay St N",
+  "source": [
+   -79.815784,
+   43.267605
+  ],
+  "synthetic": false,
+  "target": [
+   -79.873207,
+   43.260706
+  ],
+  "targetQuality": "address"
+ },
+ {
+  "evidenceIds": [
+   "src-study-phase12-route"
+  ],
+  "facilityId": "hce-recovery-plant",
+  "id": "prop-hamilton-general",
+  "kind": "proposed",
+  "phase": "Phase 1",
+  "recipientId": null,
+  "recipientName": "Hamilton General Hospital",
+  "source": [
+   -79.815784,
+   43.267605
+  ],
+  "synthetic": false,
+  "target": [
+   -79.855433,
+   43.262313
+  ],
+  "targetQuality": "address"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-01",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/122209265",
+  "recipientName": "Sir Isaac Brock Building",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.873815,
+   43.259454
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-02",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/43939696",
+  "recipientName": "Hamilton Police - Central Station",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.862557,
+   43.25615
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-03",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/167846004",
+  "recipientName": "Hamilton City Centre",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.869145,
+   43.258381
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-04",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/1016595080",
+  "recipientName": "Kiwi Condos",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.860699,
+   43.25506
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-05",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/346098906",
+  "recipientName": "Regency on Main",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.875641,
+   43.257179
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-06",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/31788071",
+  "recipientName": "Standard Life Centre",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.872984,
+   43.258297
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-07",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/167926606",
+  "recipientName": "Sheraton",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.872093,
+   43.257949
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-08",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/43940188",
+  "recipientName": "Unnamed building",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.860775,
+   43.257542
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-09",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/1318555317",
+  "recipientName": "75 James Street South",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.869343,
+   43.254553
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-recovery-plant",
+  "id": "scn-10",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/122212056",
+  "recipientName": "Unnamed building, 192 Hughson Street North",
+  "source": [
+   -79.815784,
+   43.267605
+  ],
+  "synthetic": false,
+  "target": [
+   -79.865023,
+   43.261627
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-11",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/838318760",
+  "recipientName": "The Martinique",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.873822,
+   43.25289
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-12",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/31788234",
+  "recipientName": "Fontainebleau",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.876498,
+   43.254777
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-13",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/31788251",
+  "recipientName": "Bay 100",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.875306,
+   43.255241
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-recovery-plant",
+  "id": "scn-14",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/122212053",
+  "recipientName": "Unnamed building, 181 John Street North",
+  "source": [
+   -79.815784,
+   43.267605
+  ],
+  "synthetic": false,
+  "target": [
+   -79.864661,
+   43.261141
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-recovery-plant",
+  "id": "scn-15",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/838614032",
+  "recipientName": "Ron Joyce Children's Health Centre",
+  "source": [
+   -79.815784,
+   43.267605
+  ],
+  "synthetic": false,
+  "target": [
+   -79.855894,
+   43.263684
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-recovery-plant",
+  "id": "scn-16",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/691109725",
+  "recipientName": "Unnamed building",
+  "source": [
+   -79.815784,
+   43.267605
+  ],
+  "synthetic": false,
+  "target": [
+   -79.86743,
+   43.261547
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-17",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/43940372",
+  "recipientName": "Unnamed building, 44 Queen Street North",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.87776,
+   43.260606
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-18",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/1054212089",
+  "recipientName": "Walnut Place",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.863417,
+   43.253547
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-19",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/968341361",
+  "recipientName": "Marquee Residence",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.875446,
+   43.257752
+  ],
+  "targetQuality": "approximate"
+ },
+ {
+  "evidenceIds": [],
+  "facilityId": "hce-downtown-plant",
+  "id": "scn-20",
+  "kind": "scenario",
+  "phase": null,
+  "recipientId": "osm:way/31788064",
+  "recipientName": "Unnamed building",
+  "source": [
+   -79.873207,
+   43.260706
+  ],
+  "synthetic": false,
+  "target": [
+   -79.876302,
+   43.256306
+  ],
+  "targetQuality": "approximate"
+ }
+]

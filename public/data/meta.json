@@ -1,0 +1,136 @@
+{
+ "analysisBbox": [
+  -79.88093,
+  43.25011,
+  -79.80839,
+  43.27301
+ ],
+ "calibration": [
+  {
+   "bpsRatio": 0.24,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": 80.4,
+   "n": 585,
+   "type": "office",
+   "used": false,
+   "year": 2024
+  },
+  {
+   "bpsRatio": 0.09,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": 134.0,
+   "n": 66,
+   "type": "multi_res",
+   "used": true,
+   "year": 2024
+  },
+  {
+   "bpsRatio": null,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": 134.0,
+   "n": 27,
+   "type": "retail",
+   "used": true,
+   "year": 2024
+  },
+  {
+   "bpsRatio": null,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": 107.2,
+   "n": 7,
+   "type": "school",
+   "used": false,
+   "year": 2024
+  },
+  {
+   "bpsRatio": null,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": 160.8,
+   "n": 11,
+   "type": "hotel",
+   "used": true,
+   "year": 2024
+  },
+  {
+   "bpsRatio": 0.77,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": 160.8,
+   "n": 9,
+   "type": "civic",
+   "used": true,
+   "year": 2024
+  },
+  {
+   "bpsRatio": 1.51,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": null,
+   "n": 0,
+   "type": "hospital",
+   "used": false,
+   "year": 2024
+  },
+  {
+   "bpsRatio": 0.97,
+   "column": "WN_Sit_Gas_Int2 (m3/m2) × 10.36 kWh/m3 × 0.85",
+   "medianKwhM2": 107.2,
+   "n": 46,
+   "type": "mixed",
+   "used": true,
+   "year": 2024
+  }
+ ],
+ "counts": {
+  "buildings": 375,
+  "byQuality": {
+   "actual": 7,
+   "checked": 334,
+   "estimate": 34
+  },
+  "connectionsByKind": {
+   "operational": 9,
+   "proposed": 2,
+   "scenario": 20
+  },
+  "facilities": 7,
+  "recipients": 375,
+  "synthetic": 2
+ },
+ "defaultFacilityId": "hce-recovery-plant",
+ "demoRecipientId": "osm:way/43939696",
+ "evidence": {
+  "claims": 22,
+  "found": 14,
+  "humanChecked": 0,
+  "unknown": 8
+ },
+ "frameBbox": [
+  -79.9,
+  43.23,
+  -79.77,
+  43.29
+ ],
+ "generatedAt": "2026-11-01T03:40:04Z",
+ "osmBase": "2026-11-01T03:40:04Z",
+ "protomapsBuild": "20261031",
+ "rampBreaksMwh": [
+  119.0,
+  229.0,
+  439.0,
+  1166.0
+ ],
+ "retrieved": {
+  "bps": "2026-10-31",
+  "ceep-draft": "2026-10-31",
+  "ewrb": "2026-10-31",
+  "fvb-hamilton": "2026-10-31",
+  "hce-ap-progress": "2026-10-31",
+  "hce-full": "2026-10-31",
+  "hce-mcmaster-policy": "2026-10-31",
+  "hce-mohawk-storage": "2026-10-31",
+  "hce-network": "2026-10-31",
+  "hce-overview": "2026-10-31",
+  "hce-summary": "2026-10-31",
+  "peeringdb-hce-telecom": "2026-10-31",
+  "peeringdb-netaccess": "2026-10-31"
+ }
+}

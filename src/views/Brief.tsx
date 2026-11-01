@@ -131,7 +131,10 @@ export function Brief({ recipient: r, comparison: c, data, engine }: { recipient
   const by = boilerYear(r.boilerYearsLeft);
   const edited = c.assumptions === 'edited';
   const srcById = useMemo(() => new Map(data.sources.map((s) => [s.id, s])), [data.sources]);
-  const studyCites = data.sources.filter((s) => s.docKind === 'pdf' && s.id.startsWith('src-study-')).slice(0, 3);
+  // the study passages behind the price rule, the route and the CO2 share
+  const studyCites = ['src-study-no-green-premium', 'src-study-phase12-route', 'src-study-emissions-80']
+    .map((id) => srcById.get(id))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s));
   const print = async () => {
     await document.fonts.ready;
     window.print();

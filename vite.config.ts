@@ -20,7 +20,8 @@ function contentSecurityPolicy(): Plugin {
 export default defineConfig({
   base: './',
   plugins: [react(), contentSecurityPolicy()],
-  build: { target: 'es2022', chunkSizeWarningLimit: 2500 },
+  // never inline assets as data: URIs (the production CSP allows fonts from 'self' only)
+  build: { target: 'es2022', chunkSizeWarningLimit: 2500, assetsInlineLimit: 0 },
   test: {
     environment: 'jsdom',
     setupFiles: ['src/test/setup.ts'],

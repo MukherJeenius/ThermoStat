@@ -1,0 +1,135 @@
+{
+ "boilerCapexKw": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "$/kW",
+  "value": 250,
+  "verify": false
+ },
+ "boilerEff": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "fraction",
+  "value": 0.85,
+  "verify": false
+ },
+ "boilerLife": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "years",
+  "value": 25,
+  "verify": false
+ },
+ "carbonPriceT": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "$/t CO2",
+  "value": 0,
+  "verify": false
+ },
+ "connectionFeeOn": {
+  "date": "2026-10-31",
+  "sourceId": "hce-full",
+  "unit": "0 or 1",
+  "value": 0,
+  "verify": false
+ },
+ "discountRate": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "a year",
+  "value": 0.05,
+  "verify": false
+ },
+ "elecPriceKwh": {
+  "date": "2026-10-31",
+  "sourceId": "oeb-rates",
+  "unit": "$/kWh",
+  "value": 0.15,
+  "verify": true
+ },
+ "elecUpgradeKw": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "$/kW",
+  "value": 150,
+  "verify": false
+ },
+ "fullLoadHoursBuilding": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "h",
+  "value": 2000,
+  "verify": false
+ },
+ "fullLoadHoursNetwork": {
+  "date": "2026-10-31",
+  "sourceId": "hce-summary",
+  "unit": "h",
+  "value": 3600,
+  "verify": false
+ },
+ "gasPriceM3": {
+  "date": "2026-10-31",
+  "sourceId": "enbridge-rates",
+  "unit": "$/m³",
+  "value": 0.32,
+  "verify": true
+ },
+ "hceCo2Share": {
+  "date": "2026-10-31",
+  "sourceId": "hce-summary",
+  "unit": "of the gas option",
+  "value": 0.2,
+  "verify": false
+ },
+ "hceRateAdj": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "fraction of gas parity",
+  "value": 0,
+  "verify": false
+ },
+ "hpCapexKw": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "$/kW",
+  "value": 1800,
+  "verify": false
+ },
+ "hpCop": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "seasonal COP",
+  "value": 2.8,
+  "verify": false
+ },
+ "hpCopDesign": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "design-day COP",
+  "value": 2.0,
+  "verify": false
+ },
+ "kwhPerM3": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "kWh/m³",
+  "value": 10.36,
+  "verify": false
+ },
+ "maintGas": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "of boiler capex a year",
+  "value": 0.02,
+  "verify": false
+ },
+ "maintHp": {
+  "date": "2026-10-31",
+  "sourceId": null,
+  "unit": "of heat-pump capex a year",
+  "value": 0.03,
+  "verify": false
+ }
+}

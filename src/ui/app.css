@@ -195,3 +195,4 @@ button{font:inherit}
 .ts-brief-title h1{margin:0 0 4pt}
 .ts-brief-head{padding-bottom:6pt;margin-bottom:8pt}
 .ts-page .ts-facts{grid-template-columns:minmax(140px,auto) 1fr}.ts-page .ts-facts dd{text-align:left}
+.ts-legend-slot>.ts-panel{width:100%;max-width:none}
