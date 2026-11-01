@@ -266,3 +266,23 @@ studio site's framed plates and the Tapasya shop's colour blocks:
     orange block.
   - The homepage puts a cream lead beside a navy figure field, then three solid figure tiles and three framed steps.
 - **Copy**: shorter headings and one idea per block. Every figure, source and honesty label is kept.
+
+## Rhythm and motion (1 November 2026)
+
+Follows the portfolio and storytelling references; only their mechanics are borrowed.
+
+- **Spacing**: one scale (`--s1` to `--s9`, from 4 px to 96 px) used by every section.
+- **Homepage figure**: an annotated plate (`HeroPlate`). It draws real positions, with heat halos and curved arcs.
+  Facilities are named in a callout column. A facility outside the frame is drawn as an edge marker that gives its
+  true distance.
+- **Homepage motion**:
+  - headline words rise line by line
+  - the navy field wipes in
+  - the arcs draw themselves and the buildings pop
+  - the figure tiles count up
+  - the figure moves with a light parallax
+  - a progress bar runs along the sticky masthead
+  - the three steps pin and stack beside a pinned navy key
+- **Route motion**: pages rise into place, page titles are revealed by a wipe, and the Explore rail and card slide in.
+- **Implementation**: plain CSS and a small scroll hook, with no library. It works offline, and all of it stops
+  under `prefers-reduced-motion`.

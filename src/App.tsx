@@ -549,7 +549,7 @@ export function App() {
               excerpts: facilities.reduce((n, f) => n + f.commitments.filter((c) => c.source).length, 0),
             } : null}
             figure={data ? {
-              facilities: facilities.map((f) => f.position),
+              facilities: facilities.map((f) => ({ name: f.name, at: f.position })),
               buildings: recipients.filter((r) => r.rank).map((r) => r.position),
               arcs: connections.map((c) => [c.source, c.target]),
             } : null}

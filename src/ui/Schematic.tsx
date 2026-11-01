@@ -26,9 +26,9 @@ export function Schematic({ fig }: { fig: SchematicData }) {
       <rect width={W} height={H} fill={MAP.ground} />
       {fig.arcs.map(([a, b], i) => {
         const [ax, ay] = px(a); const [bx, by] = px(b);
-        return <line key={i} x1={ax} y1={ay} x2={bx} y2={by} stroke={MAP.attention} strokeWidth="1.25" opacity="0.85" />;
+        return <line key={i} pathLength={1} style={{ ['--i' as string]: i }} x1={ax} y1={ay} x2={bx} y2={by} stroke={MAP.attention} strokeWidth="1.25" opacity="0.85" />;
       })}
-      {fig.buildings.map((p, i) => { const [x, y] = px(p); return <circle key={i} cx={x} cy={y} r="3" fill={MAP.secondary} />; })}
+      {fig.buildings.map((p, i) => { const [x, y] = px(p); return <circle key={i} style={{ ['--i' as string]: i }} cx={x} cy={y} r="3" fill={MAP.secondary} />; })}
       {fig.facilities.map((p, i) => {
         const [x, y] = px(p);
         return <g key={i}><rect x={x - 6.5} y={y - 6.5} width="13" height="13" fill={MAP.surface} /><rect x={x - 5} y={y - 5} width="10" height="10" fill={MAP.attention} /></g>;

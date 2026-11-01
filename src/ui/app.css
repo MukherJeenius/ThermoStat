@@ -913,3 +913,148 @@ figcaption{font-family:var(--ts-mono)!important;font-size:11px!important;letter-
 .ts-doc-fig{background:var(--ts-bg)}
 .ts-doc-fig svg{width:100%}
 @media (max-width:640px){.ts-hm-tile:first-child{padding-left:16px}}
+
+/* =====================================================================================================
+   Rhythm and motion (1 November 2026). One spacing scale for every section, and motion borrowed as mechanics from
+   the portfolio and storytelling references: headline words rise line by line, the figure draws itself, figures
+   count up, steps pin and stack as you scroll, a progress bar runs along the masthead, routes rise into place.
+   Expo-out easing, nothing faster than 450 ms on entrances. All of it stops under prefers-reduced-motion.
+   ===================================================================================================== */
+:root{--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;--ts-out:cubic-bezier(.16,1,.3,1);--ts-wrap:1200px}
+/* homepage rhythm: content aligns to one 1200 px column; every block uses the scale */
+.ts-hm-mast{position:sticky;top:0;z-index:5;background:var(--ts-bg)}
+.ts-hm-mast::after{content:'';position:absolute;left:0;bottom:-1.5px;height:3px;width:100%;background:var(--ts-flare);transform-origin:left;transform:scaleX(var(--sp,0))}
+.ts-hm-hero{min-height:calc(100dvh - 64px - 152px)}
+.ts-hm-lead{display:flex;flex-direction:column;justify-content:center;padding:var(--s8) var(--s7) var(--s8) max(24px,calc((100vw - var(--ts-wrap))/2))}
+.ts-hm-eyebrow{margin-bottom:var(--s5)}
+.ts-hm-deck{margin-top:var(--s5)}
+.ts-home-actions{margin-top:var(--s6)}
+.ts-hm-field{padding:var(--s7) max(24px,calc((100vw - var(--ts-wrap))/2)) var(--s7) var(--s7);overflow:hidden}
+.ts-hm-fig{max-width:560px;transform:translateY(calc(var(--sy,0) * -.12px))}
+.ts-hm-tile{padding-block:var(--s6) var(--s6)}
+.ts-hm-how{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s8);width:min(var(--ts-wrap),calc(100% - 48px));padding:var(--s9) 0 var(--s9)}
+.ts-hm-how-head{align-self:start;position:sticky;top:calc(64px + var(--s7))}
+.ts-hm-how-head .ts-label{margin:0 0 var(--s3);color:var(--ts-muted)}
+.ts-hm-h2{margin:0;font-size:48px;line-height:1.02}
+.ts-hm-how-lede{margin:var(--s4) 0 0;max-width:30ch;font-size:19px;line-height:1.45}
+.ts-hm-how ol{display:block}
+.ts-hm-how li{position:sticky;top:calc(64px + var(--s6) + var(--i) * 20px);display:grid;grid-template-columns:auto 1fr auto;column-gap:var(--s5);align-items:start;min-height:220px;margin:0 0 var(--s7);padding:var(--s6)}
+.ts-hm-how li:last-child{margin-bottom:0}
+.ts-hm-how li>.ts-icon{position:static;grid-column:3;grid-row:1/3;color:var(--ts-accent-text)}
+.ts-hm-how li h3{grid-column:2;margin:0 0 var(--s2);font-size:32px}
+.ts-hm-how li p{grid-column:2;font-size:18px;max-width:34ch}
+.ts-hm-n{grid-row:1/3;width:48px;height:48px;font-size:16px}
+.ts-hm-foot{padding-block:var(--s5) var(--s6)}
+@media (max-width:900px){
+  .ts-hm-hero{min-height:0}
+  .ts-hm-how{grid-template-columns:1fr;gap:var(--s6);padding:var(--s8) 0}
+  .ts-hm-how-head{position:static}
+  .ts-hm-lead{padding:var(--s7) var(--s5)}
+  .ts-hm-field{padding:var(--s6) var(--s5)}
+}
+@media (max-width:640px){
+  .ts-hm-lead{padding:var(--s6) var(--s4)}
+  .ts-hm-field{padding:var(--s5) var(--s4)}
+  .ts-hm-how{width:calc(100% - 32px);padding:var(--s7) 0}
+  .ts-hm-h2{font-size:34px}
+  .ts-hm-how-lede{font-size:17px}
+  .ts-hm-how li{grid-template-columns:auto 1fr;min-height:0;padding:var(--s5);margin-bottom:var(--s5);top:calc(56px + var(--s4) + var(--i) * 12px)}
+  .ts-hm-how li>.ts-icon{display:none}
+  .ts-hm-how li h3{font-size:24px}
+  .ts-hm-how li p{font-size:16px}
+  .ts-hm-n{width:40px;height:40px}
+}
+/* pages: the same scale */
+.ts-page{gap:var(--s5);padding-bottom:var(--s8)}
+.ts-doc{padding-bottom:var(--s8)}
+.ts-doc-section{padding-top:var(--s7)}
+.ts-label.ts-doc-h2{margin-bottom:var(--s5)}
+.ts-doc-foot{padding-top:var(--s7)}
+.ts-doc-head{padding-bottom:var(--s9)}
+.ts-facts-table{margin-top:calc(-1 * var(--s8))}
+@media (max-width:720px){.ts-doc-head{padding-bottom:var(--s8)}.ts-facts-table{margin-top:calc(-1 * var(--s7))}.ts-doc-section{padding-top:var(--s7)}}
+
+/* motion */
+@media (prefers-reduced-motion:no-preference){
+  /* headline: each word rises out of its own line box */
+  .ts-word{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+  .ts-word>span{display:inline-block;animation:ts-rise .95s var(--ts-out) both;animation-delay:calc(var(--i,0) * 55ms + 120ms)}
+  @keyframes ts-rise{from{transform:translateY(108%)}to{transform:none}}
+  .ts-hm-eyebrow,.ts-hm-deck,.ts-home-actions{animation:ts-fade-up .9s var(--ts-out) both}
+  .ts-hm-eyebrow{animation-delay:.05s}.ts-hm-deck{animation-delay:.6s}.ts-home-actions{animation-delay:.72s}
+  @keyframes ts-fade-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  /* the navy field slides in from the right; the figure draws its arcs, then the buildings pop */
+  .ts-hm-field{animation:ts-field-in 1.1s var(--ts-out) both}
+  @keyframes ts-field-in{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0)}}
+  .ts-hm-fig line{stroke-dasharray:1;stroke-dashoffset:1;animation:ts-draw 1.3s var(--ts-out) forwards;animation-delay:calc(var(--i,0) * 40ms + .9s)}
+  .ts-hm-fig circle{transform-box:fill-box;transform-origin:center;animation:ts-pop .5s var(--ts-out) both;animation-delay:calc(var(--i,0) * 30ms + 1.3s)}
+  @keyframes ts-draw{to{stroke-dashoffset:0}}
+  @keyframes ts-pop{from{transform:scale(0)}to{transform:none}}
+  /* tiles: a colour wipe, then the figure */
+  .ts-js .ts-hm-tile[data-reveal]{opacity:1;transform:none}
+  .ts-js .ts-hm-tile[data-reveal]>*{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ts-out),transform 1s var(--ts-out);transition-delay:inherit}
+  .ts-js .ts-hm-tile[data-reveal].is-in>*{opacity:1;transform:none}
+  /* steps: each card lifts as it pins over the last */
+  .ts-hm-how li{animation:ts-fade-up .8s var(--ts-out) both;animation-timeline:view();animation-range:entry 0% entry 60%}
+  /* routes: the page rises into place; the title band's heading is revealed by a wipe; the facts follow */
+  .ts-doc,.ts-page,.ts-brief-wrap{animation:ts-fade-up .55s var(--ts-out) both}
+  .ts-doc-head h1,.ts-page-title{animation:ts-wipe .9s var(--ts-out) both;animation-delay:.08s}
+  @keyframes ts-wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -2% 0 0)}}
+  .ts-facts-table{animation:ts-fade-up .7s var(--ts-out) both;animation-delay:.2s}
+  .ts-doc-section{animation:ts-fade-up .8s var(--ts-out) both;animation-timeline:view();animation-range:entry 0% entry 35%}
+  /* Explore: the rail slides from the left, the card from the right */
+  .ts-rail-slot{animation:ts-from-left .6s var(--ts-out) both}
+  @keyframes ts-from-left{from{transform:translateX(-24px);opacity:0}to{transform:none;opacity:1}}
+  .ts-panel.ts-panel--card{animation:ts-from-right .5s var(--ts-out) both}
+  @keyframes ts-from-right{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+  .ts-place{transition:background-color .35s var(--ts-out)}
+  .ts-nav a{transition:background-color .35s var(--ts-out),color .35s var(--ts-out)}
+}
+@media print{.ts-word>span,.ts-doc,.ts-page,.ts-brief-wrap,.ts-doc-head h1,.ts-facts-table,.ts-doc-section{animation:none!important;clip-path:none!important}}
+
+/* the homepage plate (HeroPlate): annotated, solid fills only */
+.ts-plate{display:block;width:100%;height:auto}
+.ts-plate-ground{fill:var(--ts-map-ground)}
+.ts-plate-gutter{fill:var(--ts-surface)}
+.ts-plate-grid line{stroke:var(--ts-line);stroke-width:1}
+.ts-plate-rule{stroke:var(--ts-night);stroke-width:1.5}
+.ts-plate-halo .h1{fill:var(--ts-heat-1);opacity:.55}
+.ts-plate-halo .h2{fill:var(--ts-heat-2);opacity:.5}
+.ts-plate-halo .h3{fill:var(--ts-heat-3);opacity:.45}
+.ts-plate-arc{fill:none;stroke:var(--ts-map-attention);stroke-width:1.6;stroke-linecap:round}
+.ts-plate-dot{fill:var(--ts-night);stroke:var(--ts-surface);stroke-width:1.5}
+.ts-plate-fac rect{fill:var(--ts-flare);stroke:var(--ts-night);stroke-width:2}
+.ts-plate-arrow{fill:var(--ts-night)}
+.ts-plate-label polyline{fill:none;stroke:var(--ts-night);stroke-width:.9}
+.ts-plate-label text{font:600 11.5px var(--ts-sans);fill:var(--ts-ink)}
+.ts-plate-label text.sub{font:400 9.5px var(--ts-mono);fill:var(--ts-muted);letter-spacing:.04em}
+.ts-plate-scale rect{fill:var(--ts-night)}
+.ts-plate-scale text,.ts-plate-north text{font:500 9.5px var(--ts-mono);fill:var(--ts-ink);letter-spacing:.06em}
+.ts-plate-north path{fill:var(--ts-night)}
+.ts-plate-north text{text-anchor:middle}
+.ts-hm-fig{max-width:none;box-shadow:8px 8px 0 var(--ts-flare)}
+@media (prefers-reduced-motion:no-preference){
+  .ts-plate-arc{stroke-dasharray:1;stroke-dashoffset:1;animation:ts-draw 1.4s var(--ts-out) forwards;animation-delay:calc(var(--i,0) * 45ms + 1s)}
+  .ts-plate-dot{transform-box:fill-box;transform-origin:center;animation:ts-pop .5s var(--ts-out) both;animation-delay:calc(var(--i,0) * 30ms + 1.5s)}
+  .ts-plate-halo circle{transform-box:fill-box;transform-origin:center;animation:ts-pop 1.2s var(--ts-out) both;animation-delay:calc(var(--i,0) * 90ms + .7s)}
+  .ts-plate-halo .h1{animation:ts-pop 1.2s var(--ts-out) .7s both,ts-breathe 4s ease-in-out 2s infinite}
+  @keyframes ts-breathe{50%{transform:scale(1.12)}}
+  .ts-plate-fac{animation:ts-fade-up .6s var(--ts-out) both;animation-delay:calc(var(--i,0) * 80ms + .6s)}
+  .ts-plate-label{animation:ts-fade-up .7s var(--ts-out) both;animation-delay:calc(var(--i,0) * 90ms + 1.6s)}
+}
+
+/* how to read it: the left column is a navy key that stays pinned while the steps stack */
+.ts-hm-how{align-items:start}
+.ts-hm-how-head{padding:var(--s6);border:var(--ts-edge);border-radius:var(--ts-r);background:var(--ts-night);color:var(--ts-on-night);box-shadow:var(--ts-hard-sm)}
+.ts-hm-how-head .ts-label{color:var(--ts-accent-on-night)}
+.ts-hm-how .ts-hm-how-lede{margin:var(--s4) 0 var(--s5);color:var(--ts-on-night-muted);font-size:18px;line-height:1.45}
+.ts-hm-key{list-style:none;margin:0;padding:var(--s5) 0 0;border-top:1px solid var(--ts-rule-night);display:grid;gap:var(--s3)}
+.ts-hm-key li{position:static!important;display:flex!important;align-items:center;gap:var(--s3);min-height:0!important;margin:0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;animation:none!important;color:var(--ts-on-night);font-size:15px}
+.ts-hm-key svg{flex:none}
+.ts-hm-how ol>li{align-content:start;min-height:0}
+.ts-hm-how ol>li h3{align-self:center}
+@media (max-width:640px){.ts-hm-how-head{padding:var(--s5)}}
+.ts-plate-label text{font-size:13px}
+.ts-plate-label text.sub{font-size:10.5px}
+@media (min-width:901px){.ts-hm-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.ts-hm-field{padding-left:var(--s6)}}
+.ts-hm-how{padding-bottom:var(--s8)}
