@@ -108,19 +108,17 @@ export function basemapLayers(source = 'protomaps'): LayerSpecification[] {
 /** Interim context buildings from the basemap's own buildings layer, used only while the OpenStreetMap context
  *  extract is incomplete (docs/decisions.md). Inserted below the first label layer. */
 export function tileBuildingsLayer(): LayerSpecification {
+  // flat footprints: only ThermoStat's scored buildings stand up in 3D, so nothing overlaps or flickers while zooming
   return {
     id: 'ts-context-tiles',
-    type: 'fill-extrusion',
+    type: 'fill',
     source: 'protomaps',
     'source-layer': 'buildings',
-    minzoom: 13.5,
+    minzoom: 13,
     paint: {
-      'fill-extrusion-color': MAP.roof,
-      // buildings rise and fade in smoothly between zoom 13.5 and 14.3 instead of popping
-      'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 13.5, 0, 14.3, ['coalesce', ['get', 'height'], 9]],
-      'fill-extrusion-base': ['interpolate', ['linear'], ['zoom'], 13.5, 0, 14.3, ['coalesce', ['get', 'min_height'], 0]],
-      'fill-extrusion-opacity': ['interpolate', ['linear'], ['zoom'], 13.5, 0, 14.3, 1],
-      'fill-extrusion-vertical-gradient': false,
+      'fill-color': MAP.roof,
+      'fill-outline-color': MAP.line,
+      'fill-opacity': ['interpolate', ['linear'], ['zoom'], 13, 0, 14, 1],
     },
   } as LayerSpecification;
 }

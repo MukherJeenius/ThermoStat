@@ -109,7 +109,7 @@ export function MapView(props: MapViewProps) {
   }, []);
 
   const ctxData = useMemo(() => (tileContext ? [] : contextData(data.context)), [data.context, tileContext]);
-  const recData = useMemo(() => recipientData(data.recipients.features, tileContext), [data.recipients, tileContext]);
+  const recData = useMemo(() => recipientData(data.recipients.features, false), [data.recipients, tileContext]);
   const routeCoords = useMemo(() => {
     const f = data.network?.features.find((x) => x.properties.role === 'route');
     return f && f.geometry.type === 'LineString' ? f.geometry.coordinates : null;
