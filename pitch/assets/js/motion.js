@@ -27,8 +27,8 @@
     }
     // Headline words: staggered masked rise.
     slide.querySelectorAll('.mask > span').forEach(line => {
-      gsap.fromTo(words.get(line) || [], { yPercent: 118, rotate: 2 },
-        { yPercent: 0, rotate: 0, duration: 1.25, ease: 'expo.out', stagger: 0.06, delay: delayOf(line) });
+      gsap.fromTo(words.get(line) || [], { yPercent: 120 },
+        { yPercent: 0, duration: 1.5, ease: 'expo.out', stagger: 0.08, delay: 0.25 + delayOf(line) });
     });
     // Heat lines and rings: drawn on with a slow in-out.
     slide.querySelectorAll('.draw').forEach(p => {
@@ -36,7 +36,7 @@
       gsap.fromTo(p, { drawSVG: '0%' }, { drawSVG: '100%', duration: dur, ease: 'power2.inOut', delay: delayOf(p) });
     });
     // A slow settle of the whole frame (subtle depth on every cut).
-    gsap.fromTo(slide.querySelector('.frame'), { scale: 1.03, filter: 'blur(10px)' },
-      { scale: 1, filter: 'blur(0px)', duration: 1.3, ease: 'expo.out', clearProps: 'transform,filter' });
+    gsap.fromTo(slide.querySelector('.frame'), { scale: 1.04, filter: 'blur(14px)' },
+      { scale: 1, filter: 'blur(0px)', duration: 1.6, ease: 'expo.out', clearProps: 'transform,filter' });
   });
 })();
