@@ -1,5 +1,7 @@
 # ThermoStat — 5-minute keynote
 
+Motion uses GSAP (stored locally in `assets/vendor/gsap`) for word-by-word headline reveals, heat-line draws and count-ups. If GSAP is missing, the deck falls back to CSS transitions.
+
 Open `index.html` in Chrome, or run `python3 -m http.server` in this folder and visit http://localhost:8000. It works offline with no build step.
 
 | Key | Action |

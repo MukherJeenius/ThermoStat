@@ -17,3 +17,6 @@ Map data © OpenStreetMap contributors, licensed under ODbL (https://www.openstr
 
 ## Figures
 143,000 MWh/yr and >27,000 t CO2e/yr come from Hamilton Community Enterprises, *Hamilton Energy Harvesting Study* (2025), across five proposed phases. The 5 MW → 18,000 MWh → ~$864K/yr figures are illustrative team assumptions at an approximate gas-parity price of $48/MWh.
+
+## Vendored libraries (in `assets/vendor/`)
+- GSAP 3.13.0 by GreenSock: `gsap.min.js`, `SplitText.min.js`, `DrawSVGPlugin.min.js`. The minified files are copied unmodified from the npm package `gsap@3.13.0` (https://registry.npmjs.org/gsap/-/gsap-3.13.0.tgz). They are covered by GreenSock's Standard "no charge" licence (https://gsap.com/standard-license), which is free for all uses including the bonus plugins. The licence header in each file is kept.

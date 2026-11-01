@@ -332,3 +332,9 @@ body.overview .heat { opacity: 1; }
 body.overview .lit.b { fill: var(--amber-2); stroke: var(--amber-2); }
 body.overview .report { transform: rotate(-.6deg); }
 body.overview *, body.overview *::before { animation: none !important; }
+
+/* GSAP layer owns these when present */
+.gsap .mask > span, .gsap .slide .frame { transition: none; transform: none; filter: none; }
+.gsap .slide:not(.is-active) .frame { filter: none; }
+.gsap .draw { transition: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+.gsap .mask .w { display: inline-block; }

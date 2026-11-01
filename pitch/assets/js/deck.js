@@ -69,6 +69,12 @@ const BUDGET = 300;
     el._ran = true;
     const to = +el.dataset.count;
     if (reduced()) return fmt(el, to);
+    if (window.gsap) {
+      const o = { v: 0 }, d = +(el.dataset.dec || 0);
+      fmt(el, 0);
+      return gsap.to(o, { v: to, duration: +(el.dataset.dur || 2200) / 1000, delay: +(el.dataset.delay || 0) / 1000, ease: 'expo.out',
+        onUpdate: () => fmt(el, d ? +o.v.toFixed(d) : Math.round(o.v)), onComplete: () => fmt(el, to) });
+    }
     const dur = +(el.dataset.dur || 2200), t0 = performance.now(), delay = +(el.dataset.delay || 0);
     fmt(el, 0);
     const tick = now => {
@@ -97,6 +103,8 @@ const BUDGET = 300;
     cur = n; step = s;
     const sl = slides[n];
     sl.querySelectorAll('[data-step]').forEach(el => el.classList.toggle('on', +el.dataset.step <= s));
+    if (changed) document.dispatchEvent(new CustomEvent('deck:enter', { detail: { slide: sl, reduced: reduced() } }));
+    document.dispatchEvent(new CustomEvent('deck:step', { detail: { slide: sl, step: s } }));
     sl.querySelectorAll('[data-count]').forEach(el => {
       const host = el.closest('[data-step]');
       if (!host || +host.dataset.step <= s) runCount(el);
