@@ -7,7 +7,8 @@ export type Route =
   | { view: 'explore'; sel: { kind: 'connection'; id: string } }
   | { view: 'records'; anchor: string | null }
   | { view: 'method'; anchor: string | null }
-  | { view: 'brief'; id: string };
+  | { view: 'brief'; id: string }
+  | { view: 'place'; kind: 'facility' | 'recipient'; id: string; anchor: string | null };
 
 export function parseRoute(hash: string): Route {
   const h = hash.replace(/^#/, '');
@@ -22,6 +23,9 @@ export function parseRoute(hash: string): Route {
   if (parts[0] === 'records') return { view: 'records', anchor };
   if (parts[0] === 'method') return { view: 'method', anchor };
   if (parts[0] === 'brief' && parts[1]) return { view: 'brief', id: parts[1] };
+  if (parts[0] === 'place' && (parts[1] === 'f' || parts[1] === 'r') && parts[2]) {
+    return { view: 'place', kind: parts[1] === 'f' ? 'facility' : 'recipient', id: parts[2], anchor };
+  }
   if (parts[0] === 'explore' && parts[1] && parts[2]) {
     if (parts[1] === 'f') {
       return {
@@ -49,4 +53,6 @@ export const href = {
   records: () => '#/records',
   method: (anchor?: string) => `#/method${anchor ? `#${anchor}` : ''}`,
   brief: (id: string) => `#/brief/${enc(id)}`,
+  placeFacility: (id: string, anchor?: string) => `#/place/f/${enc(id)}${anchor ? `#${anchor}` : ''}`,
+  placeRecipient: (id: string) => `#/place/r/${enc(id)}`,
 };

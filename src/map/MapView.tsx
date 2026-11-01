@@ -10,7 +10,7 @@ import { glyphsUrl, tilesUrl } from '../data/urls';
 import { basemapStyle, firstSymbolLayerId } from './basemapStyle';
 import { cameraPadding, FACILITY_MAX_ZOOM, fitPoints, FRAME, PITCH, RECIPIENT_MAX_ZOOM, reducedMotion } from './camera';
 import { buildingLayers, contextData, DEFAULT_HEIGHT_M, lighting, recipientData } from './layers/buildingLayers';
-import { makeHeatLayers } from './layers/heatLayers';
+import { makeHeatLayers, routeLayer } from './layers/heatLayers';
 import { endpointLayers, labelLayer, type EndpointDatum, type LabelDatum } from './layers/labels';
 
 let protocolAdded = false;
@@ -37,6 +37,9 @@ export interface MapViewProps {
   onSelectConnection: (id: string, x: number, y: number) => void;
   onMapReady?: (map: MlMap) => void;
   onBasemapError?: () => void;
+  demoCamera?: { points: (readonly number[])[]; maxZoom: number; floor: number } | null;
+  demoKey?: number | null;
+  arcKinds?: HeatConnection['kind'][] | null;
 }
 
 export function MapView(props: MapViewProps) {
@@ -81,6 +84,10 @@ export function MapView(props: MapViewProps) {
     map.addControl(overlay);
     mapRef.current = map;
     overlayRef.current = overlay;
+    // test hook (dev builds, or ?testhooks): the screenshot and fidelity scripts read the map from here
+    if (import.meta.env.DEV || new URLSearchParams(window.location.search).has('testhooks')) {
+      (window as unknown as { __thermostat?: object }).__thermostat = { map, overlay };
+    }
     map.once('load', () => {
       setReady(true);
       props.onMapReady?.(map);
@@ -102,7 +109,11 @@ export function MapView(props: MapViewProps) {
   }, []);
 
   const ctxData = useMemo(() => (tileContext ? [] : contextData(data.context)), [data.context, tileContext]);
-  const recData = useMemo(() => recipientData(data.recipients.features), [data.recipients]);
+  const recData = useMemo(() => recipientData(data.recipients.features, tileContext), [data.recipients, tileContext]);
+  const routeCoords = useMemo(() => {
+    const f = data.network?.features.find((x) => x.properties.role === 'route');
+    return f && f.geometry.type === 'LineString' ? f.geometry.coordinates : null;
+  }, [data.network]);
   const recById = useMemo(() => new Map(data.recipients.features.map((f) => [f.id, f.properties])), [data.recipients]);
   const facById = useMemo(() => new Map(facilities.map((f) => [f.id, f])), [facilities]);
 
@@ -110,14 +121,16 @@ export function MapView(props: MapViewProps) {
   const drawn = useMemo(() => {
     let conns: HeatConnection[] = [];
     if (tab === 'facilities' && props.focusFacilityId) {
-      conns = connections.filter((c) => c.facilityId === props.focusFacilityId);
+      // facilities show their public-record and study lines; team scenarios appear with the buildings
+      conns = connections.filter((c) => c.facilityId === props.focusFacilityId && c.kind !== 'scenario');
     } else if (tab === 'recipients' && selection?.kind === 'recipient') {
       conns = connections.filter((c) => c.recipientId === selection.id);
     } else if (selection?.kind === 'connection') {
       conns = connections.filter((c) => c.id === selection.id);
     }
+    if (props.arcKinds) conns = conns.filter((c) => props.arcKinds!.includes(c.kind));
     return conns;
-  }, [tab, props.focusFacilityId, selection, connections]);
+  }, [tab, props.focusFacilityId, selection, connections, props.arcKinds]);
 
   const targetZ = (c: HeatConnection) => {
     if (c.recipientId) return (recById.get(c.recipientId)?.heightM ?? DEFAULT_HEIGHT_M) + 2;
@@ -127,7 +140,14 @@ export function MapView(props: MapViewProps) {
   const endpoints = useMemo<EndpointDatum[]>(() => {
     const out: EndpointDatum[] = [];
     if (layers.facilities) {
-      for (const f of facilities) out.push({ id: `fac-${f.id}`, position: [f.position[0], f.position[1], 0], role: 'source', facilityId: f.id });
+      for (const f of facilities)
+        out.push({
+          id: `fac-${f.id}`,
+          position: [f.position[0], f.position[1], 0],
+          role: 'source',
+          facilityId: f.id,
+          selected: f.id === props.focusFacilityId,
+        });
     }
     for (const c of drawn) {
       out.push({
@@ -149,7 +169,7 @@ export function MapView(props: MapViewProps) {
     }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layers.facilities, facilities, drawn, tab, data.recipients, recById, facById]);
+  }, [layers.facilities, facilities, drawn, tab, data.recipients, recById, facById, props.focusFacilityId]);
 
   const labels = useMemo<LabelDatum[]>(() => {
     const out: LabelDatum[] = [];
@@ -182,6 +202,7 @@ export function MapView(props: MapViewProps) {
         onSelectRecipient: props.onSelectRecipient,
         beforeId,
       }),
+      ...routeLayer(routeCoords, layers.connections, beforeId),
       ...makeHeatLayers(drawn, {
         visible: layers.connections,
         onSelect: (id) => {
@@ -213,13 +234,14 @@ export function MapView(props: MapViewProps) {
     if (fontsReady) deckLayers.push(labelLayer({ data: labels, visible: true, beforeId }));
     overlay.setProps({ layers: deckLayers });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, fontsReady, ctxData, recData, layers, drawn, endpoints, labels, selection, data.meta, beforeId]);
+  }, [ready, fontsReady, ctxData, recData, layers, drawn, endpoints, labels, selection, data.meta, beforeId, routeCoords]);
 
   // camera: one move per selection change (spec 9.3)
   const firstCamera = useRef(true);
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready || !ref.current) return;
+    if (props.demoKey) return; // the demo step owns the camera
     const padding = cameraPadding(ref.current);
     const animate = !firstCamera.current;
     firstCamera.current = false;
@@ -240,10 +262,10 @@ export function MapView(props: MapViewProps) {
         // opening view: the plant's proposed targets and the ranked recipients, not the plant itself
         const pts = [
           ...own.filter((c) => c.kind === 'proposed').map((c) => c.target),
-          ...data.recipients.features.filter((x) => x.properties.rank).map((x) => x.properties.position),
+          ...data.recipients.features.filter((x) => x.properties.rank && x.properties.rank <= 5).map((x) => x.properties.position),
         ];
         if (pts.length >= 2) {
-          fitPoints(map, pts, f.position, FACILITY_MAX_ZOOM, padding, false);
+          fitPoints(map, pts, f.position, 15.2, padding, false, 14.4);
           return;
         }
       }
@@ -252,6 +274,20 @@ export function MapView(props: MapViewProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, selection?.kind, selection?.id, props.resetToken]);
+
+  // demo mode: one camera move per step, after the panels for that step have laid out
+  useEffect(() => {
+    const map = mapRef.current;
+    const cam = props.demoCamera;
+    if (!map || !ready || !ref.current || !props.demoKey || !cam || cam.points.length === 0) return;
+    const el = ref.current;
+    const t = window.setTimeout(() => {
+      const focus = cam.points[0];
+      fitPoints(map, cam.points, focus, cam.maxZoom, cameraPadding(el), true, cam.floor);
+    }, 60);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, props.demoKey]);
 
   // 2D / 3D and zoom controls
   useEffect(() => {

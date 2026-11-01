@@ -1,8 +1,9 @@
 /** Recipient card (spec 9.6): fit in words, gas vs own heat pump vs HCE over 20 years, carbon and grid, demand. */
+import { useEffect, useRef } from 'react';
 import type { CostComparison, Recipient, SourceRecord } from '../contract/data-contract';
 import { boilerYear } from '../engine/cost';
 import { BAND_WORD, COPY, METHOD_SENTENCE, QUALITY_WORD, recipientQuestion, TYPE_WORD } from '../content/copy';
-import { date, money, NOT_IN_SOURCE, num, pctAbs, two } from '../engine/format';
+import { date, money, NOT_IN_SOURCE, num, pct, pctAbs, two } from '../engine/format';
 import { ChevronRight } from './icons';
 
 type Props = {
@@ -18,14 +19,15 @@ type Props = {
   onBrief: () => void;
   onMethod: () => void;
   onHeading?: (el: HTMLHeadingElement | null) => void;
-  openCost?: boolean;
+  openRow?: number;
 };
 
 const STATUS = { about_the_same: 'About the same', costs_more: 'Costs more', cheaper: 'Cheaper' } as const;
-const DQ = { known_customer: 'known customer', approx_route: 'approximate route', illustrative_route: 'illustrative route' } as const;
 
 export function recipientName(r: Recipient): string {
-  return r.name ?? 'Unnamed building';
+  if (r.name) return r.name;
+  if (r.address) return `Unnamed building, ${r.address}`;
+  return `Unnamed ${TYPE_WORD[r.type].toLowerCase()}`;
 }
 
 export function CostTable({ c }: { c: CostComparison }) {
@@ -63,6 +65,14 @@ export function CostTable({ c }: { c: CostComparison }) {
 
 export function RecipientPanel(p: Props) {
   const { onHeading } = p;
+  const costRef = useRef<HTMLDetailsElement>(null);
+  const openRow = p.openRow;
+  // when a step opens the cost row, bring it to the top of the card body
+  useEffect(() => {
+    if (openRow !== 1 || !costRef.current) return;
+    const body = costRef.current.closest('.ts-panel-body');
+    if (body) body.scrollTop += costRef.current.getBoundingClientRect().top - body.getBoundingClientRect().top - 12;
+  }, [openRow]);
   const r = p.recipient;
   const c = p.comparison;
   const v = c.verdict;
@@ -81,6 +91,12 @@ export function RecipientPanel(p: Props) {
           {TYPE_WORD[r.type]}
           {r.address ? ` · ${r.address}` : ''} · {QUALITY_WORD[r.estimate.quality]}
         </p>
+        <dl className="ts-glance" aria-label="At a glance">
+          <div><dt>Fit</dt><dd>{BAND_WORD[r.fit.band]}<small>score {r.fit.score} of 100</small></dd></div>
+          <div><dt>Heat a year</dt><dd>{num(r.estimate.annualHeatMwh, 2)}<small>MWh · {QUALITY_WORD[r.estimate.quality].toLowerCase()}</small></dd></div>
+          <div><dt>Cost vs gas</dt><dd>{pct(v.deltaPct)}<small>over 20 years</small></dd></div>
+          <div><dt>CO2 vs gas</dt><dd>{pct(-v.co2CutPct)}<small>a year</small></dd></div>
+        </dl>
         {p.edited && (
           <p className="ts-notice" role="status">
             Using your assumptions ·{' '}
@@ -89,7 +105,7 @@ export function RecipientPanel(p: Props) {
             </button>
           </p>
         )}
-        <details className="ts-row" open={!p.openCost}>
+        <details className="ts-row" open={(p.openRow ?? 0) === 0}>
           <summary>
             <span className="ts-number">01</span>
             <span>Why it fits</span>
@@ -106,16 +122,9 @@ export function RecipientPanel(p: Props) {
               ))}
             </ul>
             {r.fit.missing.length > 0 && <p className="ts-meta">Not in source data: {r.fit.missing.join(', ')}.</p>}
-            <p className="ts-meta">
-              {r.distances.existingM !== null ? `${num(r.distances.existingM, 2)} m to the existing network (known customer)` : NOT_IN_SOURCE}
-              <br />
-              {r.distances.plannedM !== null
-                ? `${num(r.distances.plannedM, 2)} m to the planned route (${r.distances.plannedQuality ? DQ[r.distances.plannedQuality] : 'route'})`
-                : NOT_IN_SOURCE}
-            </p>
           </div>
         </details>
-        <details className="ts-row" open={p.openCost}>
+        <details className="ts-row" open={p.openRow === 1} ref={costRef}>
           <summary>
             <span className="ts-number">02</span>
             <span>Cost over 20 years</span>

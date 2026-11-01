@@ -113,12 +113,13 @@ export function tileBuildingsLayer(): LayerSpecification {
     type: 'fill-extrusion',
     source: 'protomaps',
     'source-layer': 'buildings',
-    minzoom: 13,
+    minzoom: 13.5,
     paint: {
       'fill-extrusion-color': MAP.roof,
-      'fill-extrusion-height': ['coalesce', ['get', 'height'], 9],
-      'fill-extrusion-base': ['coalesce', ['get', 'min_height'], 0],
-      'fill-extrusion-opacity': 1,
+      // buildings rise and fade in smoothly between zoom 13.5 and 14.3 instead of popping
+      'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 13.5, 0, 14.3, ['coalesce', ['get', 'height'], 9]],
+      'fill-extrusion-base': ['interpolate', ['linear'], ['zoom'], 13.5, 0, 14.3, ['coalesce', ['get', 'min_height'], 0]],
+      'fill-extrusion-opacity': ['interpolate', ['linear'], ['zoom'], 13.5, 0, 14.3, 1],
       'fill-extrusion-vertical-gradient': false,
     },
   } as LayerSpecification;

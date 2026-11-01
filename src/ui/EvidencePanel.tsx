@@ -19,7 +19,7 @@ export function EvidencePanel({ facility, focusCommitmentId, onBack, onHeading }
   useEffect(() => {
     if (!focusCommitmentId) return;
     const el = document.getElementById(`ev-${focusCommitmentId}`);
-    el?.scrollIntoView({ block: 'start' });
+    el?.scrollIntoView({ block: 'nearest' });
     el?.focus({ preventScroll: true });
   }, [focusCommitmentId]);
   return (

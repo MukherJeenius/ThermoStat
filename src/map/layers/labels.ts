@@ -10,6 +10,7 @@ export interface EndpointDatum {
   facilityId?: string;
   recipientId?: string | null;
   connectionId?: string;
+  selected?: boolean;
 }
 
 export interface LabelDatum {
@@ -40,12 +41,25 @@ export function endpointLayers(opts: {
   };
   const filled = opts.data.filter((d) => d.role !== 'scenario');
   const rings = opts.data.filter((d) => d.role === 'scenario');
+  const sources = opts.data.filter((d) => d.role === 'source');
   return [
+    // hot spots: a soft halo under every heat source
+    new ScatterplotLayer<EndpointDatum>({
+      ...common,
+      id: 'ts-hotspot-halo',
+      data: sources,
+      getRadius: (d) => (d.selected ? 26 : 16),
+      getFillColor: (d) => rgba(MAP.attention, d.selected ? 0.26 : 0.16),
+      stroked: false,
+      pickable: false,
+      updateTriggers: { getRadius: sources.map((d) => d.selected).join(), getFillColor: sources.map((d) => d.selected).join() },
+    }),
     new ScatterplotLayer<EndpointDatum>({
       ...common,
       id: 'ts-endpoints',
       data: filled,
-      getRadius: (d) => (d.role === 'source' ? 6 : 4),
+      getRadius: (d) => (d.role === 'source' ? (d.selected ? 8 : 6) : 4),
+      updateTriggers: { getRadius: filled.map((d) => d.selected).join() },
       getFillColor: (d) => rgba(d.role === 'source' ? MAP.attention : MAP.secondary, 1),
       stroked: true,
       getLineColor: rgba(MAP.surface, 1),

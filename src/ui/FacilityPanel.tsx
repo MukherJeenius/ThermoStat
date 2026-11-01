@@ -12,6 +12,7 @@ type Props = {
   onOpenEvidence: (facilityId: string, commitmentId?: string) => void;
   onSelectConnection: (id: string) => void;
   onHeading?: (el: HTMLHeadingElement | null) => void;
+  openAll?: boolean;
 };
 
 export function sourceLine(s: NonNullable<Facility['commitments'][number]['source']>): string {
@@ -19,7 +20,7 @@ export function sourceLine(s: NonNullable<Facility['commitments'][number]['sourc
   return `${s.shortTitle}${page} · ${s.documentDate ? `published ${date(s.documentDate)}` : 'publication date not in source data'}`;
 }
 
-export function FacilityPanel({ facility, index, connections, onOpenEvidence, onSelectConnection, onHeading }: Props) {
+export function FacilityPanel({ facility, index, connections, onOpenEvidence, onSelectConnection, onHeading, openAll }: Props) {
   const counts = (['operational', 'proposed', 'scenario'] as const).map((k) => [k, connections.filter((c) => c.kind === k).length] as const);
   const countText = counts
     .filter(([, n]) => n > 0)
@@ -54,7 +55,7 @@ export function FacilityPanel({ facility, index, connections, onOpenEvidence, on
         </p>
         {facility.commitments.length === 0 && <p className="ts-empty">No public records have been added yet.</p>}
         {facility.commitments.map((c, i) => (
-          <details className="ts-row" key={c.id} open={i === 0}>
+          <details className="ts-row" key={c.id} open={openAll || i === 0}>
             <summary>
               <span className="ts-number">{two(i + 1)}</span>
               <span>{c.title}</span>

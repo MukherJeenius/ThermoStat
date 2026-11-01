@@ -152,3 +152,43 @@ Node 26.5.1, npm 11.17.0. `pmtiles` CLI 1.31.2 installed with Homebrew.
   until deck.gl supports MapLibre 6 (then step up and recheck). `npm audit fix --force` must not be run: it installs
   MapLibre 6 and breaks the map. The 14 moderate advisories are in dev-only tooling (eslint, typescript-eslint,
   ts-json-schema-generator, glob, minimatch) and never ship in the bundle.
+
+## Demo presentation pass (1 November 2026)
+
+The owner asked (1 November 2026) for a demo that looks finished first: an opening screen with a logo, greeting and
+loading bar; clear ways in; a colourful, readable map with hot spots and highlighted connections; less information
+per screen; a less "vibecoded" look. These changes override the handoff's look where they conflict:
+
+- **Opening screen** (`src/ui/Intro.tsx`): logo mark, greeting, a loading bar over the ten data files, "Start the
+  guided demo" and "Explore the map", and three numbered steps. Deep links and `?demo=1` skip it; the header logo
+  returns to it.
+- **Guided demo** (spec 12) is built: seven steps, captions computed from the data, per-step camera framing, keys
+  (Space, arrows, R, Esc), the rail shown only on the list steps and the legend folded away.
+- **Square-edged controls:** panel radius 16 px (was 30), buttons, search, segments and map controls 8 to 12 px
+  (were pills), rectangular toggles. Rail tabs read "FACILITIES 06 · RECIPIENTS 20" (label plus two-digit count).
+- **Heat ramp made more vivid** (amber to deep red: #f3cf9c, #eea25c, #de7233, #bb4b1f, #8e2d13) and the Heat demand
+  layer is on by default. It still passes every 9.16 check: luminance 0.66 → 0.08, smallest adjacent ΔE2000 9.6 across
+  normal and simulated protanopia, deuteranopia and tritanopia, heat-1 15.9 from the roof colour.
+- **Hot spots:** every heat source has a soft halo; the selected one is larger.
+- **Planned route** drawn as a dashed ground line (labelled "Planned route (approx.)" in the legend; illustrative until
+  traced) alongside the existing, proposed and scenario arcs.
+- **Recipient card** opens with an "at a glance" hairline grid (fit, heat a year, cost vs gas, CO2 vs gas); duplicate
+  distance lines removed. The rail drops its intro paragraph (the opening screen carries it).
+- Footer credit placeholder "Team ThermoStat" until the team supplies its line.
+- **Map screen reorganised** (owner, 1 November 2026: "too much info"): the map shows a slim places list, a small
+  preview card (three facts and "Open full details") and a "Map key" button that holds the legend and the layer
+  switches. Each place has its own **details screen** (`#/place/f/<id>`, `#/place/r/<id>`) laid out to be read: a
+  facility's promises quoted with page and dates, open questions and connections; a building's reasons, a 20-year cost
+  chart with the carbon toggle, carbon and grid, demand and sources. The accordion cards are retired from the map.
+- **Lines restyled** (owner: dotted lines looked unprofessional): existing connections bold solid amber, proposed a long
+  even dash, team scenarios a thin solid lilac line (shown with buildings, not on the Facilities tab), and the planned
+  route a soft solid band. Width and pattern still distinguish them without colour.
+- **Homepage** rebuilt in solid colours on paper (one ink, one accent; no glow or tinted boxes): centred wordmark,
+  two-line tagline, "Explore the map" and "Watch the demo", three plain counts and three steps.
+- The click-through guided tour stays reachable with `?demo=1` but is no longer offered on screen; a recorded demo video
+  replaces it.
+- **Zoom glitches fixed:** scored buildings are drawn 0.8 m wider and 1 m taller than the basemap building under them
+  (no coincident faces), the depth offset is gone, and basemap buildings rise and fade in between zoom 13.5 and 14.3
+  instead of popping.
+- **Camera fits** no longer store padding on the map (MapLibre 5 subtracts stored padding as well as the padding passed
+  to `cameraForBounds`, which made fits fail and fall back to a wide view).

@@ -14,7 +14,7 @@ export const MAP = {
   park: '#e9ebe3',
 } as const;
 
-export const HEAT_RAMP = ['#e2cdb0', '#d6ab82', '#c5875b', '#ab6a45', '#8c5133'] as const;
+export const HEAT_RAMP = ['#f3cf9c', '#eea25c', '#de7233', '#bb4b1f', '#8e2d13'] as const;
 
 /** The custom property each value mirrors. `park` has no token (spec 3.5 gives #e9ebe3 directly). */
 export const MAP_TOKEN_NAMES: Partial<Record<keyof typeof MAP, string>> = {

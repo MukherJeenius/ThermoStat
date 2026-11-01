@@ -47,7 +47,7 @@
   --ts-accent-text: #a3521b;
   --ts-map-ground: #f3f2ee; --ts-map-water: #dde3df; --ts-map-road: #fbfaf6; --ts-map-roof: #e7e5df;
   --ts-map-attention: #c45f1c; --ts-map-secondary: #857a8c;
-  --ts-heat-1: #e2cdb0; --ts-heat-2: #d6ab82; --ts-heat-3: #c5875b; --ts-heat-4: #ab6a45; --ts-heat-5: #8c5133;
+  --ts-heat-1: #f3cf9c; --ts-heat-2: #eea25c; --ts-heat-3: #de7233; --ts-heat-4: #bb4b1f; --ts-heat-5: #8e2d13;
   --ts-line-strong: #85817a;  /* 3.46:1 on bg, 3.78:1 on surface: control boundaries only (WCAG 1.4.11) */
   --ts-rail-w: 272px; --ts-card-w: 404px; --ts-gutter: 32px; --ts-header-h: 112px; --ts-footer-h: 32px;
   --ts-dur: 200ms; --ts-dur-fast: 120ms; --ts-ease: cubic-bezier(.2, 0, 0, 1);

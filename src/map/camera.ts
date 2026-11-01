@@ -18,6 +18,7 @@ export function cameraPadding(container: HTMLElement): PaddingOptions {
   const rail = document.querySelector('.ts-panel--rail:not(dialog *)')?.getBoundingClientRect();
   const card = document.querySelector('.ts-stage .ts-panel--card')?.getBoundingClientRect();
   const legend = document.querySelector('.ts-stage .ts-legend')?.getBoundingClientRect();
+  const caption = document.querySelector('.ts-stage .ts-caption')?.getBoundingClientRect();
   const sheet = document.querySelector('.ts-sheet')?.getBoundingClientRect();
   if (sheet && sheet.height > 0) {
     pad.bottom = Math.max(24, stage.bottom - sheet.top + 12);
@@ -26,6 +27,7 @@ export function cameraPadding(container: HTMLElement): PaddingOptions {
   if (rail && rail.width > 0) pad.left = rail.right - stage.left + 24;
   if (card && card.width > 0) pad.right = stage.right - card.left + 24;
   if (legend && legend.height > 0) pad.bottom = stage.bottom - legend.top + 24;
+  if (caption && caption.height > 0) pad.bottom = Math.max(pad.bottom ?? 24, stage.bottom - caption.top + 16);
   // keep at least 120 px of free map between the panels
   const left = pad.left ?? 24;
   const right = pad.right ?? 24;
@@ -49,6 +51,7 @@ export function fitPoints(
   maxZoom: number,
   padding: PaddingOptions,
   animate: boolean,
+  floor: number = MIN_FIT_ZOOM,
 ): void {
   const lons = points.map((p) => p[0]);
   const lats = points.map((p) => p[1]);
@@ -56,15 +59,27 @@ export function fitPoints(
     [Math.min(...lons), Math.min(...lats)],
     [Math.max(...lons), Math.max(...lats)],
   ];
-  const cam = map.cameraForBounds(bounds, { padding, bearing: BEARING, pitch: PITCH, maxZoom });
-  const opts = { pitch: PITCH, bearing: BEARING, padding };
-  if (!cam || cam.zoom === undefined || cam.zoom < MIN_FIT_ZOOM || points.length < 2) {
-    const target = { ...opts, center: [focus[0], focus[1]] as [number, number], zoom: points.length < 2 ? maxZoom : MIN_FIT_ZOOM };
-    if (animate && !reducedMotion()) map.flyTo({ ...target, duration: 900 });
-    else map.jumpTo(target);
+  // The map never stores padding: MapLibre 5 subtracts the stored padding as well as the padding passed here, so
+  // every fit passes the live panel padding and flies without it (the fallback uses a pixel offset instead).
+  map.setPadding({ top: 0, bottom: 0, left: 0, right: 0 });
+  const cam = map.cameraForBounds(bounds, { padding, bearing: BEARING, maxZoom });
+  const duration = animate && !reducedMotion() ? 900 : 0;
+  if (!cam || cam.zoom === undefined || cam.zoom < floor || points.length < 2) {
+    const l = padding.left ?? 0;
+    const r = padding.right ?? 0;
+    const t = padding.top ?? 0;
+    const b = padding.bottom ?? 0;
+    map.easeTo({
+      center: [focus[0], focus[1]],
+      zoom: points.length < 2 ? maxZoom : floor,
+      pitch: PITCH,
+      bearing: BEARING,
+      offset: [(l - r) / 2, (t - b) / 2],
+      duration,
+    });
     return;
   }
-  const target = { ...opts, center: cam.center, zoom: cam.zoom };
-  if (animate && !reducedMotion()) map.flyTo({ ...target, duration: 900 });
+  const target = { center: cam.center, zoom: cam.zoom, pitch: PITCH, bearing: BEARING };
+  if (duration) map.flyTo({ ...target, duration });
   else map.jumpTo(target);
 }

@@ -37,28 +37,34 @@ async function getJson<T>(file: string): Promise<T> {
   return (await r.json()) as T;
 }
 
-async function optional<T>(file: string, failed: string[]): Promise<T | null> {
+async function optional<T>(file: string, failed: string[], tick: () => void): Promise<T | null> {
   try {
     return await getJson<T>(file);
   } catch {
     failed.push(file);
     return null;
+  } finally {
+    tick();
   }
 }
 
-export async function loadAll(): Promise<AppData> {
+export const DATA_FILES = 10;
+
+export async function loadAll(onProgress?: (done: number, total: number) => void): Promise<AppData> {
   const failed: string[] = [];
+  let done = 0;
+  const tick = () => onProgress?.(++done, DATA_FILES);
   const [facilities, connections, sources, recipients, context, network, places, prices, factors, meta] = await Promise.all([
-    optional<FacilitiesFile>('facilities.json', failed),
-    optional<ConnectionsFile>('connections.json', failed),
-    optional<SourcesFile>('sources.json', failed),
-    optional<RecipientsFile>('recipients.geojson', failed),
-    optional<ContextFile>('context-buildings.geojson', failed),
-    optional<NetworkFile>('network.geojson', failed),
-    optional<PlacesFile>('places.json', failed),
-    optional<Prices>('prices.json', failed),
-    optional<FactorsFile>('factors.json', failed),
-    optional<MetaFile>('meta.json', failed),
+    optional<FacilitiesFile>('facilities.json', failed, tick),
+    optional<ConnectionsFile>('connections.json', failed, tick),
+    optional<SourcesFile>('sources.json', failed, tick),
+    optional<RecipientsFile>('recipients.geojson', failed, tick),
+    optional<ContextFile>('context-buildings.geojson', failed, tick),
+    optional<NetworkFile>('network.geojson', failed, tick),
+    optional<PlacesFile>('places.json', failed, tick),
+    optional<Prices>('prices.json', failed, tick),
+    optional<FactorsFile>('factors.json', failed, tick),
+    optional<MetaFile>('meta.json', failed, tick),
   ]);
   const f = validateFacilities(facilities ?? []);
   const c = validateConnections(connections ?? []);

@@ -3,6 +3,7 @@ import { useEffect, useRef, type KeyboardEvent } from 'react';
 import type { Facility, Recipient, Totals } from '../contract/data-contract';
 import { BAND_WORD, COPY, FACILITY_KIND_WORD } from '../content/copy';
 import { about, money, num, two } from '../engine/format';
+import { recipientName } from './RecipientPanel';
 
 export type Tab = 'facilities' | 'recipients';
 export type LayerKey = 'facilities' | 'connections' | 'buildings' | 'heat';
@@ -24,12 +25,6 @@ type Props = {
   loading: boolean;
 };
 
-const LAYER_LABEL: Record<LayerKey, string> = {
-  facilities: 'Facilities',
-  connections: 'Heat connections',
-  buildings: 'Buildings',
-  heat: 'Heat demand',
-};
 
 function roving(e: KeyboardEvent<HTMLButtonElement>) {
   const list = e.currentTarget.closest('ul');
@@ -51,47 +46,13 @@ function roving(e: KeyboardEvent<HTMLButtonElement>) {
 export function Rail(p: Props) {
   const listRef = useRef<HTMLDivElement>(null);
   const ranked = p.recipients.filter((r) => r.rank).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
-  const onCount = (Object.keys(p.layers) as LayerKey[]).filter((k) => p.layers[k]).length;
-  const tall = typeof window !== 'undefined' && window.innerHeight >= 1000;
   useEffect(() => {
     listRef.current?.querySelector('[aria-current="true"]')?.scrollIntoView({ block: 'nearest' });
   }, [p.selectedId, p.tab]);
   return (
     <aside className="ts-panel ts-panel--rail" aria-label="Places to investigate">
-      <p className="ts-kicker ts-kicker--plain">{COPY.railKicker}</p>
-      <h2 className="ts-rail-title">{COPY.railTitle}</h2>
-      <p className="ts-intro">{COPY.railIntro}</p>
-      <p className="ts-meta ts-rail-meta">Hamilton, Ontario · records retrieved {p.retrieved}</p>
-      <details className="ts-row ts-rail-layers" open={tall}>
-        <summary>
-          <span className="ts-label">
-            <span className="ts-number">01</span>ON THE MAP
-          </span>
-          <span className="ts-row-status">{onCount} of 4 on</span>
-        </summary>
-        <div>
-          {(Object.keys(LAYER_LABEL) as LayerKey[]).map((k) => (
-            <button
-              key={k}
-              type="button"
-              role="switch"
-              aria-checked={p.layers[k]}
-              className="ts-switch"
-              disabled={k === 'heat' && p.heatDisabled}
-              onClick={() => p.onLayer(k)}
-            >
-              <span>{LAYER_LABEL[k]}</span>
-              <span className="track" aria-hidden="true">
-                <span className="knob" />
-              </span>
-            </button>
-          ))}
-        </div>
-      </details>
       <div className="ts-rail-tabs">
-        <p className="ts-label">
-          <span className="ts-number">02</span>PLACES TO INVESTIGATE
-        </p>
+        <p className="ts-rail-heading">Places to investigate</p>
         <div className="ts-tabs" role="tablist" aria-label="Places to investigate">
           {(['facilities', 'recipients'] as const).map((t) => (
             <button
@@ -104,7 +65,9 @@ export function Rail(p: Props) {
               className="ts-tab"
               onClick={() => p.onTab(t)}
             >
-              {t === 'facilities' ? 'Facilities' : 'Recipients to approach'}
+              {t === 'facilities' ? 'Facilities' : 'Recipients'}
+              <span className="ts-tab-count" aria-hidden="true">{two(t === 'facilities' ? p.facilities.length : ranked.length)}</span>
+              {t === 'recipients' && <span className="ts-visually-hidden"> to approach</span>}
             </button>
           ))}
         </div>
@@ -155,7 +118,7 @@ export function Rail(p: Props) {
                     onClick={() => p.onSelectRecipient(r.id)}
                   >
                     <span className="ts-number">{two(r.rank ?? 0)}</span>
-                    <span>{r.name ?? (r.address ? `Unnamed building, ${r.address}` : 'Unnamed building')}</span>
+                    <span>{recipientName(r)}</span>
                     <span className="ts-place-sub">
                       {BAND_WORD[r.fit.band]} fit{r.synthetic ? ' · Illustrative' : ''}
                     </span>

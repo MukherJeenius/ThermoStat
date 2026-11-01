@@ -20,6 +20,10 @@ describe('routes round-trip', () => {
       commitmentId: 'study-phase12-route',
     });
   });
+  it('details screens', () => {
+    expect(parseRoute(href.placeRecipient('osm:way/123'))).toEqual({ view: 'place', kind: 'recipient', id: 'osm:way/123', anchor: null });
+    expect(parseRoute(href.placeFacility('dofasco', 'dofasco-source'))).toEqual({ view: 'place', kind: 'facility', id: 'dofasco', anchor: 'dofasco-source' });
+  });
   it('unknown paths fall back to explore', () => {
     expect(parseRoute('#/nowhere/x')).toEqual({ view: 'explore', sel: null });
     expect(parseRoute('')).toEqual({ view: 'explore', sel: null });

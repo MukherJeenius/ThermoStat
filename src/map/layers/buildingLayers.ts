@@ -33,8 +33,35 @@ export function contextData(ctx: ContextFile | null): PolyDatum[] {
   return ctx.features.flatMap((f) => flattenPolys(f.id, f.geometry, f.properties.heightM ?? DEFAULT_HEIGHT_M));
 }
 
-export function recipientData(features: Feature<Poly, Recipient>[]): PolyDatum[] {
-  return features.flatMap((f) => flattenPolys(f.id, f.geometry, f.properties.heightM ?? DEFAULT_HEIGHT_M, f.properties));
+/** Grow a ring about its centroid by `metres` (approximate, fine at building scale). */
+function grow(ring: number[][], metres: number): number[][] {
+  const n = ring.length;
+  let cx = 0;
+  let cy = 0;
+  for (const p of ring) {
+    cx += p[0];
+    cy += p[1];
+  }
+  cx /= n;
+  cy /= n;
+  const mPerDegLat = 111_320;
+  const mPerDegLon = 111_320 * Math.cos((cy * Math.PI) / 180);
+  return ring.map((p) => {
+    const dx = (p[0] - cx) * mPerDegLon;
+    const dy = (p[1] - cy) * mPerDegLat;
+    const d = Math.hypot(dx, dy) || 1;
+    const k = (d + metres) / d;
+    return [cx + (dx * k) / mPerDegLon, cy + (dy * k) / mPerDegLat];
+  });
+}
+
+/** Scored buildings. When the basemap draws the context, each scored building is drawn 0.8 m wider and 1 m taller
+ *  than the basemap building under it, so no two faces coincide (no z-fighting while zooming). */
+export function recipientData(features: Feature<Poly, Recipient>[], enclose = false): PolyDatum[] {
+  return features.flatMap((f) => {
+    const h = (f.properties.heightM ?? DEFAULT_HEIGHT_M) + (enclose ? 1 : 0);
+    return flattenPolys(f.id, f.geometry, h, f.properties).map((d) => (enclose ? { ...d, ring: d.ring.map((r) => grow(r, 0.8)) } : d));
+  });
 }
 
 /** Recipients: the roof colour, slightly warmer. */
@@ -86,7 +113,6 @@ export function buildingLayers(opts: {
       getElevation: (d) => d.height,
       getFillColor: fill,
       material: MATERIAL,
-      getPolygonOffset: () => [0, -2000],   // wins over coincident basemap walls in the interim tile-context mode
       pickable: true,
       onClick: (info) => {
         if (info.object) opts.onSelectRecipient(info.object.id);

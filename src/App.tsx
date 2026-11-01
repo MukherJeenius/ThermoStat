@@ -4,23 +4,27 @@ import type { CostComparison, FactorSet, PriceValues, Recipient } from './contra
 import { COPY } from './content/copy';
 import { TEAM_CREDIT } from './content/credits';
 import { loadAll, type AppData } from './data/load';
+import { baseUrl } from './data/urls';
 import { compare, networkScenario } from './engine/cost';
 import { priceValues } from './engine/defaults';
 import { date } from './engine/format';
 import { together } from './engine/totals';
 import { MapView } from './map/MapView';
 import { href, parseRoute, type Route } from './state/route';
-import { EvidencePanel } from './ui/EvidencePanel';
-import { FacilityPanel } from './ui/FacilityPanel';
 import { Close, Minus, Plus, Reset, Search as SearchIcon } from './ui/icons';
+import { Intro } from './ui/Intro';
 import { Legend } from './ui/Legend';
+import { Wordmark } from './ui/Logo';
 import { Rail, type LayerKey, type Tab } from './ui/Rail';
-import { RecipientPanel, recipientName } from './ui/RecipientPanel';
+import { FacilityPreview, RecipientPreview } from './ui/PreviewCard';
+import { recipientName } from './ui/RecipientPanel';
+import { FacilityDetails, RecipientDetails } from './views/Details';
 import { Search } from './ui/Search';
 import { Brief } from './views/Brief';
 import { Method } from './views/Method';
 import { Records } from './views/Records';
 import { KIND_WORD } from './content/copy';
+import { DEMO_STEPS, step as demoStepFor, type DemoContext } from './demo/tour';
 
 const CARBON_KEY = 'thermostat:v1:carbon';
 
@@ -56,7 +60,7 @@ export interface Engine {
 export function App() {
   const route = useHashRoute();
   const [data, setData] = useState<AppData | null>(null);
-  const [layers, setLayers] = useState<Record<LayerKey, boolean>>({ facilities: true, connections: true, buildings: true, heat: false });
+  const [layers, setLayers] = useState<Record<LayerKey, boolean>>({ facilities: true, connections: true, buildings: true, heat: true });
   const [carbon, setCarbonState] = useState<number>(readCarbon);
   const [pitched, setPitched] = useState(true);
   const [resetToken, setResetToken] = useState(0);
@@ -66,6 +70,23 @@ export function App() {
   const [basemapFailed, setBasemapFailed] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sheetExpanded, setSheetExpanded] = useState(false);
+  const [keyOpen, setKeyOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
+  const [progress, setProgress] = useState({ done: 0, total: 10 });
+  // the opening screen shows on a fresh visit; deep links and ?demo=1 go straight in
+  const [intro, setIntro] = useState<'shown' | 'leaving' | 'gone'>(() => {
+    const h = window.location.hash;
+    const direct = new URLSearchParams(window.location.search).get('demo') === '1' || (h !== '' && h !== '#/explore' && h !== '#demo');
+    return direct ? 'gone' : 'shown';
+  });
+  const closeIntro = (then?: () => void) => {
+    setIntro('leaving');
+    then?.();
+    window.setTimeout(() => setIntro('gone'), 450);
+  };
+  const [demo, setDemo] = useState<number | null>(() =>
+    new URLSearchParams(window.location.search).get('demo') === '1' ? 1 : null,
+  );
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const setHeading = useCallback((el: HTMLHeadingElement | null) => {
     headingRef.current = el;
@@ -76,19 +97,20 @@ export function App() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
-      if (drawerOpen) setDrawerOpen(false);
+      if (videoOpen) setVideoOpen(false);
+      else if (drawerOpen) setDrawerOpen(false);
       else if (popover) setPopover(null);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [drawerOpen, popover]);
+  }, [drawerOpen, popover, videoOpen]);
 
   const reload = useCallback(() => {
     setData(null);
-    loadAll().then(setData);
+    loadAll((done, total) => setProgress({ done, total })).then(setData);
   }, []);
   useEffect(() => {
-    loadAll().then(setData);
+    loadAll((done, total) => setProgress({ done, total })).then(setData);
   }, []);
 
   const setCarbon = (t: number) => {
@@ -104,11 +126,20 @@ export function App() {
   const connections = useMemo(() => (data?.connections ?? []).filter((c) => !c.synthetic), [data]);
   const recipients = useMemo(() => (data?.recipients.features ?? []).map((f) => f.properties), [data]);
   const recById = useMemo(() => new Map(recipients.map((r) => [r.id, r])), [recipients]);
-  const facIndex = useMemo(() => new Map(facilities.map((f, i) => [f.id, i + 1])), [facilities]);
+
+  // demo mode sets the carbon price per step and restores the sourced assumptions on exit (spec 12)
+  const demoCtx = useMemo<DemoContext | null>(() => {
+    if (!data) return null;
+    const factor = data.factors.sets[data.factors.default] ?? data.factors.sets.eccc;
+    return { facilities, connections, recipients, meta: data.meta, prices: priceValues(data.prices), factor };
+  }, [data, facilities, connections, recipients]);
+  const demoStep = demo && demoCtx && data?.meta ? demoStepFor(demo, demoCtx) : null;
+  const effCarbon = demoStep ? demoStep.carbonPriceT : carbon;
 
   const engine = useMemo<Engine | null>(() => {
     if (!data) return null;
     const base = priceValues(data.prices);
+    const carbon = effCarbon;
     const prices = { ...base, carbonPriceT: carbon };
     const factor = data.factors.sets[data.factors.default] ?? data.factors.sets.eccc;
     return {
@@ -120,16 +151,77 @@ export function App() {
           assumptions: carbon !== base.carbonPriceT ? 'edited' : 'sourced_defaults',
         }),
     };
-  }, [data, carbon]);
+  }, [data, effCarbon]);
 
   const defaultFacilityId = data?.meta?.defaultFacilityId ?? 'hce-recovery-plant';
   const sel = route.view === 'explore' ? route.sel : null;
   // the tab follows the selection unless the viewer picked a tab for the current selection
   const selKey = sel ? `${sel.kind}:${sel.id}` : 'none';
   const [tabState, setTabState] = useState<{ tab: Tab; key: string }>({ tab: 'facilities', key: '' });
-  const tab: Tab =
-    tabState.key === selKey ? tabState.tab : sel?.kind === 'recipient' ? 'recipients' : sel?.kind === 'facility' ? 'facilities' : tabState.tab;
+  const tab: Tab = demoStep
+    ? demoStep.tab
+    : tabState.key === selKey
+      ? tabState.tab
+      : sel?.kind === 'recipient'
+        ? 'recipients'
+        : sel?.kind === 'facility'
+          ? 'facilities'
+          : tabState.tab;
   const setTab = (t: Tab) => setTabState({ tab: t, key: selKey });
+
+  // #demo starts the demo at any time, not only on page load
+  useEffect(() => {
+    const on = () => {
+      if (window.location.hash === '#demo') setDemo(1);
+    };
+    window.addEventListener('hashchange', on);
+    return () => window.removeEventListener('hashchange', on);
+  }, []);
+
+  // the route follows the demo step
+  const demoHash = demoStep?.hash;
+  useEffect(() => {
+    if (demoHash) go(demoHash);
+  }, [demoHash, demo]);
+  useEffect(() => {
+    if (demoStep?.n === 6) {
+      const t = window.setTimeout(() => document.getElementById('ts-together')?.scrollIntoView({ block: 'nearest' }), 300);
+      return () => window.clearTimeout(t);
+    }
+  }, [demoStep?.n]);
+
+  // single-key shortcuts for the demo, ignored while typing (spec 9.12)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable || t.getAttribute('role') === 'combobox')) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (demo === null) {
+        if (e.key === 'd' || e.key === 'D') {
+          if (!data?.meta) return;
+          e.preventDefault();
+          setDemo(1);
+        }
+        return;
+      }
+      const onButton = t?.tagName === 'BUTTON' || t?.classList.contains('maplibregl-canvas');
+      if ((e.key === ' ' && !onButton) || (e.key === 'ArrowRight' && !onButton)) {
+        e.preventDefault();
+        setDemo((d) => Math.min(DEMO_STEPS, (d ?? 1) + 1));
+      } else if (e.key === 'ArrowLeft' && !onButton) {
+        e.preventDefault();
+        setDemo((d) => Math.max(1, (d ?? 1) - 1));
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        setDemo(1);
+      } else if (e.key === 'Escape') {
+        setDemo(null);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [demo, data]);
+
   const selectedFacility = sel?.kind === 'facility' ? facilities.find((f) => f.id === sel.id) ?? null : null;
   const selectedRecipient = sel?.kind === 'recipient' ? recById.get(sel.id) ?? null : null;
   const selectedConnection = sel?.kind === 'connection' ? connections.find((c) => c.id === sel.id) ?? null : null;
@@ -187,56 +279,16 @@ export function App() {
 
   const view = route.view;
   const popConn = popover ? connections.find((c) => c.id === popover.id) : null;
-  const openCost = false;
   let card: React.ReactNode = null;
   if (data && engine) {
     if (selectedRecipient) {
-      const c = engine.compareFor(selectedRecipient);
-      card = (
-        <RecipientPanel
-          recipient={selectedRecipient}
-          comparison={c}
-          factorLabel={engine.factor.isFallback ? 'Fallback emission factors' : engine.factor.label}
-          fallbackNote={data.fallback.prices ? 'Fallback prices (plan defaults)' : null}
-          carbon={carbon}
-          onCarbon={setCarbon}
-          edited={carbon !== priceValues(data.prices).carbonPriceT}
-          onReset={() => setCarbon(priceValues(data.prices).carbonPriceT)}
-          sources={data.sources}
-          onBrief={() => go(href.brief(selectedRecipient.id))}
-          onMethod={() => go(href.method('costs'))}
-          onHeading={setHeading}
-          openCost={openCost}
-        />
-      );
-    } else if (cardFacility && route.view === 'explore' && 'evidence' in route && route.evidence) {
-      card = (
-        <EvidencePanel
-          facility={cardFacility}
-          focusCommitmentId={route.commitmentId}
-          onBack={() => {
-            focusNext.current = false;
-            go(href.facility(cardFacility.id));
-            setTimeout(() => document.getElementById('ts-open-evidence')?.focus(), 0);
-          }}
-          onHeading={setHeading}
-        />
-      );
+      card = <RecipientPreview key={selectedRecipient.id} recipient={selectedRecipient} comparison={engine.compareFor(selectedRecipient)} onHeading={setHeading} />;
     } else if (cardFacility) {
       card = (
-        <FacilityPanel
+        <FacilityPreview
+          key={cardFacility.id}
           facility={cardFacility}
-          index={facIndex.get(cardFacility.id) ?? 1}
           connections={connections.filter((c) => c.facilityId === cardFacility.id)}
-          onOpenEvidence={(fid, cid) => {
-            focusNext.current = !cid;
-            go(href.evidence(fid, cid));
-          }}
-          onSelectConnection={(id) => {
-            const c = connections.find((x) => x.id === id);
-            if (c?.recipientId) go(href.recipient(c.recipientId));
-            else setPopover({ id, x: window.innerWidth / 2, y: window.innerHeight / 2 });
-          }}
           onHeading={setHeading}
         />
       );
@@ -269,11 +321,14 @@ export function App() {
   );
 
   return (
-    <div className={`ts-app ts-view-${view}`}>
+    <div className={`ts-app ts-view-${view}${demoStep ? ' is-demo' : ''}${demoStep && !demoStep.showRail ? ' is-demo-norail' : ''}`}>
       <h1 className="ts-visually-hidden">{COPY.h1}</h1>
       <header className="ts-header">
         <div className="ts-brand">
-          <a className="ts-wordmark" href={href.explore()}>{COPY.wordmark}</a>
+          <a className="ts-wordmark" href={href.explore()} aria-label="ThermoStat home"
+            onClick={(e) => { e.preventDefault(); setDemo(null); setIntro('shown'); }}>
+            <Wordmark />
+          </a>
           <p className="ts-subline"><span className="ts-subline-dot" aria-hidden="true" />{COPY.subline}</p>
         </div>
         <nav className="ts-nav" aria-label="Main">
@@ -297,6 +352,29 @@ export function App() {
       </header>
       {view === 'records' && data && engine && <Records data={data} engine={engine} />}
       {view === 'method' && <Method data={data} engine={engine} anchor={route.view === 'method' ? route.anchor : null} />}
+      {route.view === 'place' && data && engine && (() => {
+        if (route.kind === 'facility') {
+          const f = facilities.find((x) => x.id === route.id);
+          return f ? (
+            <FacilityDetails facility={f} connections={connections.filter((c) => c.facilityId === f.id)} anchor={route.anchor} />
+          ) : (
+            <main className="ts-detail"><p>{COPY.unknownRoute}</p><a href={href.explore()}>Back to the map</a></main>
+          );
+        }
+        const r = recById.get(route.id);
+        return r ? (
+          <RecipientDetails
+            recipient={r}
+            comparison={engine.compareFor(r)}
+            sources={data.sources}
+            carbon={effCarbon}
+            onCarbon={setCarbon}
+            factorLabel={engine.factor.isFallback ? 'Fallback emission factors' : engine.factor.label}
+          />
+        ) : (
+          <main className="ts-detail"><p>{COPY.unknownRoute}</p><a href={href.explore()}>Back to the map</a></main>
+        );
+      })()}
       <main className="ts-stage" hidden={view !== 'explore'} aria-label="Explore">
         {data && (
           <MapView
@@ -314,6 +392,9 @@ export function App() {
             onSelectRecipient={selectRecipient}
             onSelectConnection={selectConnection}
             onBasemapError={() => setBasemapFailed(true)}
+            demoCamera={demoStep?.camera ?? null}
+            demoKey={demoStep?.n ?? null}
+            arcKinds={demoStep?.arcKinds ?? null}
           />
         )}
         <div className="ts-rail-slot">{rail}</div>
@@ -355,10 +436,37 @@ export function App() {
             </section>
           )}
         </div>
-        <div className="ts-legend-slot">
-          <Legend heatOn={layers.heat} breaks={data?.meta?.rampBreaksMwh ?? null} basemapFailed={basemapFailed} caption={caption} illustrative={false} />
+        {demoStep && (
+          <section className="ts-panel ts-caption" aria-label="Guided demo">
+            <p className="ts-caption-step">Step {demoStep.n} of {DEMO_STEPS}</p>
+            <p className="ts-caption-text" aria-live="polite">{demoStep.caption}</p>
+            <div className="ts-caption-actions">
+              <button type="button" className="ts-secondary" onClick={() => setDemo((d) => Math.max(1, (d ?? 1) - 1))} disabled={demoStep.n === 1}>
+                Back
+              </button>
+              {demoStep.n < DEMO_STEPS ? (
+                <button type="button" className="ts-primary" onClick={() => setDemo((d) => Math.min(DEMO_STEPS, (d ?? 1) + 1))}>
+                  Next
+                </button>
+              ) : (
+                <button type="button" className="ts-primary" onClick={() => setDemo(null)}>
+                  Finish
+                </button>
+              )}
+              <button type="button" className="ts-secondary ts-caption-exit" onClick={() => setDemo(null)}>
+                Exit demo
+              </button>
+            </div>
+          </section>
+        )}
+        <div className="ts-legend-slot" hidden={!keyOpen}>
+          <Legend heatOn={layers.heat} breaks={data?.meta?.rampBreaksMwh ?? null} basemapFailed={basemapFailed} caption={caption} illustrative={false}
+            layers={layers} onLayer={(k) => setLayers((l) => ({ ...l, [k]: !l[k] }))} onClose={() => setKeyOpen(false)} />
         </div>
         <div className="ts-controls" role="group" aria-label="Map controls">
+          <button type="button" className="ts-key-btn" aria-expanded={keyOpen} aria-controls="ts-map-key" onClick={() => setKeyOpen((v) => !v)}>
+            Map key
+          </button>
           <button type="button" aria-label="Zoom in" onClick={() => setZoomDelta((z) => ({ n: z.n + 1, d: 1 }))}><Plus /></button>
           <button type="button" aria-label="Zoom out" onClick={() => setZoomDelta((z) => ({ n: z.n + 1, d: -1 }))}><Minus /></button>
           <button type="button" aria-pressed={!pitched} onClick={() => setPitched((p) => !p)}>{pitched ? '2D' : '3D'}</button>
@@ -386,6 +494,30 @@ export function App() {
         <a href={href.method('sources')}>Sources and method</a>
       </footer>
       <div className="ts-visually-hidden" aria-live="polite">{announce}</div>
+      {videoOpen && (
+        <div className="ts-video" role="dialog" aria-modal="true" aria-label="ThermoStat demo video">
+          <div className="ts-video-frame">
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption -- music only, no speech */}
+            <video src={baseUrl() + 'demo/thermostat-demo.mp4'} controls autoPlay playsInline />
+            <button type="button" className="ts-video-close" onClick={() => setVideoOpen(false)}>Close</button>
+          </div>
+        </div>
+      )}
+      {intro !== 'gone' && (
+        <div className={intro === 'leaving' ? 'ts-intro-leave' : undefined}>
+          <Intro
+            progress={progress}
+            ready={!!data}
+            facts={data ? {
+              facilities: facilities.length,
+              recipients: recipients.length,
+              excerpts: facilities.reduce((n, f) => n + f.commitments.filter((c) => c.source).length, 0),
+            } : null}
+            onDemo={() => setVideoOpen(true)}
+            onExplore={() => closeIntro(() => { setDemo(null); go(href.explore()); })}
+          />
+        </div>
+      )}
     </div>
   );
 }
