@@ -142,3 +142,13 @@ Node 26.5.1, npm 11.17.0. `pmtiles` CLI 1.31.2 installed with Homebrew.
 - The brief cites the study passages behind the price rule (page 18), the route (page 5) and the CO2 share (page 5).
 - In the candidates-only mode the brief's locator shows the recipient and the nearest network element without
   surrounding context footprints (`context-buildings.geojson` is empty until the full-frame fetch completes).
+
+### npm audit (1 November 2026)
+
+- `npm audit` reports 1 critical advisory in maplibre-gl ≤ 6.4.0 (GHSA-jrc7-96c5-q579, an XSS sanitizer bypass in
+  `DOM.sanitize()`, which handles HTML given to popups and attribution). ThermoStat uses no MapLibre popups, its
+  attribution strings are fixed in code, data strings render as React text, and the production CSP blocks other
+  origins. The fix (6.16.0) is MapLibre 6, which deck.gl 9.4's interleaved overlay cannot draw on, so 5.24.0 stays
+  until deck.gl supports MapLibre 6 (then step up and recheck). `npm audit fix --force` must not be run: it installs
+  MapLibre 6 and breaks the map. The 14 moderate advisories are in dev-only tooling (eslint, typescript-eslint,
+  ts-json-schema-generator, glob, minimatch) and never ship in the bundle.
