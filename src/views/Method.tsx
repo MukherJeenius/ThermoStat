@@ -25,8 +25,8 @@ export function Method({ data, engine, anchor }: { data: AppData | null; engine:
   return (
     <main className="ts-page">
       <div data-crumb="METHOD">
-        <h2 className="ts-page-title">How ThermoStat knows what it shows.</h2>
-        <p className="ts-page-lede">Every figure has a source, a date and a quality word. Unknowns stay unknown.</p>
+        <h2 className="ts-page-title">How it knows what it shows.</h2>
+        <p className="ts-page-lede">Every figure has a source, a date and a quality word. Unknowns stay Unknown.</p>
       </div>
       <section className="ts-panel ts-panel--flow" id="read">
         <h3>How to read ThermoStat</h3>

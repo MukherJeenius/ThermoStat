@@ -249,3 +249,20 @@ warm (the same ramp), the water stays pale blue, and `npm run contrast` judges e
 
 **Motion:** one easing curve (`--ts-ease: cubic-bezier(.16,1,.3,1)`): 200 ms for state changes, 600 ms for reveals.
 Everything stops under `prefers-reduced-motion`. The map camera keeps its own timing.
+
+## Plate system (1 November 2026)
+
+The "Studio" block in `src/ui/app.css` is replaced by one shape and colour system, the "Plate system", taken from the
+studio site's framed plates and the Tapasya shop's colour blocks:
+
+- **Three solid fields**: cream paper, navy (`--ts-night`), and a flare orange (`--ts-flare #E8783A`; navy text on it
+  is 5.5:1). There are no gradients, blurs or glows.
+- **Shapes**: every object has a 1.5 px navy edge and 4 px corners. Things that float or press have a hard offset
+  shadow (solid navy, no blur). Pills are used only for filter chips. Squares mean facilities and dots mean buildings.
+- **Layout**:
+  - The Explore rail is a navy field, and the current row is an orange block.
+  - Preview cards carry a navy title strip and tile-grid facts.
+  - Details pages put the facts in a tile grid that overlaps the navy title band, and number each section with an
+    orange block.
+  - The homepage puts a cream lead beside a navy figure field, then three solid figure tiles and three framed steps.
+- **Copy**: shorter headings and one idea per block. Every figure, source and honesty label is kept.

@@ -80,8 +80,8 @@ export function Records({ data, engine, anchor = null }: { data: AppData; engine
   return (
     <main className="ts-page">
       <div data-crumb="RECORDS">
-        <h2 className="ts-page-title">A quieter way to investigate.</h2>
-        <p className="ts-page-lede">Every record on the map, as a readable list.</p>
+        <h2 className="ts-page-title">Every record, as a list.</h2>
+        <p className="ts-page-lede">The same data as the map: facilities, buildings and links.</p>
       </div>
       <Shortlist data={data} engine={engine} focus={anchor === 'shortlist'} />
       <section className="ts-panel ts-panel--flow">

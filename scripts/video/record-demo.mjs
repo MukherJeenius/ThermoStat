@@ -71,7 +71,7 @@ mark('cost');
 await page.click('#ts-open-details');
 await sleep(900);
 await page.evaluate(() => {
-  const h = [...document.querySelectorAll('.ts-doc-h2')].find((x) => x.textContent?.includes('What it would cost'));
+  const h = [...document.querySelectorAll('.ts-doc-h2')].find((x) => x.textContent?.includes('Cost'));
   if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
 });
 await sleep(1600);

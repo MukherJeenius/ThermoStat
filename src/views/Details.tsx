@@ -98,7 +98,7 @@ export function FacilityDetails({ facility, connections, anchor }: { facility: F
         ['Buildings served', served.length || null],
       ]} />
 
-      <Section title="The evidence">
+      <Section title="Evidence">
         {sourced.length === 0 ? (
           <p className="ts-doc-empty">No promise on record. {COPY.notNonCompliance}</p>
         ) : (
@@ -144,7 +144,7 @@ export function FacilityDetails({ facility, connections, anchor }: { facility: F
         )}
       </Section>
 
-      <Section title="See on map">
+      <Section title="On the map">
         <figure className="ts-frame ts-doc-fig">
           <a href={href.facility(facility.id)} aria-label="Open this facility on the map">
             <Schematic fig={{ facilities: [facility.position], buildings: connections.map((c) => c.target), arcs: connections.map((c) => [c.source, c.target]) }} />
@@ -214,7 +214,7 @@ export function RecipientDetails({
         <p className="ts-doc-q">{recipientQuestion(r)}</p>
       </Section>
 
-      <Section title="The evidence">
+      <Section title="Evidence">
         {evidence.length === 0 ? (
           <p className="ts-doc-empty">Unknown. No quoted claim links this building to a facility.</p>
         ) : (
@@ -224,7 +224,7 @@ export function RecipientDetails({
         )}
       </Section>
 
-      <Section title="What it would cost">
+      <Section title="Cost">
         <p className="ts-doc-lead">{v.sentence}</p>
         <div className="ts-tabs ts-doc-carbon" role="radiogroup" aria-label="Carbon price">
           {[{ t: 0, label: 'No carbon price' }, { t: 85, label: '$85 per tonne' }].map((o) => (
@@ -261,7 +261,7 @@ export function RecipientDetails({
         </p>
       </Section>
 
-      <Section title="See on map">
+      <Section title="On the map">
         <figure className="ts-frame ts-doc-fig">
           <a href={href.recipient(r.id)} aria-label="Open this building on the map">
             <Schematic fig={{ facilities: nearFac ? [nearFac.position] : [], buildings: [r.position], arcs: links.map((x) => [x.source, x.target]) }} />

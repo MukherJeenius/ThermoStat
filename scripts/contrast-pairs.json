@@ -144,6 +144,18 @@
    "bg": "--ts-surface",
    "kind": "non-text",
    "where": "orange marks and focus ring on panels"
+  },
+  {
+   "fg": "--ts-night",
+   "bg": "--ts-flare",
+   "kind": "text",
+   "where": "buttons, current rail row, nav tab, section numbers"
+  },
+  {
+   "fg": "--ts-night",
+   "bg": "--ts-bg",
+   "kind": "non-text",
+   "where": "1.5 px frames and button edges"
   }
  ],
  "info": [
