@@ -1,0 +1,626 @@
+# Every source ThermoStat uses. URLs are seeds from docs/build-spec.md section 4 or were found by search
+# (found_by/found_on). 00_probe resolves them and writes the results back here; never hand-build a URL.
+- key: osm
+  row: 1
+  title: OpenStreetMap data via the Overpass API
+  shortTitle: OpenStreetMap (Overpass)
+  publisher: OpenStreetMap contributors
+  docKind: dataset
+  licence: ODbL 1.0
+  documentDate: null
+  url: https://overpass-api.de/api/interpreter
+  probe: overpass
+  found_by: seed
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: HEAD
+- key: osm-mirror
+  row: 1
+  title: OpenStreetMap data via an Overpass API mirror
+  shortTitle: OpenStreetMap (Overpass mirror)
+  publisher: OpenStreetMap contributors
+  docKind: dataset
+  licence: ODbL 1.0
+  documentDate: null
+  url: https://overpass.private.coffee/api/interpreter
+  probe: overpass
+  found_by: wiki
+  found_on: '2026-10-31'
+  note: one public instance from the OpenStreetMap wiki page "Overpass API"
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: ham-footprints
+  row: 3
+  title: City of Hamilton building footprints
+  shortTitle: City of Hamilton footprints
+  publisher: City of Hamilton
+  docKind: dataset
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: bps
+  row: 4
+  title: Energy use and greenhouse gas emissions for the Broader Public Sector
+  shortTitle: Broader Public Sector energy reports (Ontario)
+  publisher: Government of Ontario
+  docKind: dataset
+  licence: Open Government Licence – Ontario
+  documentDate: null
+  slug: energy-use-and-greenhouse-gas-emissions-for-the-broader-public-sector
+  url: https://data.ontario.ca/dataset/energy-use-and-greenhouse-gas-emissions-for-the-broader-public-sector
+  probe: ckan
+  found_by: seed
+  api: https://data.ontario.ca/api/3/action/package_show?id=energy-use-and-greenhouse-gas-emissions-for-the-broader-public-sector
+  resources:
+  - name: 2020 raw data
+    format: XLSX
+    last_modified: '2024-02-13T21:08:06.150530'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/06606169-81ff-4d7f-8694-32348c50567c/download/les_donnees_de_2020_relatives.xlsx
+  - name: 2020 raw data
+    format: XLSX
+    last_modified: '2024-02-13T21:08:52.154524'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/af9bef69-01de-4979-a62e-78ecbd215a01/download/2020_final_data_set_1.xlsx
+  - name: 2011-2020 normalized - municipality and municipal service board
+    format: XLSX
+    last_modified: '2024-02-13T21:03:53.993418'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/34bd4894-991d-43dc-ba90-130f6490a2c1/download/normalized_bps_data_2011-2020_municipality_and_municipal_service_board.xlsx
+  - name: 2011 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155634'
+    url: https://files.ontario.ca/opendata/bps_2011_report_english.xlsx
+  - name: 2012 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155637'
+    url: https://files.ontario.ca/opendata/bps_2012_report_english.xlsx
+  - name: 2013 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155640'
+    url: https://files.ontario.ca/opendata/bps_2013_report_english.xlsx
+  - name: 2014 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155643'
+    url: https://files.ontario.ca/opendata/bps_2014_report_english.xlsx
+  - name: 2015 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155645'
+    url: https://files.ontario.ca/opendata/bps_2015_report_english.xlsx
+  - name: 2016 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155648'
+    url: https://files.ontario.ca/opendata/bps_2016_report_english.xlsx
+  - name: Did not report 2013-2020
+    format: XLSX
+    last_modified: '2023-02-13T21:46:57.197068'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/1fc33020-694b-4bb5-b76b-6b420af6ee46/download/bps_non-reporters_2013-2020_english.xlsx
+  - name: 2011 raw data
+    format: XLSX
+    last_modified: '2020-03-26T12:12:53.977807'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/8cc08b0c-9c6b-4aa9-971b-52289ca5b4da/download/bps_2011_report_french_0.xlsx
+  - name: 2012 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155658'
+    url: https://files.ontario.ca/opendata/bps_2012_report_french_0.xlsx
+  - name: 2013 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155660'
+    url: https://files.ontario.ca/opendata/bps_2013_report_french_0.xlsx
+  - name: 2014 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155662'
+    url: https://files.ontario.ca/opendata/bps_2014_report_french_0.xlsx
+  - name: 2015 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155665'
+    url: https://files.ontario.ca/opendata/bps_2015_report_french_1.xlsx
+  - name: 2016 raw data
+    format: XLSX
+    last_modified: '2019-12-31T15:22:57.155667'
+    url: https://files.ontario.ca/opendata/bps_2016_report_french_0.xlsx
+  - name: Rapports de 2013 à 2020 non présentés
+    format: XLSX
+    last_modified: '2023-02-13T21:48:05.921298'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/52f70988-0a4c-4319-8c2f-8b1e8c6b849d/download/rapports_de_2013_a_2020_non_presentes.xlsx
+  - name: 2017 raw data
+    format: XLSX
+    last_modified: '2020-03-09T20:37:13.227706'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/611104eb-0806-4c42-971c-c36c43584c4e/download/2017_energy_consumption.xlsx
+  - name: 2017 raw data
+    format: XLSX
+    last_modified: '2021-01-08T23:20:26.673222'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/e747d87c-12d4-44b4-b52c-5be5c774f1bc/download/les_donnees_de_2017_relatives.xlsx
+  - name: 2011-2020 normalized - post secondary educational institution
+    format: XLSX
+    last_modified: '2023-02-13T21:26:40.737507'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/fba17e12-eb8b-48c6-a637-882de2b7a56e/download/normalized_bps_data_2011-2020_post_secondary_educational_institution.xlsx
+  - name: 2011-2020 normalized - public hospital
+    format: XLSX
+    last_modified: '2023-02-13T21:27:43.169159'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/4a253958-ec5e-4b1a-bb34-4258548ba18d/download/normalized_bps_data_2011-2020_public_hospital.xlsx
+  - name: 2011-2020 normalized - school board
+    format: XLSX
+    last_modified: '2023-02-13T21:30:54.065567'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/96e10d29-9c62-4ffe-801a-1b3a528b6c53/download/normalized_bps_data_2011-2020_school_board_english.xlsx
+  - name: 2011-2020 normalized - school board
+    format: XLSX
+    last_modified: '2023-02-13T21:33:41.145383'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/b79ef5c0-51ed-4384-ab78-6f2359576901/download/les_donnees_de_2011_a_2020_normalisees_conseil_scolaire.xlsx
+  - name: 2011-2020 normalized - post secondary educational institution
+    format: XLSX
+    last_modified: '2024-02-13T21:05:21.365011'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/45576a19-69f1-43d1-af6d-9535af383a7d/download/les_donnees_de_2011_a_2020_normalisees_municipalites_et_commission_de_services_municipaux.xlsx
+  - name: 2011-2020 normalized - public hospital
+    format: XLSX
+    last_modified: '2023-02-13T21:36:21.756597'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/cd3993fc-7fc3-4e69-b76e-09965bf62bf7/download/les_donnees_de_2011_a_2020_normalisees_hopital_public.xlsx
+  - name: 2011-2020 normalized - municipality and municipal service board
+    format: XLSX
+    last_modified: '2023-02-13T21:38:19.317962'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/2b833e37-eb5a-4dcf-983b-60f1defac1d0/download/les_donnees_de_2011_a_2020_normalisees_municipalites_et_commission_de_services_municipaux.xlsx
+  - name: 2018 raw data
+    format: XLSX
+    last_modified: '2021-07-05T17:54:39.075852'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/0b13546d-f2d7-4f4c-bf80-9dce8a112494/download/2018_final_data_set.xlsx
+  - name: 2018 raw data
+    format: XLSX
+    last_modified: '2021-07-05T17:54:55.696031'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/89c115b4-ea37-4270-9c9f-206cb4e7f301/download/les_donnees_de_2018_relatives.xlsx
+  - name: 2019 raw data
+    format: XLSX
+    last_modified: '2022-01-04T20:42:44.174122'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/054263bd-9d22-4fd5-9057-333b0bf97df1/download/2019_final_data_set.xlsx
+  - name: 2019 raw data
+    format: XLSX
+    last_modified: '2022-01-04T20:43:10.495133'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/927037b5-5d04-4174-bbc9-6f865e036776/download/les_donnees_de_2019_relatives.xlsx
+  - name: 2021 raw data
+    format: XLSX
+    last_modified: '2024-01-26T20:43:54.568302'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/4727e0fb-d020-4ea8-b27a-20f383d05199/download/2021_final_bps_dataset.xlsx
+  - name: 2021 raw data
+    format: XLSX
+    last_modified: '2024-01-26T20:46:13.835850'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/2f5c2cdd-f024-4b8e-9970-fae024ec9563/download/2021_final_bps_dataset_french.xlsx
+  - name: '2022'
+    format: XLSX
+    last_modified: '2026-01-13T15:01:25.607801'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/88c3efde-5bd5-4645-811d-ef1ffe3d05cc/download/2022_final_data_set.xlsx
+  - name: '2022'
+    format: XLSX
+    last_modified: '2026-01-13T15:01:51.740305'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/be4ac31f-8781-48b1-b593-ca0379044c6a/download/les_donnees_de_2022_relatives.xlsx
+  - name: '2023'
+    format: XLSX
+    last_modified: '2026-01-13T15:03:02.920636'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/a2fdbdb2-3cc9-4d30-a60f-58c70f6e3f5a/download/2023_final_data_set.xlsx
+  - name: '2023'
+    format: XLSX
+    last_modified: '2026-01-13T15:03:41.360050'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/b5c4e34e-60b9-4afa-9ac7-d9400fa8a857/download/les_donnees_de_2023_relatives.xlsx
+  - name: '2024'
+    format: XLSX
+    last_modified: '2026-01-13T15:05:10.672349'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/b6b569cf-5d3a-4b96-9972-ea428c316278/download/2024_final_data_set.xlsx
+  - name: '2024'
+    format: XLSX
+    last_modified: '2026-01-13T15:06:49.329652'
+    url: https://data.ontario.ca/dataset/5e976319-9769-4f77-aab9-d170e0131efe/resource/44a8f111-d030-4afa-ab1c-3fcc9c7d2b9f/download/les_donnees_de_2024_relatives.xlsx
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: CKAN package_show
+- key: ewrb
+  row: 5
+  title: Energy and water usage of large buildings in Ontario
+  shortTitle: Large-building energy reports (EWRB, Ontario)
+  publisher: Government of Ontario
+  docKind: dataset
+  licence: Open Government Licence – Ontario
+  documentDate: null
+  slug: energy-and-water-usage-of-large-buildings-in-ontario
+  url: https://data.ontario.ca/dataset/energy-and-water-usage-of-large-buildings-in-ontario
+  probe: ckan
+  found_by: seed
+  api: https://data.ontario.ca/api/3/action/package_show?id=energy-and-water-usage-of-large-buildings-in-ontario
+  resources:
+  - name: '2018'
+    format: XLSX
+    last_modified: '2020-08-31T17:38:06.620829'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/74c0e959-9683-4263-ba24-d047acfef681/download/ontario_large_building_energy_water_ghgs-2018.xlsx
+  - name: '2018'
+    format: XLSX
+    last_modified: '2020-08-31T17:38:36.855843'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/5a352124-2c08-497d-ab44-b819942c3652/download/energie_eau_et_ges_des_grands_immeubles_en_ontario_2018.xlsx
+  - name: Data Dictionary
+    format: XLSX
+    last_modified: '2020-08-31T17:39:08.519976'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/357cd5e3-03e0-42fe-9bea-21b1126fd9ad/download/ontario_large_building_energy_water_ghgs_data_dictionary.xlsx
+  - name: Dictionnaire de données
+    format: XLSX
+    last_modified: '2020-08-31T17:39:54.426960'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/0e11455b-37c7-46bf-9ed7-95fa6c4e5fc5/download/energie_eau_et_ges_des_grands_immeubles_en_ontario-dictionnaire.xlsx
+  - name: '2019'
+    format: XLSX
+    last_modified: '2021-02-25T19:49:38.846630'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/bda9443d-dd2b-427f-b239-03820fa2ca3d/download/ontario_large_building_energy_water_ghgs-2019.xlsx
+  - name: '2019'
+    format: XLSX
+    last_modified: '2021-02-25T19:52:15.400812'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/61fed2e6-155e-48ab-b92f-e75c956a68d4/download/energie_eau_et_ges_des_grands_immeubles_en_ontario-2019.xlsx
+  - name: '2020'
+    format: XLSX
+    last_modified: '2021-12-14T18:22:27.532074'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/5753b180-7c21-485e-8324-e232b59ce19e/download/energy_large_building_energy_water_ghgs-2020_.xlsx
+  - name: '2020'
+    format: XLSX
+    last_modified: '2021-12-14T18:22:41.516423'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/065a6821-229e-4bbf-b78e-a2f63d4fd4d9/download/energie_eau_et_ges_des_grands_immeubles_en_ontario_2020_.xlsx
+  - name: '2021'
+    format: XLSX
+    last_modified: '2023-09-28T14:50:11.399112'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/e7292ae5-90b9-4c6c-bd7b-75f4fab48142/download/ewrb_odc_data_prep_2022_updated_sept_28_2023.xlsx
+  - name: '2021'
+    format: XLSX
+    last_modified: '2023-09-28T14:50:42.649907'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/ec345613-6938-4f6b-bf3f-dd2367475e11/download/energie_eau_et_ges_des_grands_immeubles_en_ontario_2021_updated_sept_28_2023.xlsx
+  - name: '2022'
+    format: XLSX
+    last_modified: '2024-12-24T15:06:09.746424'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/f53db89b-d5e0-49ea-aa85-70453d969453/download/energy_large_building_energy_water_ghgs_2022.xlsx
+  - name: '2022'
+    format: XLSX
+    last_modified: '2024-12-24T15:06:36.814888'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/8a9bb7e0-8218-44a7-a688-2c61e0a8810f/download/energie_eau_et_ges_des_grands_immeubles_en_ontario_2022.xlsx
+  - name: '2023'
+    format: XLSX
+    last_modified: '2024-12-24T15:07:02.737575'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/980458c7-81df-4ffe-8543-71907583cc87/download/energy_large_building_energy_water_ghgs-2023.xlsx
+  - name: '2023'
+    format: XLSX
+    last_modified: '2024-12-24T15:07:33.391646'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/5e273fb6-445f-4d50-bdb8-9c36e995b23f/download/energie_eau_et_ges_des_grands_immeubles_en_ontario_2023.xlsx
+  - name: '2024'
+    format: XLSX
+    last_modified: '2026-01-13T16:28:55.320451'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/aeb34aef-5029-4b65-8093-c86ad682b037/download/odc_final_dataset_2024.xlsx
+  - name: '2024'
+    format: XLSX
+    last_modified: '2026-01-13T16:30:11.518029'
+    url: https://data.ontario.ca/dataset/0eab2faf-6186-4a5b-8de1-b15872943c24/resource/bec1504a-d6d3-4fcf-9943-05b9329379e3/download/energie_eau_et_ges_des_grands_immeubles_en_ontario_2024.xlsx
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: CKAN package_show
+- key: ceud
+  row: 6
+  title: Comprehensive Energy Use Database, commercial and institutional sector, Ontario
+  shortTitle: NRCan Comprehensive Energy Use Database
+  publisher: Natural Resources Canada
+  docKind: dataset
+  licence: Open Government Licence – Canada
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: eccc-climate
+  row: 7
+  title: Historical climate data, Hamilton
+  shortTitle: ECCC climate data, Hamilton
+  publisher: Environment and Climate Change Canada
+  docKind: dataset
+  licence: Open Government Licence – Canada
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: nominatim
+  row: 8
+  title: Nominatim geocoder (OpenStreetMap)
+  shortTitle: Nominatim
+  publisher: OpenStreetMap Foundation
+  docKind: dataset
+  licence: ODbL 1.0
+  documentDate: null
+  url: https://nominatim.openstreetmap.org/search
+  probe: head
+  found_by: seed
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 461
+- key: climatiq
+  row: 9
+  title: Climatiq emission factor API
+  shortTitle: Climatiq
+  publisher: Climatiq
+  docKind: dataset
+  licence: null
+  documentDate: null
+  url: https://api.climatiq.io/data/v1/data-versions
+  probe: climatiq
+  found_by: seed
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: skipped
+- key: enbridge-rates
+  row: 10
+  title: Enbridge Gas rate schedule, Union South rate zone
+  shortTitle: Enbridge Gas rates (Union South)
+  publisher: Enbridge Gas
+  docKind: html
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: oeb-rates
+  row: 11
+  title: Ontario Energy Board electricity rates
+  shortTitle: OEB electricity rates
+  publisher: Ontario Energy Board
+  docKind: html
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: ieso-ga
+  row: 11
+  title: IESO Global Adjustment
+  shortTitle: IESO Global Adjustment
+  publisher: Independent Electricity System Operator
+  docKind: html
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: eccc-grid
+  row: 12
+  title: National Inventory Report, electricity generation intensity, Ontario
+  shortTitle: ECCC grid intensity (NIR)
+  publisher: Environment and Climate Change Canada
+  docKind: dataset
+  licence: Open Government Licence – Canada
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: taf-grid
+  row: 12
+  title: Ontario electricity emissions factors and forecast
+  shortTitle: TAF electricity emissions forecast
+  publisher: The Atmospheric Fund
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: protomaps-builds
+  row: 13
+  title: Protomaps daily basemap builds
+  shortTitle: Protomaps basemap
+  publisher: Protomaps
+  docKind: dataset
+  licence: ODbL 1.0 (OpenStreetMap produced work)
+  documentDate: null
+  url: https://build-metadata.protomaps.dev/builds.json
+  probe: protomaps
+  found_by: seed
+  newest_build: '20261031'
+  newest_build_uploaded: '2026-10-31T09:05:55.380Z'
+  newest_build_bytes: 139220727668
+  archive_url: https://build.protomaps.com/20261031.pmtiles
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: GET JSON
+- key: protomaps-glyphs
+  row: 13
+  title: Protomaps basemaps-assets fonts (glyphs)
+  shortTitle: Protomaps glyphs
+  publisher: Protomaps
+  docKind: dataset
+  licence: SIL Open Font License
+  documentDate: null
+  url: https://protomaps.github.io/basemaps-assets/fonts/
+  probe_suffix: Noto%20Sans%20Regular/0-255.pbf
+  probe: head
+  found_by: seed
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 46059
+- key: hce-reports
+  row: 14
+  title: HCE reports page
+  shortTitle: HCE reports
+  publisher: Hamilton Community Enterprises
+  docKind: html
+  licence: null
+  documentDate: null
+  url: https://hce.net/reports
+  probe: hce_reports
+  found_by: seed
+  final_url: https://hce.net/energy-harvesting-study
+  pdf_links:
+  - https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c62a30e9d3099bf553_Hamilton%20Energy%20Harvesting%20Study%20OVERVIEW%20REPORT.pdf
+  - https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6890ced50e9bb577c_Hamilton%20Energy%20Harvesting%20Study%20FINAL%20REPORT%20May%20_25.pdf
+  - https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf
+  - https://cdn.prod.website-files.com/683203b617910f35a398ebe6/683dc49bbab71d48d32345bf_Mohawk%20College%20Thermal%20Storage%20Report%20Commissioned%20by%20HCE%20FINAL.pdf
+  - https://cdn.prod.website-files.com/683203b617910f35a398ebe6/683dc49bcb23b1c26c7dedb3_McMaster%20University%20Energy%20Harvesting%20Policy%20Report%20Commissioned%20by%20HCE%20FINAL.pdf
+  - https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6a636cb0e12d1b246ae228e2_HCE%20AP%20Progress%20Report%20-%20%202026_Merged.pdf
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: GET page
+- key: hce-summary
+  row: 14
+  title: Hamilton Energy Harvesting Study, Summary Report
+  shortTitle: Energy Harvesting Study, Summary
+  publisher: Hamilton Community Enterprises
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6cfcf3ff919f7de24_Hamilton%20Energy%20Harvesting%20Study%20SUMMARY%20REPORT.pdf
+  probe: head
+  found_by: hce-reports-page
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 1304502
+- key: hce-full
+  row: 14
+  title: Hamilton Energy Harvesting Study, Final Report
+  shortTitle: Energy Harvesting Study, Full Report
+  publisher: Hamilton Community Enterprises
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c6890ced50e9bb577c_Hamilton%20Energy%20Harvesting%20Study%20FINAL%20REPORT%20May%20_25.pdf
+  probe: head
+  found_by: hce-reports-page
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 5861862
+- key: hce-overview
+  row: 14
+  title: Hamilton Energy Harvesting Study, Overview Report
+  shortTitle: Energy Harvesting Study, Overview
+  publisher: Hamilton Community Enterprises
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6833c0c62a30e9d3099bf553_Hamilton%20Energy%20Harvesting%20Study%20OVERVIEW%20REPORT.pdf
+  probe: head
+  found_by: hce-reports-page
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 459848
+- key: hce-mcmaster-policy
+  row: 14
+  title: McMaster University Energy Harvesting Policy Report, commissioned by HCE
+  shortTitle: McMaster energy harvesting policy report
+  publisher: McMaster University (for HCE)
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/683dc49bcb23b1c26c7dedb3_McMaster%20University%20Energy%20Harvesting%20Policy%20Report%20Commissioned%20by%20HCE%20FINAL.pdf
+  probe: head
+  found_by: hce-reports-page
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 869119
+- key: hce-mohawk-storage
+  row: 14
+  title: Mohawk College Thermal Storage Report, commissioned by HCE
+  shortTitle: Mohawk College thermal storage report
+  publisher: Mohawk College (for HCE)
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/683dc49bbab71d48d32345bf_Mohawk%20College%20Thermal%20Storage%20Report%20Commissioned%20by%20HCE%20FINAL.pdf
+  probe: head
+  found_by: hce-reports-page
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 2243852
+- key: hce-ap-progress
+  row: 14
+  title: HCE AP Progress Report 2026
+  shortTitle: HCE progress report 2026
+  publisher: Hamilton Community Enterprises
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: https://cdn.prod.website-files.com/683203b617910f35a398ebe6/6a636cb0e12d1b246ae228e2_HCE%20AP%20Progress%20Report%20-%20%202026_Merged.pdf
+  probe: head
+  found_by: hce-reports-page
+  probed_on: '2026-10-31'
+  probe_status: 200
+  probe_method: HEAD
+  probe_bytes: 361577
+- key: ceep
+  row: 15
+  title: City of Hamilton Community Energy and Emissions Plan
+  shortTitle: City climate plan (CEEP)
+  publisher: City of Hamilton
+  docKind: pdf
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: hce-network
+  row: 16
+  title: HCE district energy (downtown system)
+  shortTitle: HCE district energy page
+  publisher: Hamilton Community Enterprises
+  docKind: html
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: route
+  row: 17
+  title: Planned route, traced by a person from the study figure
+  shortTitle: Planned route (traced)
+  publisher: ThermoStat team
+  docKind: dataset
+  licence: null
+  documentDate: null
+  url: null
+  probe: local
+  note: route/route_planned.geojson not yet traced; 06_places writes the illustrative placeholder
+  found_by: local
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'
+- key: permits
+  row: 18
+  title: City of Hamilton building permits
+  shortTitle: City of Hamilton permits
+  publisher: City of Hamilton
+  docKind: dataset
+  licence: null
+  documentDate: null
+  url: null
+  probe: head
+  found_by: search
+  probed_on: '2026-10-31'
+  probe_status: null
+  probe_method: '-'

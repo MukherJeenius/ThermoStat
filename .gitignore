@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+.vite/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+.vercel/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+pipeline/raw/
+pipeline/out/
+test-results/

@@ -1,0 +1,36 @@
+/* Import after a CSS reset. Map UI only; no global page layout. */
+:root {
+  --ts-bg: #f3f2ee; --ts-surface: #fdfcf9; --ts-ink: #292925;
+  --ts-muted: #716e67; --ts-line: #d9d7d1; --ts-accent: #d16b24;
+  --ts-arc-source: #e68338; --ts-arc-target: #a49aa9;
+  --ts-radius: 30px; --ts-space: 8px;
+  --ts-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --ts-serif: 'Iowan Old Style', 'Baskerville', Georgia, serif;
+  --ts-shadow: 0 24px 55px -28px rgb(68 56 39 / .26), 0 2px 7px rgb(68 56 39 / .035);
+}
+.ts-panel { box-sizing:border-box; font-family:var(--ts-sans); color:var(--ts-ink); background:var(--ts-surface); border:1px solid var(--ts-line); border-radius:var(--ts-radius); box-shadow:var(--ts-shadow),inset 0 1px 0 #fff; padding:28px; width:min(418px,calc(100vw - 32px)); max-height:calc(100dvh - 140px); overflow:auto; }
+.ts-panel * { box-sizing:border-box; }
+.ts-kicker { display:flex; gap:9px; align-items:center; font-size:10px; line-height:1.5; letter-spacing:.16em; text-transform:uppercase; color:var(--ts-muted); margin:0 0 20px; }
+.ts-kicker::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--ts-accent); }
+.ts-panel h2 { font-size:27px; font-weight:500; letter-spacing:-.035em; line-height:1.15; margin:0 0 12px; }
+.ts-meta { font-size:12px; color:var(--ts-muted); line-height:1.6; margin:0 0 24px; }
+.ts-row { border-top:1px solid var(--ts-line); }
+.ts-row summary { list-style:none; cursor:pointer; display:flex; gap:16px; align-items:center; min-height:64px; font-size:14px; }
+.ts-row summary::-webkit-details-marker { display:none; }
+.ts-row summary::after { content:'+'; margin-left:auto; font-size:20px; color:var(--ts-muted); }
+.ts-row[open] summary::after { content:'−'; }
+.ts-number { font-size:11px; color:var(--ts-muted); font-variant-numeric:tabular-nums; }
+.ts-row-body { padding:0 0 24px 32px; }
+.ts-row-body p { font-size:13px; line-height:1.7; }
+.ts-quote { font-family:var(--ts-serif); font-style:italic; font-size:22px!important; line-height:1.35!important; margin:4px 0 18px; }
+.ts-source { font-size:12px; color:var(--ts-accent); text-underline-offset:4px; }
+.ts-status { font-size:11px; color:var(--ts-muted); }
+.ts-actions { border-top:1px solid var(--ts-line); margin-top:8px; padding-top:22px; display:flex; flex-wrap:wrap; align-items:center; gap:16px; }
+.ts-primary { border:0; cursor:pointer; border-radius:999px; padding:14px 20px; background:var(--ts-ink); color:#fffdf6; font:inherit; font-size:12px; }
+.ts-secondary { border:0; cursor:pointer; background:transparent; font:inherit; font-size:12px; padding:12px 0; color:var(--ts-muted); }
+.ts-panel :focus-visible { outline:2px solid var(--ts-accent); outline-offset:5px; }
+.ts-note-label { display:block; font-size:10px; letter-spacing:.16em; margin:24px 0 16px; color:var(--ts-muted); }
+.ts-notes { width:100%; border:0; border-bottom:1px solid var(--ts-line); background:transparent; color:var(--ts-ink); font:italic 20px/2 var(--ts-serif); min-height:140px; resize:vertical; }
+.ts-empty { font:italic 22px/1.5 var(--ts-serif); color:var(--ts-muted); padding:24px 0; border-block:1px solid var(--ts-line); }
+@media (max-width:640px) { .ts-panel { padding:22px; border-radius:24px; width:calc(100vw - 24px); max-height:62dvh; } .ts-panel h2 {font-size:24px;} }
+@media (prefers-reduced-motion:no-preference) { .ts-panel { animation:ts-enter 180ms ease-out; } @keyframes ts-enter { from { opacity:0; transform:translateY(6px); } to {opacity:1;transform:none;} } }

@@ -1,0 +1,41 @@
+{
+  "facility": {
+    "id": "demo-bayfront",
+    "name": "Bayfront Compute",
+    "locality": "Hamilton, Ontario (illustrative location)",
+    "position": [-79.8663, 43.2557],
+    "synthetic": true,
+    "commitments": [
+      {
+        "id": "demo-heat",
+        "topic": "heat",
+        "title": "Heat reuse",
+        "summary": "A proposed connection. A delivery still to verify.",
+        "status": "proposed",
+        "source": null,
+        "question": "Has a heat customer been identified?"
+      },
+      {
+        "id": "demo-water",
+        "topic": "water",
+        "title": "Water demand",
+        "summary": "The operating figure is not available in this demo.",
+        "status": "unknown",
+        "source": null,
+        "question": "What operating data would allow the estimate to be checked?"
+      }
+    ]
+  },
+  "connections": [
+    {
+      "id": "demo-connection-01",
+      "facilityId": "demo-bayfront",
+      "recipientName": "Illustrative housing cluster",
+      "source": [-79.8663, 43.2557],
+      "target": [-79.8784, 43.2588],
+      "kind": "scenario",
+      "evidenceIds": [],
+      "synthetic": true
+    }
+  ]
+}
