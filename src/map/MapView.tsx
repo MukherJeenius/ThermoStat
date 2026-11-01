@@ -153,7 +153,7 @@ export function MapView(props: MapViewProps) {
       out.push({
         id: `end-${c.id}`,
         position: [c.target[0], c.target[1], targetZ(c)],
-        role: c.kind === 'scenario' ? 'scenario' : 'customer',
+        role: c.kind,
         recipientId: c.recipientId,
         connectionId: c.id,
         facilityId: facById.has(c.recipientName) ? c.recipientName : undefined,

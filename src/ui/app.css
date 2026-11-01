@@ -611,3 +611,22 @@ dialog.ts-drawer,.ts-drawer{border-radius:0;box-shadow:none;border-right:1px sol
 .ts-video-close{border-radius:2px}
 .ts-tab[role=radio][aria-checked=true]{color:var(--ts-ink);box-shadow:inset 0 -2px 0 var(--ts-accent)}
 .ts-card-reason{margin:0 0 8px;font-size:13px;line-height:1.5}.ts-card-reason .ts-label{display:block;margin:0 0 4px}
+
+/* field notes (spec 9.8, 10) */
+.ts-notes-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin:4px 0 20px}
+.ts-btn-outline{min-height:44px;padding:0 18px;border:1px solid var(--ts-line-strong);border-radius:2px;background:var(--ts-surface);color:var(--ts-ink);font:inherit;font-size:13px;cursor:pointer}
+.ts-btn-outline:hover{border-color:var(--ts-ink)}
+.ts-btn-outline[aria-pressed="true"]{background:var(--ts-ink);border-color:var(--ts-ink);color:var(--ts-surface)}
+.ts-btn-outline:focus-visible{outline:2px solid var(--ts-accent);outline-offset:4px}
+.ts-notes-block .ts-note-label{margin:8px 0 6px}
+.ts-notes-block .ts-notes{display:block;padding:4px 0;background-image:linear-gradient(to bottom,transparent calc(2em - 1px),var(--ts-line) calc(2em - 1px));background-size:100% 2em;border-bottom-color:var(--ts-line-strong);min-height:8em}
+.ts-notes-block .ts-notes:focus-visible{outline:2px solid var(--ts-accent);outline-offset:4px}
+.ts-note-status{min-height:1.6em;margin:10px 0 4px;font-size:12px;color:var(--ts-muted);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.ts-note-status.is-failed{color:var(--ts-ink);font-weight:500}
+.ts-note-status.is-saved::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ts-accent);margin-right:2px}
+.ts-note-status .ts-link{font-size:12px}
+.ts-shortlist{list-style:none;margin:0;padding:0}
+.ts-shortlist li{display:flex;align-items:center;gap:16px;min-height:52px;border-top:1px solid var(--ts-line)}
+.ts-shortlist li a{margin-right:auto}
+.ts-shortlist-empty{font:italic 20px/1.5 var(--ts-serif);color:var(--ts-muted);margin:8px 0 4px}
+.ts-shortlist li .ts-meta{margin:0}

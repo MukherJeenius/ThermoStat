@@ -24,6 +24,7 @@ import { Brief } from './views/Brief';
 import { Method } from './views/Method';
 import { Records } from './views/Records';
 import { KIND_WORD } from './content/copy';
+import { LocalNotesStore, NotesContext } from './notes/store';
 import { DEMO_STEPS, step as demoStepFor, type DemoContext } from './demo/tour';
 
 const CARBON_KEY = 'thermostat:v1:carbon';
@@ -56,6 +57,10 @@ export interface Engine {
   carbon: number;
   compareFor: (r: Recipient) => CostComparison;
 }
+
+// ?testhooks&notesdelay=ms slows note writes so scripts/notes-shots.mjs can capture the "Saving…" state
+const notesParams = new URLSearchParams(window.location.search);
+const notesStore = new LocalNotesStore(undefined, notesParams.has('testhooks') ? Number(notesParams.get('notesdelay')) || 0 : 0);
 
 export function App() {
   const route = useHashRoute();
@@ -324,6 +329,7 @@ export function App() {
   );
 
   return (
+    <NotesContext.Provider value={demo ? null : notesStore}>
     <div className={`ts-app ts-view-${view}${demoStep ? ' is-demo' : ''}${demoStep && !demoStep.showRail ? ' is-demo-norail' : ''}`}>
       <h1 className="ts-visually-hidden">{COPY.h1}</h1>
       <header className="ts-header">
@@ -353,7 +359,7 @@ export function App() {
           <SearchIcon />
         </button>
       </header>
-      {view === 'records' && data && engine && <Records data={data} engine={engine} />}
+      {view === 'records' && data && engine && <Records data={data} engine={engine} anchor={route.view === 'records' ? route.anchor : null} />}
       {view === 'method' && <Method data={data} engine={engine} anchor={route.view === 'method' ? route.anchor : null} />}
       {route.view === 'place' && data && engine && (() => {
         if (route.kind === 'facility') {
@@ -530,5 +536,6 @@ export function App() {
         </div>
       )}
     </div>
+    </NotesContext.Provider>
   );
 }

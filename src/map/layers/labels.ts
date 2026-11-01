@@ -14,7 +14,7 @@ const SQUARE_SELECTED = squareIcon('ts-square-on', MAP.ink);
 export interface EndpointDatum {
   id: string;
   position: [number, number, number];
-  role: 'source' | 'customer' | 'scenario';
+  role: 'source' | 'operational' | 'proposed' | 'scenario';
   facilityId?: string;
   recipientId?: string | null;
   connectionId?: string;
@@ -61,17 +61,18 @@ export function endpointLayers(opts: {
       billboard: true,
       updateTriggers: { getIcon: sources.map((d) => d.selected).join(), getSize: sources.map((d) => d.selected).join() },
     }),
-    // buildings: 6 px ink dots
+    // link ends, told apart by shape as well as line width (never by colour alone):
+    // operating = filled ink dot, proposed = hollow ink ring, scenario = small hollow ring
     new ScatterplotLayer<EndpointDatum>({
       ...common,
       id: 'ts-endpoints',
       data: dots,
-      getRadius: (d) => (d.selected ? 4.5 : 3),
+      getRadius: (d) => (d.role === 'scenario' ? 3.5 : 4.5) + (d.selected ? 1.5 : 0),
       updateTriggers: { getRadius: dots.map((d) => d.selected).join() },
-      getFillColor: rgba(MAP.secondary, 1),
+      getFillColor: (d) => (d.role === 'operational' ? rgba(MAP.secondary, 1) : rgba(MAP.surface, 1)),
       stroked: true,
-      getLineColor: rgba(MAP.surface, 1),
-      getLineWidth: 1,
+      getLineColor: (d) => (d.role === 'operational' ? rgba(MAP.surface, 1) : rgba(MAP.secondary, 1)),
+      getLineWidth: (d) => (d.role === 'operational' ? 1.5 : d.role === 'proposed' ? 2 : 1.25),
     }),
   ];
 }

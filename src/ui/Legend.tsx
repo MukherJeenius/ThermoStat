@@ -1,4 +1,4 @@
-/** The printed key: brick square, ink dot, brick line, and the heat ramp only when heat density is on. */
+/** The printed key: brick square, ink dot, the three link kinds in words, width and end shape, and the heat ramp only when heat density is on. */
 import { HEAT_RAMP, MAP } from './mapTokens';
 import { COPY } from '../content/copy';
 
@@ -20,10 +20,15 @@ function Dot() {
     </svg>
   );
 }
-function Arc() {
+/** A link sample: line width plus the end marker's shape carry the kind, so it reads without colour. */
+function Link({ width, end }: { width: number; end: 'filled' | 'ring' | 'small' }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-      <line x1="1" y1="8" x2="15" y2="8" stroke={MAP.attention} strokeWidth="1.5" />
+    <svg width="34" height="16" viewBox="0 0 34 16" aria-hidden="true">
+      <line x1="2" y1="8" x2="25" y2="8" stroke={MAP.surface} strokeWidth={width + 3} strokeLinecap="round" />
+      <line x1="2" y1="8" x2="25" y2="8" stroke={MAP.attention} strokeWidth={width} strokeLinecap="round" />
+      {end === 'filled' && <circle cx="28" cy="8" r="4.5" fill={MAP.secondary} stroke={MAP.surface} strokeWidth="1.5" />}
+      {end === 'ring' && <circle cx="28" cy="8" r="4" fill={MAP.surface} stroke={MAP.secondary} strokeWidth="2" />}
+      {end === 'small' && <circle cx="28" cy="8" r="3" fill={MAP.surface} stroke={MAP.secondary} strokeWidth="1.25" />}
     </svg>
   );
 }
@@ -51,7 +56,9 @@ export function Legend({ heatOn, breaks, basemapFailed, caption, illustrative, l
       <ul className="ts-key-rows">
         <li><Square /> Facility (heat source)</li>
         <li><Dot /> Candidate building</li>
-        <li><Arc /> Arc: joins endpoints, not pipe routes</li>
+        <li><Link width={4} end="filled" /> Operating link: thick line, filled end</li>
+        <li><Link width={3.5} end="ring" /> Proposed link: ring end</li>
+        <li><Link width={2.5} end="small" /> Scenario: thin line, small ring</li>
       </ul>
       {heatOn && breaks && (
         <div className="ts-ramp">
@@ -74,7 +81,8 @@ export function Legend({ heatOn, breaks, basemapFailed, caption, illustrative, l
       )}
       {illustrative && <p className="ts-legend-note">Illustrative items are labelled</p>}
       {basemapFailed && <p className="ts-legend-note">Basemap unavailable</p>}
-      <p className="ts-visually-hidden">{caption} {COPY.legendNote}</p>
+      <p className="ts-legend-note">{COPY.legendNote}</p>
+      <p className="ts-visually-hidden">{caption}</p>
     </section>
   );
 }

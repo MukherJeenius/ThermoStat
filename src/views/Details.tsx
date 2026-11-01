@@ -10,6 +10,7 @@ import { href } from '../state/route';
 import { facilityState, FACILITY_STATE_WORD, pageRef, two, Val } from '../ui/ledger';
 import { recipientName } from '../ui/RecipientPanel';
 import { Schematic } from '../ui/Schematic';
+import { FieldNotes } from '../ui/FieldNotes';
 
 function useScrollTo(anchor: string | null, dep: unknown) {
   useEffect(() => {
@@ -62,7 +63,7 @@ function Footer({ action }: { action?: ReactNode }) {
         {action}
         <button type="button" className="ts-link" onClick={() => window.print()}>Print</button>
       </div>
-      <p className="ts-doc-fine">Prepared for Hamilton Community Enterprises. {COPY.disclaimer}</p>
+      <p className="ts-doc-fine">{COPY.disclaimer}</p>
     </footer>
   );
 }
@@ -151,6 +152,8 @@ export function FacilityDetails({ facility, connections, anchor }: { facility: F
           <figcaption>Fig. 1. {facility.name} (brick) and the buildings it is linked to (ink). {COPY.legendNote}</figcaption>
         </figure>
       </Section>
+
+      <FieldNotes key={facility.id} subject={{ kind: 'facility', id: facility.id }} place={facility.name} />
 
       <Footer />
     </main>
@@ -266,6 +269,8 @@ export function RecipientDetails({
           <figcaption>Fig. 1. {recipientName(r)} (ink){nearFac ? ` and ${nearFac.name} (brick)` : ''}. {COPY.legendNote}</figcaption>
         </figure>
       </Section>
+
+      <FieldNotes key={r.id} subject={{ kind: 'recipient', id: r.id }} place={recipientName(r)} />
 
       <Footer action={<a className="ts-primary" href={href.brief(r.id)}>Add to brief</a>} />
     </main>
