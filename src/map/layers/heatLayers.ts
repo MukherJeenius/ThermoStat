@@ -4,7 +4,7 @@ import type { Layer } from '@deck.gl/core';
 import { PathStyleExtension } from '@deck.gl/extensions';
 import { PathLayer } from '@deck.gl/layers';
 import type { ConnectionKind, HeatConnection } from '../../contract/data-contract';
-import { ARC, HEAT_RAMP, MAP, rgba } from '../../ui/mapTokens';
+import { HEAT_RAMP, MAP, rgba } from '../../ui/mapTokens';
 
 export const ROUTE_COLOR = HEAT_RAMP[4];
 
@@ -16,7 +16,7 @@ const SAMPLES = 48;
 // existing: bold solid · proposed: long even dash · scenario: thin solid in the secondary colour
 // every arc is a solid brick line of one width; the kind is told in words in the panels
 const DASH: Record<ConnectionKind, [number, number]> = { operational: [0, 0], proposed: [0, 0], scenario: [0, 0] };
-const WIDTH: Record<ConnectionKind, number> = { operational: ARC.width, proposed: ARC.width, scenario: ARC.width };
+const WIDTH: Record<ConnectionKind, number> = { operational: 4, proposed: 3.5, scenario: 2.5 };
 
 export interface ArcDatum {
   connection: HeatConnection;
@@ -32,9 +32,9 @@ export function groundDistanceM(a: readonly number[], b: readonly number[]): num
   return Math.hypot(dx, dy);
 }
 
-/** 48 points with height h × 4t(1 − t), h = clamp(0.25 × ground distance, 40 m, 700 m), between z0 and z1. */
+/** 48 points with height h × 4t(1 − t), h = clamp(0.15 × ground distance, 30 m, 350 m), between z0 and z1. */
 export function arcPath(src: readonly number[], dst: readonly number[], z0 = 0, z1 = 0): [number, number, number][] {
-  const h = Math.max(40, Math.min(700, 0.25 * groundDistanceM(src, dst)));   // tuned from 0.45 · [150, 1500] (decisions.md)
+  const h = Math.max(30, Math.min(350, 0.15 * groundDistanceM(src, dst)));   // tuned from 0.45 · [150, 1500] (decisions.md)
   const out: [number, number, number][] = [];
   for (let i = 0; i < SAMPLES; i++) {
     const t = i / (SAMPLES - 1);
@@ -54,7 +54,7 @@ export function makeHeatLayers(
   },
 ): Layer[] {
   const data: ArcDatum[] = connections.map((c) => ({ connection: c, path: arcPath(c.source, c.target, 0, options.targetZ?.(c) ?? 0) }));
-  const width = (d: ArcDatum) => WIDTH[d.connection.kind] + (d.connection.id === options.selectedConnectionId ? 1.25 : 0);
+  const width = (d: ArcDatum) => WIDTH[d.connection.kind] + (d.connection.id === options.selectedConnectionId ? 2 : 0);
   const common = {
     data,
     visible: options.visible,
@@ -72,13 +72,13 @@ export function makeHeatLayers(
       ...common,
       id: 'ts-heat-casing',
       getColor: rgba(MAP.surface, 1),
-      getWidth: (d) => width(d) + 1.5,
+      getWidth: (d) => width(d) + 3,
       pickable: false,
     }),
     new PathLayer<ArcDatum, { getDashArray: (d: ArcDatum) => [number, number] }>({
       ...common,
       id: 'ts-heat-connections',
-      getColor: rgba(MAP.attention, ARC.opacity),
+      getColor: rgba(MAP.attention, 1),
       getWidth: width,
       getDashArray: (d) => DASH[d.connection.kind],
       extensions: [new PathStyleExtension({ dash: true })],
@@ -101,8 +101,8 @@ export function routeLayer(coords: number[][] | null, visible: boolean, beforeId
       data,
       visible,
       getPath: (d) => d.path as never,
-      getColor: rgba(MAP.surface, 0.85),
-      getWidth: 10,
+      getColor: rgba(MAP.surface, 1),
+      getWidth: 11,
       widthUnits: 'pixels',
       capRounded: true,
       jointRounded: true,
@@ -114,7 +114,7 @@ export function routeLayer(coords: number[][] | null, visible: boolean, beforeId
       data,
       visible,
       getPath: (d) => d.path as never,
-      getColor: rgba(ROUTE_COLOR, 0.55),
+      getColor: rgba(ROUTE_COLOR, 1),
       getWidth: 6,
       widthUnits: 'pixels',
       capRounded: true,
