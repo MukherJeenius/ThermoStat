@@ -7,7 +7,8 @@ button{font:inherit}
 .ts-visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .ts-icon{flex:none;vertical-align:-2px}
 
-.ts-app{display:grid;grid-template-rows:var(--ts-header-h) 1fr var(--ts-footer-h);height:100dvh;overflow:hidden}
+.ts-app{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:var(--ts-header-h) minmax(0,1fr) var(--ts-footer-h);height:100dvh;overflow:hidden}
+.ts-header,.ts-stage,.ts-footer{min-width:0}
 .ts-app.ts-view-records,.ts-app.ts-view-method{overflow:auto;height:auto;min-height:100dvh;grid-template-rows:var(--ts-header-h) auto var(--ts-footer-h)}
 
 /* header */
@@ -125,10 +126,11 @@ button{font:inherit}
 
 /* the sheet layout: under 640 px wide or 560 px tall (spec 9.13) */
 @media (max-width:639.98px),(max-height:559.98px){
-  .ts-header{padding:env(safe-area-inset-top) 16px 0;gap:8px}
+  .ts-header{padding:env(safe-area-inset-top) 12px 0 16px;gap:4px}
   .ts-subline{display:none}
-  .ts-nav{gap:4px;font-size:12px}
-  .ts-nav a{padding-inline:6px}
+  .ts-wordmark{font-size:13px;letter-spacing:.22em}
+  .ts-nav{gap:0}
+  .ts-nav a{padding-inline:6px;font-size:12px}
   .ts-places-btn{display:none}
   .ts-legend-slot{display:none}
   .ts-footer{display:none}
@@ -150,8 +152,8 @@ button{font:inherit}
 .ts-brief-toolbar .ts-meta{margin:0;flex-basis:100%}
 .ts-brief-fit{max-width:816px;margin:30px auto 0}
 .ts-brief{width:816px;min-height:1056px;padding:53px;background:#fff;color:#292925;box-shadow:var(--ts-shadow);transform:scale(var(--fit,1));transform-origin:top left;font-size:9.5pt;line-height:13pt;font-variant-numeric:tabular-nums}
-.ts-brief p{margin:0 0 6pt}
-.ts-brief-head{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid var(--ts-line);padding-bottom:10pt;margin-bottom:12pt}
+.ts-brief p{margin:0 0 4pt}
+.ts-brief-head{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid var(--ts-line);padding-bottom:8pt;margin-bottom:10pt}
 .ts-brief-wordmark{font-size:11pt;font-weight:500;letter-spacing:.38em;margin:0 0 8pt!important}
 .ts-brief .ts-kicker{margin:0;font-size:7pt}
 .ts-brief-for{max-width:260px;text-align:right;font-size:7.5pt;line-height:10pt;color:#716e67}
@@ -159,11 +161,11 @@ button{font:inherit}
 .ts-brief-title h1{font-size:20pt;font-weight:500;letter-spacing:-.02em;line-height:1.15;margin:0 0 6pt}
 .ts-brief-title p{color:#716e67}
 .ts-brief-flag{font-size:8pt;color:#292925!important}
-.ts-brief-lead{font-size:12pt;line-height:16pt;margin:10pt 0 4pt!important}
-.ts-brief-question{font:italic 11pt/15pt var(--ts-serif);margin-bottom:12pt!important}
+.ts-brief-lead{font-size:12pt;line-height:15pt;margin:8pt 0 3pt!important}
+.ts-brief-question{font:italic 11pt/15pt var(--ts-serif);margin-bottom:8pt!important}
 .ts-brief-grid{display:grid;grid-template-columns:7fr 5fr;gap:6mm}
-.ts-brief-h{font-size:7pt;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:#716e67;margin:10pt 0 6pt;break-after:avoid}
-.ts-brief ul{margin:0 0 6pt;padding-left:12pt}
+.ts-brief-h{font-size:7pt;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:#716e67;margin:8pt 0 4pt;break-after:avoid}
+.ts-brief ul{margin:0 0 4pt;padding-left:12pt}
 .ts-brief-chart{width:100%;height:auto;display:block}
 .ts-chart-label{font-size:8px;fill:#292925}
 .ts-chart-value{font-size:8px;fill:#292925}
@@ -175,10 +177,10 @@ button{font:inherit}
 .ts-locator figcaption{font-size:7.5pt;color:#716e67;line-height:10pt;margin-top:3pt}
 .ts-locator-text{font-size:3px;fill:#292925}
 .ts-brief-small,.ts-brief-assume{font-size:7.5pt;line-height:10pt;color:#292925}
-.ts-brief-cta{border-top:1px solid var(--ts-line);padding-top:8pt;margin-top:8pt!important}
-.ts-brief-review{margin-top:10pt!important}
+.ts-brief-cta{border-top:1px solid var(--ts-line);padding-top:6pt;margin-top:6pt!important}
+.ts-brief-review{margin-top:6pt!important}
 .ts-brief-foot{display:flex;justify-content:space-between;border-top:1px solid var(--ts-line);padding-top:6pt;margin-top:8pt;font-size:7.5pt;color:#716e67}
-.ts-brief *{break-inside:avoid}
+.ts-brief :is(p,ul,table,figure,svg,h2,.ts-brief-head,.ts-brief-title,.ts-brief-foot){break-inside:avoid}
 @page{size:Letter;margin:14mm}
 @media print{
   html,body,#root{height:auto;background:#fff}
@@ -188,3 +190,8 @@ button{font:inherit}
   .ts-brief{transform:none;width:auto;min-height:0;padding:0;box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:0ms!important;animation-duration:0ms!important}}
+.ts-brief-grid li{line-height:12pt}
+.ts-brief-assume p{margin:0 0 3pt}
+.ts-brief-title h1{margin:0 0 4pt}
+.ts-brief-head{padding-bottom:6pt;margin-bottom:8pt}
+.ts-page .ts-facts{grid-template-columns:minmax(140px,auto) 1fr}.ts-page .ts-facts dd{text-align:left}

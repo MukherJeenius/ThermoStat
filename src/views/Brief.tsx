@@ -24,14 +24,14 @@ function CostChart({ c }: { c: CostComparison }) {
     { key: 'hce', label: 'Connect to HCE (assumed rate: gas parity)', v: c.hce.pv20 },
   ].sort((a, b) => a.v - b.v);
   const max = Math.max(...rows.map((r) => r.v));
-  const W = 360;
+  const W = 440;
   const labelW = 0;
   return (
-    <svg className="ts-brief-chart" viewBox={`0 0 ${W} ${rows.length * 34}`} role="img" aria-label="20-year cost of each option">
+    <svg className="ts-brief-chart" viewBox={`0 0 ${W} ${rows.length * 30}`} role="img" aria-label="20-year cost of each option">
       {rows.map((r, i) => {
         const w = Math.max(2, ((W - labelW - 70) * r.v) / max);
         return (
-          <g key={r.key} transform={`translate(0 ${i * 34})`}>
+          <g key={r.key} transform={`translate(0 ${i * 30})`}>
             <text x="0" y="10" className="ts-chart-label">{r.label}</text>
             <rect x={labelW} y="14" width={w} height="12" fill={r.key === 'hce' ? '#d16b24' : '#b9b5ad'} />
             <text x={labelW + w + 6} y="24" className="ts-chart-value">{money(r.v)}</text>
@@ -75,7 +75,7 @@ function Locator({ r, data }: { r: Recipient; data: AppData }) {
   void scale;
   return (
     <figure className="ts-locator">
-      <svg viewBox={`0 0 ${W} ${H}`} width="85mm" height="60mm" role="img" aria-label="Schematic locator">
+      <svg viewBox={`0 0 ${W} ${H}`} width="70mm" height="50mm" role="img" aria-label="Schematic locator">
         <rect x="0" y="0" width={W} height={H} fill="#fff" stroke="#d9d7d1" strokeWidth="0.3" />
         {near.map((f) =>
           f.geometry.type === 'Polygon' ? (
@@ -162,11 +162,17 @@ export function Brief({ recipient: r, comparison: c, data, engine }: { recipient
               {r.address ?? 'Address not in source data'} · {TYPE_WORD[r.type]} · {QUALITY_WORD[r.estimate.quality]} · Data as of{' '}
               {date(data.meta?.osmBase)}
             </p>
-            {r.synthetic && <p className="ts-brief-flag">Illustrative building: generated data, not a real site.</p>}
-            {edited && <p className="ts-brief-flag">Uses edited assumptions, not the sourced defaults.</p>}
-            {data.fallback.prices && <p className="ts-brief-flag">Fallback prices (plan defaults)</p>}
-            {engine.factor.isFallback && <p className="ts-brief-flag">Fallback emission factors</p>}
-            <p className="ts-brief-flag">{p.carbonPriceT > 0 ? `Carbon price: $${p.carbonPriceT} per tonne (scenario)` : 'Carbon price: none'}</p>
+            <p className="ts-brief-flag">
+              {[
+                r.synthetic ? 'Illustrative building: generated data, not a real site.' : null,
+                edited ? 'Uses edited assumptions, not the sourced defaults.' : null,
+                data.fallback.prices ? 'Fallback prices (plan defaults)' : null,
+                engine.factor.isFallback ? 'Fallback emission factors' : null,
+                p.carbonPriceT > 0 ? `Carbon price: $${p.carbonPriceT} per tonne (scenario)` : 'Carbon price: none',
+              ]
+                .filter(Boolean)
+                .join(' · ')}
+            </p>
           </section>
           <p className="ts-brief-lead">{v.sentence}</p>
           <p className="ts-brief-question">{recipientQuestion(r)}</p>
@@ -188,11 +194,13 @@ export function Brief({ recipient: r, comparison: c, data, engine }: { recipient
                 </tbody>
               </table>
               <Locator r={r} data={data} />
+              <p className="ts-brief-cta">{COPY.briefCta}</p>
+              <p className="ts-brief-review">Reviewed by ____________ on ____________</p>
             </div>
             <div>
               <h2 className="ts-brief-h">Why it fits</h2>
               <p><strong>{BAND_WORD[r.fit.band]} fit</strong> (score {r.fit.score} of 100)</p>
-              <ul>{r.fit.reasons.map((x) => <li key={x}>{x}</li>)}</ul>
+              <ul>{r.fit.reasons.slice(0, 2).map((x) => <li key={x}>{x}</li>)}</ul>
               {r.fit.missing.length > 0 && <p className="ts-brief-small">Not in source data: {r.fit.missing.join(', ')}.</p>}
               <h2 className="ts-brief-h">Heat demand</h2>
               <p>
@@ -229,8 +237,6 @@ export function Brief({ recipient: r, comparison: c, data, engine }: { recipient
               </div>
             </div>
           </div>
-          <p className="ts-brief-cta">{COPY.briefCta}</p>
-          <p className="ts-brief-review">Reviewed by ____________ on ____________</p>
           <footer className="ts-brief-foot">
             <span>Estimates, not a quote.</span>
             <span>{TEAM_CREDIT}</span>
